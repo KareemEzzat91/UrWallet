@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Brand Primary Colors -->
+    <color name="urwallet_primary">#000666</color>
+    <color name="urwallet_primary_dark">#0A1172</color>
+    <color name="urwallet_primary_light">#E8EAF6</color>
+    <color name="urwallet_primary_variant_start">#1A237E</color>
+    <color name="urwallet_primary_variant_end">#4C56AF</color>
+
+    <!-- Semantic Financial Colors -->
+    <color name="urwallet_income">#00732C</color>
+    <color name="urwallet_income_light">#5CFD80</color>
+    <color name="urwallet_income_container">#E8F5E9</color>
+
+    <color name="urwallet_expense">#BA1A1A</color>
+    <color name="urwallet_expense_light">#D32F2F</color>
+    <color name="urwallet_expense_container">#FFEBEE</color>
+
+    <color name="urwallet_warning">#FBBC00</color>
+    <color name="urwallet_warning_light">#FFF8E1</color>
+
+    <!-- Background & Surface Canvas -->
+    <color name="urwallet_background">#F8F9FA</color>
+    <color name="urwallet_surface">#FFFFFF</color>
+    <color name="urwallet_surface_glass">#B3FFFFFF</color>
+
+    <!-- Text & Content Colors -->
+    <color name="urwallet_text_primary">#191C1D</color>
+    <color name="urwallet_text_secondary">#454652</color>
+    <color name="urwallet_text_tertiary">#767683</color>
+
+    <!-- Borders & Dividers -->
+    <color name="urwallet_divider">#33C6C5D4</color>
+    <color name="urwallet_card_border">#20C6C5D4</color>
+
+    <!-- Standard Utils -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

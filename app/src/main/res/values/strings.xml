@@ -1,3 +1,61 @@
 <resources>
-    <string name="app_name">UrWallet</string>
+    <!-- App Identity -->
+    <string name="app_name">محفظتك</string>
+    <string name="app_tagline">محفظتك، بس أذكى.</string>
+    <string name="currency_symbol">ج.م</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_dashboard">الرئيسية</string>
+    <string name="nav_transactions">المعاملات</string>
+    <string name="nav_goals">أهدافي</string>
+    <string name="nav_more">المزيد</string>
+
+    <!-- Common Actions -->
+    <string name="action_add">إضافة</string>
+    <string name="action_add_transaction">إضافة معاملة</string>
+    <string name="action_save">حفظ</string>
+    <string name="action_cancel">إلغاء</string>
+    <string name="action_delete">حذف</string>
+    <string name="action_edit">تعديل</string>
+    <string name="action_share">مشاركة</string>
+    <string name="action_skip">تخطي</string>
+    <string name="action_next">التالي</string>
+    <string name="action_start">ابدأ الآن</string>
+    <string name="action_confirm">تأكيد</string>
+    <string name="action_view_all">عرض الكل</string>
+
+    <!-- Transaction Types -->
+    <string name="type_expense">مصروف</string>
+    <string name="type_income">دخل</string>
+
+    <!-- Default Expense Categories -->
+    <string name="cat_food">أكل ومشروبات</string>
+    <string name="cat_transport">مواصلات</string>
+    <string name="cat_shopping">تسوق</string>
+    <string name="cat_bills">فواتير</string>
+    <string name="cat_entertainment">ترفيه</string>
+    <string name="cat_health">صحة</string>
+    <string name="cat_education">تعليم</string>
+    <string name="cat_other">أخرى</string>
+
+    <!-- Default Income Categories -->
+    <string name="cat_salary">راتب</string>
+    <string name="cat_freelance">عمل حر</string>
+    <string name="cat_bonus">مكافأة</string>
+
+    <!-- Budget Statuses -->
+    <string name="budget_status_healthy">سليم</string>
+    <string name="budget_status_near_limit">قريب من الحد (80%+)</string>
+    <string name="budget_status_exceeded">تجاوزت الميزانية</string>
+
+    <!-- Goal Pace Modes -->
+    <string name="pace_relaxed">هادئ</string>
+    <string name="pace_balanced">متوازن</string>
+    <string name="pace_aggressive">مكثف</string>
+
+    <!-- Time Frequencies -->
+    <string name="freq_daily">يومي</string>
+    <string name="freq_weekly">أسبوعي</string>
+    <string name="freq_monthly">شهري</string>
+    <string name="freq_yearly">سنوي</string>
 </resources>

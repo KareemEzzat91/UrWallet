@@ -1,16 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.UrWallet" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+    <!-- Dark Mode Theme Variant -->
+    <style name="Theme.UrWallet" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/urwallet_primary_light</item>
+        <item name="colorOnPrimary">@color/urwallet_primary</item>
+        <item name="colorPrimaryContainer">@color/urwallet_primary_variant_start</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+
+        <item name="colorSecondary">@color/urwallet_primary_variant_end</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">#121212</item>
+        <item name="colorSurface">#1E1E1E</item>
+        <item name="colorOnSurface">#E0E0E0</item>
+        <item name="colorOnSurfaceVariant">#A0A0A0</item>
+
+        <item name="android:statusBarColor">#121212</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">#1E1E1E</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.UrWallet.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.UrWallet.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.UrWallet.Large</item>
+    </style>
+
+    <style name="Theme.UrWallet.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/urwallet_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.UrWallet</item>
     </style>
 </resources>
