@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="160dp"
+    android:viewportWidth="200"
+    android:viewportHeight="160">
+    <!-- Glassmorphic card -->
+    <path android:fillColor="#33FFFFFF"
+        android:pathData="M30,40 Q30,20 50,20 L150,20 Q170,20 170,40 L170,120 Q170,140 150,140 L50,140 Q30,140 30,120 Z"/>
+    <!-- Coin stack -->
+    <path android:fillColor="#FBBC00"
+        android:pathData="M80,110 L120,110 L120,100 L80,100 Z"
+        android:strokeColor="#F9A825" android:strokeWidth="1"/>
+    <path android:fillColor="#FBBC00"
+        android:pathData="M75,100 L125,100 L125,90 L75,90 Z"/>
+    <path android:fillColor="#FBBC00"
+        android:pathData="M80,90 L120,90 L120,80 L80,80 Z"/>
+    <!-- Chart sparkline -->
+    <path android:fillColor="#00000000"
+        android:pathData="M50,75 Q70,55 90,65 Q110,75 130,45 L150,55"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"/>
+    <!-- Badge pill -->
+    <path android:fillColor="#000666"
+        android:pathData="M60,30 Q60,25 65,25 L135,25 Q140,25 140,30 L140,42 Q140,47 135,47 L65,47 Q60,47 60,42 Z"/>
+    <!-- Badge text placeholder lines -->
+    <path android:fillColor="#FFFFFF" android:pathData="M70,35 L130,35" android:strokeColor="#FFFFFF" android:strokeWidth="2"/>
+    <path android:fillColor="#FBBC00" android:pathData="M85,41 L115,41" android:strokeColor="#FBBC00" android:strokeWidth="2"/>
+</vector>

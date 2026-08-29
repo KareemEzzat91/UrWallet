@@ -13,6 +13,7 @@ interface TransactionRepository {
     fun getTransactionsBetween(startDate: Long, endDate: Long): Flow<List<Transaction>>
     fun getTransactionsByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): Flow<List<Transaction>>
     fun getSumByTypeAndPeriod(type: TransactionType, startDate: Long, endDate: Long): Flow<Double>
+    fun getTotalSumByType(type: TransactionType): Flow<Double>
     fun getSumByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): Flow<Double>
     fun getTodayTransactionCount(startOfDay: Long, endOfDay: Long): Flow<Int>
     suspend fun insertTransaction(transaction: Transaction): Long

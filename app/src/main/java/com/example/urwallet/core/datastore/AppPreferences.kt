@@ -13,6 +13,20 @@ import kotlinx.coroutines.flow.map
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Constants.PREFERENCES_NAME)
 
+/**
+ * Persistent preferences backed by Jetpack DataStore.
+ *
+ * Architectural & Design Notes:
+ * 1. Single-Currency MVP:
+ *    [currencySymbol] and [currencyCode] are strictly display preferences (default EGP / ج.م).
+ *    All financial transactions, budgets, and goals are calculated in a single unit.
+ *    No exchange rates or currency conversions exist in the MVP.
+ *
+ * 2. Security & PIN Authentication:
+ *    PIN authentication uses PBKDF2WithHmacSHA256 key derivation / password hashing
+ *    with a cryptographically random salt. This is password hashing, NOT encryption.
+ *    Only [pinHash] and [pinSalt] are persisted.
+ */
 class AppPreferences(private val context: Context) {
 
     companion object {

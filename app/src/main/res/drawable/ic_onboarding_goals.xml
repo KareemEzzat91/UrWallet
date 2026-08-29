@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="160dp"
+    android:viewportWidth="200"
+    android:viewportHeight="160">
+    <!-- Mountain/Progress path -->
+    <path android:fillColor="#1A237E"
+        android:pathData="M10,140 L70,60 L100,90 L140,30 L190,140 Z"/>
+    <!-- Progress line -->
+    <path android:fillColor="#00000000"
+        android:pathData="M10,140 L70,60 L100,90 L140,30"
+        android:strokeColor="#FBBC00"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"/>
+    <!-- Flag at top -->
+    <path android:fillColor="#FBBC00"
+        android:pathData="M138,10 L138,50 L138,10 L158,18 L138,26 Z"/>
+    <!-- Progress ball -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M97,90 A6,6 0 1,1 103,90 A6,6 0 1,1 97,90 Z"/>
+    <!-- Stars -->
+    <path android:fillColor="#FBBC00"
+        android:pathData="M170,50 L172,56 L178,56 L173,60 L175,66 L170,62 L165,66 L167,60 L162,56 L168,56 Z"
+        android:scaleX="0.6" android:scaleY="0.6"/>
+</vector>

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 kotlin {
@@ -84,6 +85,10 @@ dependencies {
 
     // Glide
     implementation(libs.glide)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
     // Testing
     testImplementation(libs.junit)

@@ -13,9 +13,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class GoalRepositoryImpl(
+class GoalRepositoryImpl @Inject constructor(
     private val goalDao: GoalDao,
     private val goalContributionDao: GoalContributionDao
 ) : GoalRepository {
@@ -93,7 +94,7 @@ class GoalRepositoryImpl(
     }
 
     override suspend fun addContribution(goalId: Long, amount: Double, note: String?): Long {
-        val contributionId = goalContributionDao.insertContribution(
+        return goalContributionDao.insertContribution(
             GoalContributionEntity(
                 goalId = goalId,
                 amount = amount,
@@ -101,13 +102,6 @@ class GoalRepositoryImpl(
                 date = System.currentTimeMillis()
             )
         )
-        // Check goal completion
-        val totalSaved = goalContributionDao.getTotalSavedForGoalSync(goalId)
-        val goalEntity = goalDao.getGoalByIdSync(goalId)
-        if (goalEntity != null && totalSaved >= goalEntity.targetAmount) {
-            goalDao.updateGoalCompletion(goalId, true)
-        }
-        return contributionId
     }
 
     override suspend fun deleteGoal(id: Long) {
@@ -125,7 +119,6 @@ class GoalRepositoryImpl(
         monthlyTarget = monthlyTarget,
         deadline = deadline,
         createdAt = createdAt,
-        isCompleted = isCompleted || (savedAmount >= targetAmount),
         isDeleted = isDeleted
     )
 
@@ -138,7 +131,6 @@ class GoalRepositoryImpl(
         monthlyTarget = monthlyTarget,
         deadline = deadline,
         createdAt = createdAt,
-        isCompleted = isCompleted,
         isDeleted = isDeleted
     )
 

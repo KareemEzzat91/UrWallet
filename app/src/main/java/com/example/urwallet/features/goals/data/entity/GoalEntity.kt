@@ -15,6 +15,5 @@ data class GoalEntity(
     val monthlyTarget: Double,
     val deadline: Long,
     val createdAt: Long = System.currentTimeMillis(),
-    val isCompleted: Boolean = false,
     val isDeleted: Boolean = false
 )

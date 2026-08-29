@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".UrWalletApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,16 +13,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UrWallet">
 
+        <!-- Splash: LAUNCHER, reads onboarding state and routes -->
         <activity
-            android:name=".MainActivity"
+            android:name=".features.onboarding.presentation.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.UrWallet.Splash"
-            android:windowSoftInputMode="adjustResize">
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Onboarding: 3-slide value proposition -->
+        <activity
+            android:name=".features.onboarding.presentation.OnboardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.UrWallet"
+            android:launchMode="singleTop"
+            android:noHistory="true" />
+
+        <!-- Wizard: 5-step Smart Savings Wizard -->
+        <activity
+            android:name=".features.onboarding.presentation.wizard.WizardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.UrWallet"
+            android:windowSoftInputMode="adjustResize"
+            android:noHistory="true" />
+
+        <!-- Main app shell (tabs) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.UrWallet"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

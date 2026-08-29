@@ -6,8 +6,9 @@ import com.example.urwallet.features.budgets.domain.model.Budget
 import com.example.urwallet.features.budgets.domain.repository.BudgetRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class BudgetRepositoryImpl(
+class BudgetRepositoryImpl @Inject constructor(
     private val budgetDao: BudgetDao
 ) : BudgetRepository {
 

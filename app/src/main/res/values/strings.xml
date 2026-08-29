@@ -19,10 +19,12 @@
     <string name="action_edit">تعديل</string>
     <string name="action_share">مشاركة</string>
     <string name="action_skip">تخطي</string>
+    <string name="action_skip_now">تخطي الآن</string>
     <string name="action_next">التالي</string>
     <string name="action_start">ابدأ الآن</string>
     <string name="action_confirm">تأكيد</string>
     <string name="action_view_all">عرض الكل</string>
+    <string name="action_start_journey">ابدأ رحلتي</string>
 
     <!-- Transaction Types -->
     <string name="type_expense">مصروف</string>
@@ -45,7 +47,7 @@
 
     <!-- Budget Statuses -->
     <string name="budget_status_healthy">سليم</string>
-    <string name="budget_status_near_limit">قريب من الحد (80%+)</string>
+    <string name="budget_status_near_limit" formatted="false">قريب من الحد (80%+)</string>
     <string name="budget_status_exceeded">تجاوزت الميزانية</string>
 
     <!-- Goal Pace Modes -->
@@ -58,4 +60,77 @@
     <string name="freq_weekly">أسبوعي</string>
     <string name="freq_monthly">شهري</string>
     <string name="freq_yearly">سنوي</string>
+
+    <!-- Onboarding Slides -->
+    <string name="onboarding_slide1_title">اعرف فلوسك رايحة فين</string>
+    <string name="onboarding_slide1_subtitle">سجل مصاريفك بسهولة وشوف تفاصيل انفاقك بصورة واضحة في اي وقت.</string>
+    <string name="onboarding_slide2_title">حقق اهدافك المالية</string>
+    <string name="onboarding_slide2_subtitle">حدد هدفك واختار وتيرة الادخار المناسبة وخلي محفظتك تحسب المبلغ الشهري عشانك.</string>
+    <string name="onboarding_slide3_title">طور عاداتك المالية</string>
+    <string name="onboarding_slide3_subtitle">محفظتك مش بس تطبيق - هو مدربك المالي الشخصي. تحديات وتحليل ونصايح ذكية كل يوم.</string>
+
+    <!-- Wizard General -->
+    <string name="wizard_step_of">%1$d من %2$d</string>
+    <string name="wizard_skip_now">تخطي الآن</string>
+
+    <!-- Wizard Step 1: Goal Focus -->
+    <string name="wizard_step1_title">ما هو هدفك الاول؟</string>
+    <string name="wizard_step1_subtitle">اختار الهدف اللي انت عايز تبدأ بيه وحنساعدك توصله.</string>
+    <string name="goal_type_emergency">صندوق الطوارئ</string>
+    <string name="goal_type_emergency_desc">احتياطي للأيام الصعبة</string>
+    <string name="goal_type_travel">سفر وسياحة</string>
+    <string name="goal_type_travel_desc">رحلة احلامك في انتظارك</string>
+    <string name="goal_type_home">منزل جديد</string>
+    <string name="goal_type_home_desc">ابني بيتك خطوة بخطوة</string>
+    <string name="goal_type_retirement">التقاعد</string>
+    <string name="goal_type_retirement_desc">مستقبلك يبدأ من النهارده</string>
+    <string name="goal_type_custom">هدف مخصص</string>
+    <string name="goal_type_custom_desc">اي هدف تاني في بالك</string>
+
+    <!-- Wizard Step 2: Target Amount -->
+    <string name="wizard_step2_title">كام هو الهدف؟</string>
+    <string name="wizard_step2_subtitle">حدد المبلغ اللي عايز توصله.</string>
+    <string name="wizard_amount_hint">ادخل المبلغ</string>
+    <string name="wizard_preset_1000">1,000</string>
+    <string name="wizard_preset_5000">5,000</string>
+    <string name="wizard_preset_10000">10,000</string>
+    <string name="wizard_preset_20000">20,000</string>
+    <string name="wizard_currency_egp">ج.م</string>
+
+    <!-- Wizard Step 3: Pace Plan -->
+    <string name="wizard_step3_title">اختار وتيرة الادخار</string>
+    <string name="wizard_step3_subtitle">على حسب وتيرتك، حنحسب المبلغ الشهري اللازم.</string>
+    <string name="wizard_pace_relaxed_desc">ادخار اقل ببطء اكتر</string>
+    <string name="wizard_pace_balanced_desc">توازن مثالي بين الادخار والمعيشة</string>
+    <string name="wizard_pace_aggressive_desc">ادخار اسرع لتحقيق هدفك</string>
+    <string name="wizard_monthly_calc">هتحتاج توفر تقريبا %1$s ج.م شهريا للوصول للهدف في %2$d اشهر</string>
+    <string name="wizard_monthly_calc_short">%1$s ج.م / شهر</string>
+
+    <!-- Wizard Step 4: Reminders -->
+    <string name="wizard_step4_title">تنبيهات الادخار</string>
+    <string name="wizard_step4_subtitle">خلينا نفكرك بانتظام عشان ماتنساش هدفك.</string>
+    <string name="wizard_reminder_weekly">تذكير اسبوعي بالتقدم</string>
+    <string name="wizard_reminder_monthly">تقرير شهري تفصيلي</string>
+    <string name="wizard_reminder_deadline">تنبيه اقتراب الموعد</string>
+    <string name="wizard_reminder_motivation">رسائل تحفيزية يومية</string>
+    <string name="wizard_reminder_time_label">وقت التذكير المفضل</string>
+
+    <!-- Wizard Step 5: Habits -->
+    <string name="wizard_step5_title">اسرار المدخرين الناجحين</string>
+    <string name="wizard_step5_subtitle">4 عادات بسيطة هتغير علاقتك بالفلوس.</string>
+    <string name="wizard_habit1_title">قاعدة 50/30/20</string>
+    <string name="wizard_habit1_desc" formatted="false">50% للاحتياجات، 30% للرغبات، 20% للادخار. بسيطة وفعالة.</string>
+    <string name="wizard_habit2_title">الادخار التلقائي</string>
+    <string name="wizard_habit2_desc">حدد مبلغ ثابت تدخره اول ما الراتب يجي قبل ما تصرف.</string>
+    <string name="wizard_habit3_title">تتبع المصاريف الصغيرة</string>
+    <string name="wizard_habit3_desc">فنجان القهوة اليومي يساوي 180 ج.م في الشهر. السيطرة تبدأ بالوعي.</string>
+    <string name="wizard_habit4_title">اهداف SMART</string>
+    <string name="wizard_habit4_desc">هدف محدد وقابل للقياس وواقعي ومحدد بوقت هو اللي بيتحقق فعلا.</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="cd_app_logo">شعار محفظتك</string>
+    <string name="cd_onboarding_illustration">توضيح المزية</string>
+    <string name="cd_goal_type_card">بطاقة نوع الهدف</string>
+    <string name="cd_next_step">الخطوة التالية</string>
+    <string name="cd_back">رجوع</string>
 </resources>

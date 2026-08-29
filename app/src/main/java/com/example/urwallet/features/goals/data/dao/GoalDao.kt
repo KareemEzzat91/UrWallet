@@ -20,10 +20,10 @@ interface GoalDao {
     @Query("SELECT * FROM goals WHERE isDeleted = 0 ORDER BY deadline ASC")
     fun getAllGoals(): Flow<List<GoalEntity>>
 
-    @Query("SELECT * FROM goals WHERE isDeleted = 0 AND isCompleted = 0 ORDER BY deadline ASC")
+    @Query("SELECT g.* FROM goals g WHERE g.isDeleted = 0 AND (SELECT COALESCE(SUM(c.amount), 0.0) FROM goal_contributions c WHERE c.goalId = g.id) < g.targetAmount ORDER BY g.deadline ASC")
     fun getActiveGoals(): Flow<List<GoalEntity>>
 
-    @Query("SELECT * FROM goals WHERE isDeleted = 0 AND isCompleted = 0 ORDER BY deadline ASC LIMIT 1")
+    @Query("SELECT g.* FROM goals g WHERE g.isDeleted = 0 AND (SELECT COALESCE(SUM(c.amount), 0.0) FROM goal_contributions c WHERE c.goalId = g.id) < g.targetAmount ORDER BY g.deadline ASC LIMIT 1")
     fun getNearestActiveGoal(): Flow<GoalEntity?>
 
     @Query("SELECT * FROM goals WHERE id = :id AND isDeleted = 0 LIMIT 1")
@@ -31,9 +31,6 @@ interface GoalDao {
 
     @Query("SELECT * FROM goals WHERE id = :id AND isDeleted = 0 LIMIT 1")
     suspend fun getGoalByIdSync(id: Long): GoalEntity?
-
-    @Query("UPDATE goals SET isCompleted = :isCompleted WHERE id = :id")
-    suspend fun updateGoalCompletion(id: Long, isCompleted: Boolean): Int
 
     @Query("UPDATE goals SET isDeleted = 1 WHERE id = :id")
     suspend fun softDeleteGoal(id: Long): Int

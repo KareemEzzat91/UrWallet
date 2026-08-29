@@ -49,6 +49,9 @@ interface TransactionDao {
     @Query("SELECT COALESCE(SUM(amount), 0.0) FROM transactions WHERE categoryId = :categoryId AND date >= :startDate AND date <= :endDate")
     fun getSumByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): Flow<Double>
 
+    @Query("SELECT COALESCE(SUM(amount), 0.0) FROM transactions WHERE type = :type")
+    fun getTotalSumByType(type: TransactionType): Flow<Double>
+
     @Query("SELECT COUNT(*) FROM transactions WHERE date >= :startOfDay AND date <= :endOfDay")
     fun getTodayTransactionCount(startOfDay: Long, endOfDay: Long): Flow<Int>
 

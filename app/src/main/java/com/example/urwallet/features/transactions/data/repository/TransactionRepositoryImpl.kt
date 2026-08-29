@@ -11,8 +11,9 @@ import com.example.urwallet.features.transactions.domain.model.Transaction
 import com.example.urwallet.features.transactions.domain.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class TransactionRepositoryImpl(
+class TransactionRepositoryImpl @Inject constructor(
     private val transactionDao: TransactionDao,
     private val categoryDao: CategoryDao
 ) : TransactionRepository {
@@ -48,6 +49,10 @@ class TransactionRepositoryImpl(
         endDate: Long
     ): Flow<Double> {
         return transactionDao.getSumByTypeAndPeriod(type, startDate, endDate)
+    }
+
+    override fun getTotalSumByType(type: TransactionType): Flow<Double> {
+        return transactionDao.getTotalSumByType(type)
     }
 
     override fun getSumByCategoryAndPeriod(

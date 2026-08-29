@@ -6,8 +6,9 @@ import com.example.urwallet.features.more.domain.model.RecurringTransaction
 import com.example.urwallet.features.more.domain.repository.RecurringRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class RecurringRepositoryImpl(
+class RecurringRepositoryImpl @Inject constructor(
     private val recurringDao: RecurringTransactionDao
 ) : RecurringRepository {
 

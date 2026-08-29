@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <!-- Illustration area -->
+    <FrameLayout
+        android:layout_width="240dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="40dp">
+
+        <!-- Soft glow circle behind illustration -->
+        <View
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_onboarding_slide" />
+
+        <ImageView
+            android:id="@+id/iv_illustration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:contentDescription="@string/cd_onboarding_illustration"
+            tools:src="@drawable/ic_onboarding_tracking" />
+    </FrameLayout>
+
+    <!-- Slide title -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:layout_marginBottom="16dp"
+        tools:text="اعرف فلوسك رايحة فين" />
+
+    <!-- Slide subtitle -->
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#CCE8EAF6"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.5"
+        tools:text="سجل مصاريفك بسهولة" />
+
+</LinearLayout>

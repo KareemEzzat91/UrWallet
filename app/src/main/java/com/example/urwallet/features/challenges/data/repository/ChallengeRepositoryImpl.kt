@@ -6,8 +6,9 @@ import com.example.urwallet.features.challenges.domain.model.Challenge
 import com.example.urwallet.features.challenges.domain.repository.ChallengeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class ChallengeRepositoryImpl(
+class ChallengeRepositoryImpl @Inject constructor(
     private val challengeDao: ChallengeDao
 ) : ChallengeRepository {
 
