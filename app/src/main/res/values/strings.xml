@@ -127,7 +127,26 @@
     <string name="wizard_habit4_title">اهداف SMART</string>
     <string name="wizard_habit4_desc">هدف محدد وقابل للقياس وواقعي ومحدد بوقت هو اللي بيتحقق فعلا.</string>
 
-    <!-- Content Descriptions (Accessibility) -->
+    <!-- Phase 3 Navigation & Placeholders -->
+    <string name="greeting_placeholder">مرحباً 👋</string>
+    <string name="dashboard_subtitle_placeholder">محفظتك جاهزة لتنظيم وتتبع أموالك</string>
+    <string name="fab_add_transaction">إضافة معاملة</string>
+    <string name="title_add_transaction">إضافة معاملة جديدة</string>
+    <string name="label_income">دخل (+)</string>
+    <string name="label_expense">مصروف (-)</string>
+    <string name="hint_amount">0.00</string>
+    <string name="hint_note">ملاحظات (اختياري)...</string>
+    <string name="feature_coming_soon_toast">سيتم تفعيل الإضافة وحفظ البيانات في المرحلة القادمة (المرحلة 4)</string>
+    <string name="dashboard_placeholder_card_title">لوحة التحكم الذكية</string>
+    <string name="dashboard_placeholder_card_desc">سيتم عرض الرصيد الإجمالي، الميزانيات، وتتبع الأهداف الحية هنا في مرحلة لوحة التحكم.</string>
+    <string name="transactions_placeholder_card_title">سجل المعاملات</string>
+    <string name="transactions_placeholder_card_desc">سيتم عرض وتصفية كافة المعاملات والمصاريف مع تصنيفاتها هنا في المرحلة القادمة.</string>
+    <string name="goals_placeholder_card_title">أهدافي المالية</string>
+    <string name="goals_placeholder_card_desc">سيتم متابعة أهداف الادخار وحلقات التقدم والمساهمات هنا.</string>
+    <string name="more_placeholder_card_title">المزيد والإعدادات</string>
+    <string name="more_placeholder_card_desc">المعاملات المتكررة، قفل التطبيق بالأمان (PIN/Biometric)، وإدارة النسخ الاحتياطي واستيراد البيانات.</string>
+    <string name="cd_notifications">الإشعارات</string>
+    <string name="cd_avatar">الملف الشخصي</string>
     <string name="cd_app_logo">شعار محفظتك</string>
     <string name="cd_onboarding_illustration">توضيح المزية</string>
     <string name="cd_goal_type_card">بطاقة نوع الهدف</string>

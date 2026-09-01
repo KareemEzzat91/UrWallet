@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.urwallet.features.dashboard.presentation.DashboardFragment"
+        android:label="@string/nav_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.example.urwallet.features.transactions.presentation.TransactionsFragment"
+        android:label="@string/nav_transactions"
+        tools:layout="@layout/fragment_transactions" />
+
+    <fragment
+        android:id="@+id/goalsFragment"
+        android:name="com.example.urwallet.features.goals.presentation.GoalsFragment"
+        android:label="@string/nav_goals"
+        tools:layout="@layout/fragment_goals" />
+
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.example.urwallet.features.more.presentation.MoreFragment"
+        android:label="@string/nav_more"
+        tools:layout="@layout/fragment_more" />
+
+</navigation>
