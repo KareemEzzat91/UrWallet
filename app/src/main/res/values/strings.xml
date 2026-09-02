@@ -152,4 +152,18 @@
     <string name="cd_goal_type_card">بطاقة نوع الهدف</string>
     <string name="cd_next_step">الخطوة التالية</string>
     <string name="cd_back">رجوع</string>
+
+    <!-- Phase 4 Transactions Strings -->
+    <string name="hint_transaction_title">اسم المعاملة (مثل: غداء، مشتريات...)</string>
+    <string name="label_category">التصنيف</string>
+    <string name="label_choose_category">اختر التصنيف</string>
+    <string name="error_invalid_amount">يرجى إدخال مبلغ صحيح أكبر من صفر</string>
+    <string name="error_empty_title">يرجى إدخال اسم المعاملة</string>
+    <string name="error_empty_category">يرجى اختيار تصنيف للمعاملة</string>
+    <string name="transaction_saved_success">تم حفظ المعاملة بنجاح</string>
+    <string name="transaction_deleted_success">تم حذف المعاملة</string>
+    <string name="empty_transactions_title">لا توجد معاملات مسجلة</string>
+    <string name="empty_transactions_desc">ابدأ بتسجيل أول معاملة عبر زر (+) بالأسفل لتتبع مصاريفك ودخلك بدقة.</string>
+    <string name="dialog_delete_transaction_title">حذف المعاملة</string>
+    <string name="dialog_delete_transaction_message">هل أنت متأكد من حذف هذه المعاملة؟ لا يمكن التراجع عن هذا الإجراء.</string>
 </resources>
