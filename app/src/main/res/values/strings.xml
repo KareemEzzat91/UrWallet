@@ -166,4 +166,18 @@
     <string name="empty_transactions_desc">ابدأ بتسجيل أول معاملة عبر زر (+) بالأسفل لتتبع مصاريفك ودخلك بدقة.</string>
     <string name="dialog_delete_transaction_title">حذف المعاملة</string>
     <string name="dialog_delete_transaction_message">هل أنت متأكد من حذف هذه المعاملة؟ لا يمكن التراجع عن هذا الإجراء.</string>
+
+    <!-- Phase 5 Dashboard Strings -->
+    <string name="dashboard_net_balance_label">الرصيد الإجمالي</string>
+    <string name="dashboard_monthly_income">دخل الشهر</string>
+    <string name="dashboard_monthly_expense">مصروف الشهر</string>
+    <string name="dashboard_recent_transactions">آخر المعاملات</string>
+    <string name="dashboard_nearest_goal">الهدف الأقرب</string>
+    <string name="dashboard_no_recent_transactions">لا توجد معاملات مسجلة بعد</string>
+    <string name="dashboard_goal_saved_format">تم توفير: %1$s</string>
+    <string name="dashboard_goal_target_format">من: %1$s</string>
+    <string name="greeting_morning">صباح الخير 👋</string>
+    <string name="greeting_afternoon">مساء الخير 👋</string>
+    <string name="greeting_evening">مساء النور 👋</string>
+    <string name="cd_nearest_goal_icon">أيقونة الهدف الأقرب</string>
 </resources>

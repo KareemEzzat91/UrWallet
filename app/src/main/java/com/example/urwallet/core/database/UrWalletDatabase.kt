@@ -31,7 +31,7 @@ import com.example.urwallet.features.transactions.data.entity.TransactionEntity
         RecurringTransactionEntity::class,
         ChallengeEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
