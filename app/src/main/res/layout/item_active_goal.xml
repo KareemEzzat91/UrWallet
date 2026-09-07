@@ -81,7 +81,7 @@
                 android:background="@drawable/bg_pill_primary"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="4dp"
-                android:textColor="@color/urwallet_primary"
+                android:textColor="@color/white"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 tools:text="متبقي 45 يوم" />

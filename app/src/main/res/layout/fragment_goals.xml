@@ -204,7 +204,7 @@
                         android:background="@drawable/bg_pill_primary"
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="2dp"
-                        android:textColor="@color/urwallet_primary"
+                        android:textColor="@color/white"
                         android:textSize="11sp"
                         android:textStyle="bold"
                         tools:text="2" />
