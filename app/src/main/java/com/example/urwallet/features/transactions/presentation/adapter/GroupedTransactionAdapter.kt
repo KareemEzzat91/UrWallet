@@ -14,7 +14,7 @@ import com.example.urwallet.core.common.TransactionType
 import com.example.urwallet.databinding.ItemTransactionBinding
 import com.example.urwallet.databinding.ItemTransactionHeaderBinding
 import com.example.urwallet.features.transactions.domain.model.Transaction
-import com.example.urwallet.features.transactions.presentation.CategoryResourceHelper
+import com.example.urwallet.core.designsystem.CategoryIconMapper
 import com.example.urwallet.features.transactions.presentation.TransactionListItem
 
 class GroupedTransactionAdapter(
@@ -79,10 +79,10 @@ class GroupedTransactionAdapter(
             val timeFormatted = DateUtils.formatTimeArabic(transaction.date)
             binding.tvTransactionSubtitle.text = "$categoryName • $timeFormatted"
 
-            val iconRes = CategoryResourceHelper.getIconDrawableRes(category?.icon ?: "ic_other")
+            val iconRes = CategoryIconMapper.getIconDrawableRes(category?.icon ?: "ic_other")
             binding.ivCategoryIcon.setImageResource(iconRes)
 
-            val categoryColor = CategoryResourceHelper.parseColorSafely(
+            val categoryColor = CategoryIconMapper.parseColorSafely(
                 category?.color ?: "#78909C"
             )
             binding.flIconContainer.backgroundTintList = ColorStateList.valueOf(categoryColor)

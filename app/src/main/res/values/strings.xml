@@ -182,4 +182,53 @@
     <string name="cd_nearest_goal_icon">أيقونة الهدف الأقرب</string>
     <!-- Empty-category state in Add Transaction BottomSheet -->
     <string name="msg_no_categories_for_type">لا توجد تصنيفات لهذا النوع. يمكنك إضافة تصنيفات من إعدادات التصنيفات.</string>
+
+    <!-- Phase 6 Search, Filters, Details & Category Analytics -->
+    <string name="hint_search_transactions">ابحث بالاسم، الملاحظة، أو التصنيف...</string>
+    <string name="search_results_count">%1$d معاملة</string>
+    <string name="search_no_results_title">لا توجد نتائج مطابقة</string>
+    <string name="search_no_results_desc">لم نجد أي معاملات تطابق كلمات البحث أو الفلاتر المحددة.</string>
+    <string name="action_reset_filters">إعادة ضبط الفلاتر</string>
+    <string name="filter_all">الكل</string>
+    <string name="filter_expenses">مصروفات</string>
+    <string name="filter_income">دخل</string>
+    <string name="action_filter">تصفية</string>
+    <string name="reports_banner_title">تحكم في مصاريفك بذكاء</string>
+    <string name="reports_banner_desc">شاهد تقاريرك التفصيلية وحلل نفقاتك حسب التصنيف</string>
+    <string name="action_view_reports">عرض التقارير</string>
+    <string name="title_filter_bottom_sheet">فلترة المعاملات</string>
+    <string name="label_filter_type">نوع المعاملة</string>
+    <string name="label_filter_category">الفئة</string>
+    <string name="label_filter_period">الفترة</string>
+    <string name="label_filter_amount">المبلغ (ج.م)</string>
+    <string name="period_all">الكل</string>
+    <string name="period_today">اليوم</string>
+    <string name="period_this_week">هذا الأسبوع</string>
+    <string name="period_this_month">هذا الشهر</string>
+    <string name="period_custom">مخصص</string>
+    <string name="label_from">من</string>
+    <string name="label_to">إلى</string>
+    <string name="hint_min_amount">0</string>
+    <string name="hint_max_amount">5,000+</string>
+    <string name="action_reset">إعادة ضبط</string>
+    <string name="action_apply_filters">تطبيق الفلاتر</string>
+    <string name="error_invalid_amount_range">الحد الأدنى لا يمكن أن يكون أكبر من الحد الأقصى</string>
+    <string name="title_category_analytics">تحليل الفئة</string>
+    <string name="analytics_total_spent">إجمالي الصرف</string>
+    <string name="analytics_average_transaction">المتوسط</string>
+    <string name="analytics_transaction_count">عدد المعاملات</string>
+    <string name="analytics_top_transactions">أعلى المعاملات</string>
+    <string name="analytics_no_transactions">لا توجد معاملات مسجلة في هذا التصنيف</string>
+    <string name="analytics_budget_alert_title">تنبيه الميزانية</string>
+    <string name="analytics_compared_to_last_month">مقارنة بالشهر الماضي</string>
+    <string name="title_transaction_detail">تفاصيل المعاملة</string>
+    <string name="detail_category_label">التصنيف</string>
+    <string name="detail_date_label">التاريخ والوقت</string>
+    <string name="detail_type_label">نوع المعاملة</string>
+    <string name="detail_note_label">الملاحظات</string>
+    <string name="detail_no_note">لا توجد ملاحظات</string>
+    <string name="share_transaction_format">معاملة في محفظتك (UrWallet):\n%1$s\nالمبلغ: %2$s\nالتصنيف: %3$s\nالتاريخ: %4$s</string>
+    <string name="cd_clear_search">مسح البحث</string>
+    <string name="cd_filter_icon">أيقونة الفلترة</string>
+    <string name="cd_search_icon">أيقونة البحث</string>
 </resources>

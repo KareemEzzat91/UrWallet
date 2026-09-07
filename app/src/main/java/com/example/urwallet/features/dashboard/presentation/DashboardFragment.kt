@@ -19,7 +19,7 @@ import com.example.urwallet.databinding.FragmentDashboardBinding
 import com.example.urwallet.features.dashboard.domain.model.DashboardSummary
 import com.example.urwallet.features.dashboard.presentation.adapter.RecentTransactionsAdapter
 import com.example.urwallet.features.goals.domain.model.Goal
-import com.example.urwallet.features.transactions.presentation.CategoryResourceHelper
+import com.example.urwallet.core.designsystem.CategoryIconMapper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -167,7 +167,7 @@ class DashboardFragment : Fragment() {
         if (goal.icon.startsWith("ic_")) {
             binding.ivGoalIcon.isVisible = true
             binding.tvGoalEmoji.isVisible = false
-            val iconRes = CategoryResourceHelper.getIconDrawableRes(goal.icon)
+            val iconRes = CategoryIconMapper.getIconDrawableRes(goal.icon)
             binding.ivGoalIcon.setImageResource(iconRes)
         } else {
             binding.ivGoalIcon.isVisible = false

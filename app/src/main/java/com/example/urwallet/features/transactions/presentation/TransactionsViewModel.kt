@@ -7,41 +7,95 @@ import com.example.urwallet.core.common.DateUtils
 import com.example.urwallet.core.common.TransactionType
 import com.example.urwallet.features.transactions.domain.model.Category
 import com.example.urwallet.features.transactions.domain.model.Transaction
+import com.example.urwallet.features.transactions.domain.model.TransactionFilterCriteria
 import com.example.urwallet.features.transactions.domain.usecase.AddTransactionUseCase
 import com.example.urwallet.features.transactions.domain.usecase.DeleteTransactionUseCase
 import com.example.urwallet.features.transactions.domain.usecase.GetCategoriesUseCase
+import com.example.urwallet.features.transactions.domain.usecase.GetFilteredTransactionsUseCase
 import com.example.urwallet.features.transactions.domain.usecase.GetTransactionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class TransactionsViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
+    private val getFilteredTransactionsUseCase: GetFilteredTransactionsUseCase,
     private val addTransactionUseCase: AddTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {
 
+    // --- Search & Filter State ---
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private val _filterCriteria = MutableStateFlow(TransactionFilterCriteria())
+    val filterCriteria: StateFlow<TransactionFilterCriteria> = _filterCriteria.asStateFlow()
+
+    val allCategories: StateFlow<List<Category>> = getCategoriesUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    private val debouncedSearchQuery = _searchQuery
+        .debounce(300L)
+        .distinctUntilChanged()
+
     // --- Transactions List State ---
     val transactionsUiState: StateFlow<TransactionsUiState> = combine(
         getTransactionsUseCase(),
-        getCategoriesUseCase()
-    ) { transactions, categories ->
-        if (transactions.isEmpty()) {
+        getCategoriesUseCase(),
+        debouncedSearchQuery,
+        _filterCriteria
+    ) { allTransactions, categories, query, criteria ->
+        if (allTransactions.isEmpty()) {
             TransactionsUiState.Empty
         } else {
             val categoryMap = categories.associateBy { it.id }
-            val groupedItems = buildGroupedList(transactions, categoryMap)
-            TransactionsUiState.Success(groupedItems)
+            val effectiveCriteria = criteria.copy(query = query)
+            val filteredTransactions = getFilteredTransactionsUseCase(
+                transactions = allTransactions,
+                categoryMap = categoryMap,
+                criteria = effectiveCriteria
+            )
+
+            if (filteredTransactions.isEmpty()) {
+                TransactionsUiState.NoSearchResults(
+                    query = query,
+                    hasActiveFilters = effectiveCriteria.hasActiveFilters()
+                )
+            } else {
+                val income = filteredTransactions
+                    .filter { it.type == TransactionType.INCOME }
+                    .sumOf { it.amount }
+                val expense = filteredTransactions
+                    .filter { it.type == TransactionType.EXPENSE }
+                    .sumOf { it.amount }
+
+                val groupedItems = buildGroupedList(filteredTransactions, categoryMap)
+                TransactionsUiState.Success(
+                    items = groupedItems,
+                    totalIncome = income,
+                    totalExpense = expense,
+                    hasActiveFilters = effectiveCriteria.hasActiveFilters(),
+                    activeFilterCount = effectiveCriteria.activeFilterCount()
+                )
+            }
         }
     }.catch { error ->
         emit(TransactionsUiState.Error(error.message ?: "حدث خطأ أثناء تحميل المعاملات"))
@@ -51,6 +105,27 @@ class TransactionsViewModel @Inject constructor(
         initialValue = TransactionsUiState.Loading
     )
 
+    // --- Search & Filter Functions ---
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
+    fun setQuickTypeFilter(type: TransactionType?) {
+        _filterCriteria.update { current ->
+            val newType = if (current.type == type) null else type
+            current.copy(type = newType)
+        }
+    }
+
+    fun applyFilterCriteria(criteria: TransactionFilterCriteria) {
+        _filterCriteria.value = criteria.copy(query = _searchQuery.value)
+    }
+
+    fun clearAllFilters() {
+        _searchQuery.value = ""
+        _filterCriteria.value = TransactionFilterCriteria()
+    }
+
     // --- Add Transaction Form State ---
     // TODO(architecture): isSaved is a boolean state field, not a true one-time event.
     //   This works correctly in practice because resetAddTransactionState() is called
@@ -59,7 +134,6 @@ class TransactionsViewModel @Inject constructor(
     private val _addTransactionUiState = MutableStateFlow(AddTransactionUiState())
     val addTransactionUiState: StateFlow<AddTransactionUiState> = _addTransactionUiState.asStateFlow()
 
-    // Track the active categories collection to cancel before starting a new one
     private var categoriesJob: kotlinx.coroutines.Job? = null
 
     init {
@@ -83,15 +157,15 @@ class TransactionsViewModel @Inject constructor(
             TransactionType.EXPENSE -> CategoryType.EXPENSE
             TransactionType.INCOME -> CategoryType.INCOME
         }
-        // Cancel any previous active collection before starting a new one
         categoriesJob?.cancel()
         categoriesJob = viewModelScope.launch {
             getCategoriesUseCase(categoryType).collect { categories ->
                 _addTransactionUiState.update { currentState ->
+                    val currentIdValid = categories.any { it.id == currentState.selectedCategoryId }
+                    val validSelectedId = if (currentIdValid) currentState.selectedCategoryId else categories.firstOrNull()?.id
                     currentState.copy(
                         categories = categories,
-                        // Auto-select first category if none selected
-                        selectedCategoryId = currentState.selectedCategoryId ?: categories.firstOrNull()?.id
+                        selectedCategoryId = validSelectedId
                     )
                 }
             }

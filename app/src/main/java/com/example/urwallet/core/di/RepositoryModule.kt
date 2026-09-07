@@ -8,7 +8,9 @@ import com.example.urwallet.features.goals.data.repository.GoalRepositoryImpl
 import com.example.urwallet.features.goals.domain.repository.GoalRepository
 import com.example.urwallet.features.more.data.repository.RecurringRepositoryImpl
 import com.example.urwallet.features.more.domain.repository.RecurringRepository
+import com.example.urwallet.features.transactions.data.repository.CategoryRepositoryImpl
 import com.example.urwallet.features.transactions.data.repository.TransactionRepositoryImpl
+import com.example.urwallet.features.transactions.domain.repository.CategoryRepository
 import com.example.urwallet.features.transactions.domain.repository.TransactionRepository
 import dagger.Binds
 import dagger.Module
@@ -31,6 +33,12 @@ abstract class RepositoryModule {
     abstract fun bindTransactionRepository(
         impl: TransactionRepositoryImpl
     ): TransactionRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCategoryRepository(
+        impl: CategoryRepositoryImpl
+    ): CategoryRepository
 
     @Binds
     @Singleton

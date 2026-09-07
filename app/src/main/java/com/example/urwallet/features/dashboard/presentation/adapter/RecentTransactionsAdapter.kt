@@ -13,7 +13,7 @@ import com.example.urwallet.core.common.Formatters
 import com.example.urwallet.core.common.TransactionType
 import com.example.urwallet.databinding.ItemRecentTransactionBinding
 import com.example.urwallet.features.dashboard.domain.model.DashboardTransactionItem
-import com.example.urwallet.features.transactions.presentation.CategoryResourceHelper
+import com.example.urwallet.core.designsystem.CategoryIconMapper
 
 class RecentTransactionsAdapter(
     private val onTransactionClick: ((DashboardTransactionItem) -> Unit)? = null
@@ -47,10 +47,10 @@ class RecentTransactionsAdapter(
             val dateStr = DateUtils.formatDateArabic(transaction.date)
             binding.tvSubtitle.text = "$categoryName • $dateStr"
 
-            val iconRes = CategoryResourceHelper.getIconDrawableRes(category?.icon ?: "ic_other")
+            val iconRes = CategoryIconMapper.getIconDrawableRes(category?.icon ?: "ic_other")
             binding.ivIcon.setImageResource(iconRes)
 
-            val color = CategoryResourceHelper.parseColorSafely(category?.color ?: "#78909C")
+            val color = CategoryIconMapper.parseColorSafely(category?.color ?: "#78909C")
             binding.flIconContainer.backgroundTintList = ColorStateList.valueOf(color)
 
             binding.tvAmount.text = Formatters.formatSignedAmount(

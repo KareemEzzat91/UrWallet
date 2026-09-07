@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.urwallet.R
 import com.example.urwallet.databinding.ItemCategoryChipBinding
 import com.example.urwallet.features.transactions.domain.model.Category
-import com.example.urwallet.features.transactions.presentation.CategoryResourceHelper
+import com.example.urwallet.core.designsystem.CategoryIconMapper
 
 class CategoryChipAdapter(
     private val onCategoryClick: (Category) -> Unit
@@ -44,10 +44,10 @@ class CategoryChipAdapter(
             val context = binding.root.context
             binding.tvCategoryName.text = category.name
 
-            val iconRes = CategoryResourceHelper.getIconDrawableRes(category.icon)
+            val iconRes = CategoryIconMapper.getIconDrawableRes(category.icon)
             binding.ivCategoryIcon.setImageResource(iconRes)
 
-            val categoryColor = CategoryResourceHelper.parseColorSafely(category.color)
+            val categoryColor = CategoryIconMapper.parseColorSafely(category.color)
             binding.ivCategoryIcon.backgroundTintList = ColorStateList.valueOf(categoryColor)
 
             val isSelected = category.id == selectedCategoryId

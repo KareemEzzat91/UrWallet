@@ -19,11 +19,208 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+    <!-- Search Bar -->
+    <LinearLayout
+        android:id="@+id/layoutSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_search_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/cd_search_icon"
+            android:src="@drawable/ic_search"
+            app:tint="@color/urwallet_text_secondary" />
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/hint_search_transactions"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/urwallet_text_primary"
+            android:textColorHint="@color/urwallet_text_secondary"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/ivClearSearch"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_clear_search"
+            android:padding="4dp"
+            android:src="@drawable/ic_close"
+            android:visibility="gone"
+            app:tint="@color/urwallet_text_secondary"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <!-- Quick Filters & Advanced Filter Button -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Advanced Filter Button with Badge -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAdvancedFilter"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingHorizontal="14dp"
+                    android:text="@string/action_filter"
+                    android:textColor="@color/urwallet_primary"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:icon="@drawable/ic_filter"
+                    app:iconGravity="textStart"
+                    app:iconSize="16dp"
+                    app:iconTint="@color/urwallet_primary"
+                    app:strokeColor="@color/urwallet_primary"
+                    app:strokeWidth="1dp" />
+
+                <!-- Active Filter Indicator Badge -->
+                <View
+                    android:id="@+id/viewFilterBadge"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/bg_filter_badge"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+            </FrameLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupQuickType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAll"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:checked="true"
+                    android:text="@string/filter_all"
+                    android:textSize="13sp"
+                    app:chipCornerRadius="20dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipExpenses"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="@string/filter_expenses"
+                    android:textSize="13sp"
+                    app:chipCornerRadius="20dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipIncome"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="@string/filter_income"
+                    android:textSize="13sp"
+                    app:chipCornerRadius="20dp" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Reports Promo Banner (Figma Node 2021:417) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardReportsBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="#EEF2FF"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#C7D2FE"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reports_banner_title"
+                    android:textColor="@color/urwallet_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/reports_banner_desc"
+                    android:textColor="@color/urwallet_text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewReports"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/urwallet_primary"
+                android:paddingHorizontal="12dp"
+                android:text="@string/action_view_reports"
+                android:textColor="@color/urwallet_surface"
+                android:textSize="12sp"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_reports"
+                app:iconGravity="textStart"
+                app:iconSize="14dp"
+                app:iconTint="@color/urwallet_surface" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <!-- FrameLayout for states -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1">
 
         <!-- Loading Indicator -->
@@ -44,7 +241,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_transaction" />
 
-        <!-- Empty State -->
+        <!-- Empty State 1: No Transactions in DB -->
         <LinearLayout
             android:id="@+id/layoutEmptyState"
             android:layout_width="match_parent"
@@ -79,6 +276,54 @@
                 android:text="@string/empty_transactions_desc"
                 android:textColor="@color/urwallet_text_secondary"
                 android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Empty State 2: No Search/Filter Results -->
+        <LinearLayout
+            android:id="@+id/layoutNoSearchResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_search"
+                app:tint="@color/urwallet_text_secondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/search_no_results_title"
+                android:textColor="@color/urwallet_text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/search_no_results_desc"
+                android:textColor="@color/urwallet_text_secondary"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnResetFilters"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_reset_filters"
+                android:textColor="@color/urwallet_primary"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/urwallet_primary" />
         </LinearLayout>
 
         <!-- Error State -->
