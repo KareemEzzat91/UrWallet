@@ -20,6 +20,7 @@ import com.example.urwallet.features.dashboard.domain.model.DashboardSummary
 import com.example.urwallet.features.dashboard.presentation.adapter.RecentTransactionsAdapter
 import com.example.urwallet.features.goals.domain.model.Goal
 import com.example.urwallet.core.designsystem.CategoryIconMapper
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -63,20 +64,24 @@ class DashboardFragment : Fragment() {
 
     private fun setupRecentTransactionsList() {
         recentTransactionsAdapter = RecentTransactionsAdapter {
-            // Tapping a recent transaction navigates to Transactions tab
-            findNavController().navigate(R.id.transactionsFragment)
+            // Tapping a recent transaction switches to Transactions tab
+            navigateToTab(R.id.transactionsFragment)
         }
         binding.rvRecentTransactions.adapter = recentTransactionsAdapter
     }
 
     private fun setupNavigationLinks() {
         binding.btnViewAllTransactions.setOnClickListener {
-            findNavController().navigate(R.id.transactionsFragment)
+            navigateToTab(R.id.transactionsFragment)
         }
 
         binding.cardNearestGoal.setOnClickListener {
-            findNavController().navigate(R.id.goalsFragment)
+            navigateToTab(R.id.goalsFragment)
         }
+    }
+
+    private fun navigateToTab(tabMenuId: Int) {
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNav)?.selectedItemId = tabMenuId
     }
 
     private fun observeDashboardState() {
