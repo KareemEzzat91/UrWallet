@@ -10,4 +10,7 @@ data class AddTransactionUiState(
     val isLoading: Boolean = false,
     val isSaved: Boolean = false,
     val errorMessage: String? = null
-)
+) {
+    /** True when no categories exist for the currently selected transaction type. */
+    val noCategoriesAvailable: Boolean get() = categories.isEmpty()
+}

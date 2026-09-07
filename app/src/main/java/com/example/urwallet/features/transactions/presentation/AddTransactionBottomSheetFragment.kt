@@ -115,8 +115,13 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         // 2. Categories
-        categoryAdapter.submitList(state.categories)
-        categoryAdapter.selectedCategoryId = state.selectedCategoryId
+        val hasCats = !state.noCategoriesAvailable
+        binding.rvCategories.isVisible = hasCats
+        binding.tvNoCategoriesMessage.isVisible = !hasCats
+        if (hasCats) {
+            categoryAdapter.submitList(state.categories)
+            categoryAdapter.selectedCategoryId = state.selectedCategoryId
+        }
 
         // 3. Error Feedback
         if (state.errorMessage != null) {
@@ -128,7 +133,8 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
 
         // 4. Loading indicator
         binding.progressSaving.isVisible = state.isLoading
-        binding.btnSaveTransaction.isEnabled = !state.isLoading
+        // Disable Save when: loading OR no categories available
+        binding.btnSaveTransaction.isEnabled = !state.isLoading && hasCats
         binding.btnSaveTransaction.text = if (state.isLoading) "" else getString(R.string.action_save)
 
         // 5. Success Handling
@@ -141,6 +147,7 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
             viewModel.resetAddTransactionState()
             dismiss()
         }
+
     }
 
     override fun onDestroyView() {

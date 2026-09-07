@@ -52,6 +52,10 @@ class TransactionsViewModel @Inject constructor(
     )
 
     // --- Add Transaction Form State ---
+    // TODO(architecture): isSaved is a boolean state field, not a true one-time event.
+    //   This works correctly in practice because resetAddTransactionState() is called
+    //   immediately in the Fragment after dismiss(). For future cleanup, replace with
+    //   a Channel<UiEffect> pattern (e.g. SharedFlow) to guarantee exactly-once delivery.
     private val _addTransactionUiState = MutableStateFlow(AddTransactionUiState())
     val addTransactionUiState: StateFlow<AddTransactionUiState> = _addTransactionUiState.asStateFlow()
 

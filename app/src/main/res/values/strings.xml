@@ -180,4 +180,6 @@
     <string name="greeting_afternoon">مساء الخير 👋</string>
     <string name="greeting_evening">مساء النور 👋</string>
     <string name="cd_nearest_goal_icon">أيقونة الهدف الأقرب</string>
+    <!-- Empty-category state in Add Transaction BottomSheet -->
+    <string name="msg_no_categories_for_type">لا توجد تصنيفات لهذا النوع. يمكنك إضافة تصنيفات من إعدادات التصنيفات.</string>
 </resources>
