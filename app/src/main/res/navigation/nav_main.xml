@@ -52,7 +52,21 @@
         android:id="@+id/goalsFragment"
         android:name="com.example.urwallet.features.goals.presentation.GoalsFragment"
         android:label="@string/nav_goals"
-        tools:layout="@layout/fragment_goals" />
+        tools:layout="@layout/fragment_goals">
+        <action
+            android:id="@+id/action_goalsFragment_to_goalDetailFragment"
+            app:destination="@id/goalDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/goalDetailFragment"
+        android:name="com.example.urwallet.features.goals.presentation.detail.GoalDetailFragment"
+        android:label="@string/title_goal_detail"
+        tools:layout="@layout/fragment_goal_detail">
+        <argument
+            android:name="goalId"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/moreFragment"

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_surface_rounded"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Drag Handle -->
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_drag_handle" />
+
+    <!-- Title & Goal Subtitle -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_contribute_goal"
+        android:textColor="@color/urwallet_text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvTargetGoalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_pill_primary"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        android:textColor="@color/urwallet_primary"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        tools:text="الهدف: صندوق الطوارئ" />
+
+    <!-- Amount Input -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/label_contribute_amount"
+        android:textColor="@color/urwallet_text_secondary"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        app:boxCornerRadiusBottomEnd="@dimen/input_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/input_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/input_corner_radius"
+        app:boxCornerRadiusTopStart="@dimen/input_corner_radius"
+        app:boxStrokeColor="@color/urwallet_primary"
+        app:suffixText="@string/currency_symbol">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etContributeAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0.00"
+            android:inputType="numberDecimal"
+            android:textColor="@color/urwallet_text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Quick Presets -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPreset100"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:text="@string/preset_plus_100"
+            android:textColor="@color/urwallet_primary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/urwallet_primary_light"
+            app:cornerRadius="@dimen/chip_corner_radius" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPreset250"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:text="@string/preset_plus_250"
+            android:textColor="@color/urwallet_primary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/urwallet_primary_light"
+            app:cornerRadius="@dimen/chip_corner_radius" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPreset500"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:text="@string/preset_plus_500"
+            android:textColor="@color/urwallet_primary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/urwallet_primary_light"
+            app:cornerRadius="@dimen/chip_corner_radius" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPreset1000"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:text="@string/preset_plus_1000"
+            android:textColor="@color/urwallet_primary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/urwallet_primary_light"
+            app:cornerRadius="@dimen/chip_corner_radius" />
+    </LinearLayout>
+
+    <!-- Optional Note Input -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/hint_contribute_note"
+        android:textColor="@color/urwallet_text_secondary"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        app:boxCornerRadiusBottomEnd="@dimen/input_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/input_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/input_corner_radius"
+        app:boxCornerRadiusTopStart="@dimen/input_corner_radius"
+        app:boxStrokeColor="@color/urwallet_primary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etContributeNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="مثال: من مكافأة العمل..."
+            android:inputType="textCapSentences"
+            android:textColor="@color/urwallet_text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Submit CTA Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSubmitContribution"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/action_contribute_full"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/urwallet_primary"
+        app:cornerRadius="@dimen/input_corner_radius" />
+
+</LinearLayout>

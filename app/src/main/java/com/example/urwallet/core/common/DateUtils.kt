@@ -81,10 +81,17 @@ object DateUtils {
         }
     }
 
+    fun formatDisplayDate(epochMs: Long): String {
+        val formatter = SimpleDateFormat("dd MMMM yyyy", ARABIC_LOCALE)
+        return formatter.format(Date(epochMs))
+    }
+
     fun formatTimeArabic(epochMs: Long): String {
         val formatter = SimpleDateFormat("hh:mm a", ARABIC_LOCALE)
         return formatter.format(Date(epochMs))
     }
+
+    fun formatTime(epochMs: Long): String = formatTimeArabic(epochMs)
 
     fun formatMonthYearArabic(month: Int, year: Int): String {
         val calendar = Calendar.getInstance().apply {

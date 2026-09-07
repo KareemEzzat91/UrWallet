@@ -82,4 +82,53 @@ class GoalCalculatorTest {
         assertEquals(100.0, fundedGoal.progressPercentage, 0.001)
         assertTrue(fundedGoal.isCompleted)
     }
+
+    @Test
+    fun `calculateDaysRemaining returns correct remaining days`() {
+        val now = 1000000000000L
+        val oneDayLater = now + (24 * 60 * 60 * 1000L)
+        val tenDaysLater = now + (10 * 24 * 60 * 60 * 1000L)
+
+        assertEquals(1L, GoalCalculator.calculateDaysRemaining(oneDayLater, now))
+        assertEquals(10L, GoalCalculator.calculateDaysRemaining(tenDaysLater, now))
+        assertEquals(0L, GoalCalculator.calculateDaysRemaining(now - 5000L, now))
+    }
+
+    @Test
+    fun `calculateRequiredMonthlySavings returns correct monthly required amount`() {
+        val now = java.util.Calendar.getInstance().apply {
+            set(2026, java.util.Calendar.JANUARY, 1, 0, 0, 0)
+        }.timeInMillis
+
+        val sixMonthsLater = java.util.Calendar.getInstance().apply {
+            set(2026, java.util.Calendar.JULY, 1, 0, 0, 0)
+        }.timeInMillis
+
+        // Target = 6,000, Saved = 0, Months = 6 -> Required = 1,000
+        val required = GoalCalculator.calculateRequiredMonthlySavings(
+            targetAmount = 6000.0,
+            savedAmount = 0.0,
+            deadline = sixMonthsLater,
+            currentTimeMillis = now
+        )
+        assertEquals(1000.0, required, 0.001)
+
+        // Target = 6,000, Saved = 3,000, Months = 6 -> Required = 500
+        val requiredPartial = GoalCalculator.calculateRequiredMonthlySavings(
+            targetAmount = 6000.0,
+            savedAmount = 3000.0,
+            deadline = sixMonthsLater,
+            currentTimeMillis = now
+        )
+        assertEquals(500.0, requiredPartial, 0.001)
+
+        // When saved equals or exceeds target -> Required = 0.0
+        val requiredCompleted = GoalCalculator.calculateRequiredMonthlySavings(
+            targetAmount = 6000.0,
+            savedAmount = 6000.0,
+            deadline = sixMonthsLater,
+            currentTimeMillis = now
+        )
+        assertEquals(0.0, requiredCompleted, 0.001)
+    }
 }

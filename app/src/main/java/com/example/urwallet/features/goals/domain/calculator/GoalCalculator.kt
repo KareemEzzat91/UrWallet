@@ -32,4 +32,31 @@ object GoalCalculator {
     fun isGoalCompleted(targetAmount: Double, savedAmount: Double): Boolean {
         return targetAmount > 0.0 && savedAmount >= targetAmount
     }
+
+    fun calculateDaysRemaining(deadline: Long, currentTimeMillis: Long = System.currentTimeMillis()): Long {
+        val diff = deadline - currentTimeMillis
+        return if (diff <= 0) 0L else diff / (1000L * 60 * 60 * 24)
+    }
+
+    fun calculateMonthsRemaining(deadline: Long, currentTimeMillis: Long = System.currentTimeMillis()): Int {
+        if (deadline <= currentTimeMillis) return 0
+        val startCal = java.util.Calendar.getInstance().apply { timeInMillis = currentTimeMillis }
+        val endCal = java.util.Calendar.getInstance().apply { timeInMillis = deadline }
+        val yearDiff = endCal.get(java.util.Calendar.YEAR) - startCal.get(java.util.Calendar.YEAR)
+        val monthDiff = endCal.get(java.util.Calendar.MONTH) - startCal.get(java.util.Calendar.MONTH)
+        val totalMonths = yearDiff * 12 + monthDiff
+        return if (totalMonths <= 0) 1 else totalMonths
+    }
+
+    fun calculateRequiredMonthlySavings(
+        targetAmount: Double,
+        savedAmount: Double,
+        deadline: Long,
+        currentTimeMillis: Long = System.currentTimeMillis()
+    ): Double {
+        val remaining = calculateRemainingAmount(targetAmount, savedAmount)
+        if (remaining <= 0.0) return 0.0
+        val months = calculateMonthsRemaining(deadline, currentTimeMillis)
+        return if (months > 0) remaining / months else remaining
+    }
 }
