@@ -1,32 +1,31 @@
-# UrWallet | محفظتك 💳
+# UrWallet 💳
 
 <div align="center">
 
-![UrWallet Logo](app/src/main/res/drawable/ic_launcher_foreground.xml)
+### **Your money, smarter.**
 
-### **"محفظتك، بس أذكى"**
-**تطبيق إدارة مالية شخصية ذكي، عربي بالكامل، ويعمل بدون إنترنت بنسبة 100% (Offline-First).**
+A privacy-first personal finance Android app built with **native Kotlin**, **Jetpack Room**, and **Feature-First Clean Architecture**. UrWallet is designed around an **offline-first experience**, keeping financial data on the device while providing practical tools for tracking spending, understanding financial habits, and reaching savings goals.
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.9.24-7F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org)
-[![Android](https://img.shields.io/badge/Platform-Android%20Native-3DDC84.svg?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com)
+[![Android](https://img.shields.io/badge/Platform-Native%20Android-3DDC84.svg?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com)
 [![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2B%20MVVM-000666.svg?style=for-the-badge)](https://developer.android.com/topic/architecture)
-[![Hilt](https://img.shields.io/badge/DI-Hilt%20Dagger-2C5E8A.svg?style=for-the-badge)](https://dagger.dev/hilt/)
-[![Room](https://img.shields.io/badge/Storage-Room%20(Offline--First)-4285F4.svg?style=for-the-badge)](https://developer.android.com/training/data-storage/room)
-[![Tests](https://img.shields.io/badge/Unit%20Tests-62%20Passing-00732C.svg?style=for-the-badge)](https://junit.org)
+[![DI](https://img.shields.io/badge/DI-Hilt-2C5E8A.svg?style=for-the-badge)](https://dagger.dev/hilt/)
+[![Database](https://img.shields.io/badge/Database-Room-4285F4.svg?style=for-the-badge)](https://developer.android.com/training/data-storage/room)
+[![Testing](https://img.shields.io/badge/Unit%20Tests-62%20Passing-00732C.svg?style=for-the-badge)](https://junit.org)
 
 </div>
 
 ---
 
-## 📱 نظرة عامة على الشاشات (App Screens)
+## 📱 App Preview
 
 <div align="center">
 
-| الرئيسية (Dashboard) | المعاملات والبحث (Transactions) |
+| Dashboard | Transactions |
 | :---: | :---: |
 | <img src="docs/screenshots/dashboard.jpg" width="340" alt="Dashboard Screen"/> | <img src="docs/screenshots/transactions.jpg" width="340" alt="Transactions Screen"/> |
 
-| تحليل الفئات (Analytics) | الأهداف المالية (Goals & Savings) |
+| Analytics | Goals & Savings |
 | :---: | :---: |
 | <img src="docs/screenshots/analytics.jpg" width="340" alt="Analytics Screen"/> | <img src="docs/screenshots/goals.jpg" width="340" alt="Goals Screen"/> |
 
@@ -34,136 +33,180 @@
 
 ---
 
-## ✨ المميزات الرئيسية (Core Features)
+## ✨ Features
 
-### 1. 🛡️ خصوصية تامة وبدون إنترنت (100% Offline-First)
-* بياناتك المالية ملكك وحدك ولا تُرفع على أي خوادم سحابية.
-* قاعدة بيانات محلية فائقة السرعة مدعومة بـ **Room Database** و **Coroutines Flow**.
+### 💰 Personal Finance Management
 
-### 2. 📊 لوحة التحكم الذكية (Smart Dashboard)
-* **كارت الرصيد الصافي (Hero Balance Card):** متابعة فورية للرصيد الحالي، إجمالي الدخل الشهري، وإجمالي المصروفات.
-* **مؤشر الصحة المالية (Financial Health Score):** قراءة سريعة لنسبة استهلاك الميزانية الشهرية.
-* **قائمة أحدث المعاملات:** وصول فوري لمعاملاتك الأخيرة مع تصنيفات ملونة.
+- **Dashboard** — Get a quick overview of current balance, monthly income, monthly expenses, recent transactions, and financial health.
+- **Income & Expense Tracking** — Record transactions with categories, notes, dates, and transaction types.
+- **Transaction Search** — Search instantly by transaction name or notes.
+- **Advanced Filtering** — Filter by income/expense type, category, and date range.
+- **Smart Date Grouping** — Automatically organize transactions into Today, Yesterday, and historical dates.
+- **Transaction Details** — View complete transaction information and share transaction details.
 
-### 3. 🔍 البحث المتقدم والفلترة (Search & Filters)
-* بحث حي وفوري بالاسم أو الملاحظات.
-* تصنيف بحسب نوع المعاملة (دخل / مصروف).
-* فلترة حسب الفئة (طعام، تسوق، فواتير، مواصلات، راتب، أعمال حرة...).
-* فلترة زمنية ذكية (اليوم، هذا الأسبوع، هذا الشهر، أو مخصص).
-* تجميع زمني تلقائي للمعاملات (اليوم، أمس، التواريخ السابقة).
+### 📊 Analytics & Financial Insights
 
-### 4. 📈 تحليلات الفئات ومراقبة الميزانية (Category Analytics)
-* تحليل تفصيلي لكل فئة يشمل: إجمالي الإنفاق، عدد المعاملات، متوسط الصرف لكل معاملة، وأعلى معاملة مسجلة.
-* مقارنة الإنفاق بالشهر السابق لمعرفة مدى وفرتك أو تجاوزك.
-* شاشات تفاصيل المعاملة مع إمكانية المشاركة (Share Transaction Details).
+- **Category Analytics** — Analyze spending by category with total spending, transaction count, average transaction value, and highest transaction.
+- **Monthly Comparison** — Compare current spending with the previous month to understand changes in financial behavior.
+- **Financial Health Score** — Get a simple snapshot of monthly spending relative to income and budget.
+- **Visual Insights** — Present financial data through charts and clear visual summaries.
 
-### 5. 🎯 محرك الأهداف المالية والادخار (Goals & Contribution Engine)
-* **كارت الهيرو التجميعي (Overview Banner):** متابعة فورية لإجمالي مدخراتك عبر كافة الأهداف مع شريط تقدم إجمالي.
-* **وتيرة الادخار الذكية (Pace Modes):** حساب الادخار الشهري المطلوب بناءً على الوتيرة (مريح، متوازن، سريع).
-* **تنبيهات المواعيد الحرجة:** بادج تحذيري ديناميكي للأهداف التي اقترب موعد وصولها (15 يوماً أو أقل).
-* **إيداع مباشر ومرن:** دعم الإيداع السريع ومبالغ الـ Presets الجاهزة (+100، +250، +500، +1000 ج.م).
-* **سجل إيداعات تفصيلي:** تتبع تاريخ ووقت وملاحظة كل إيداع.
-* **احتفال باكتمال الأهداف:** كروت إنجاز خاصة عند تحقيق 100% من الهدف.
+### 🎯 Goals & Savings
 
-### 6. 🚀 إعداد ذكي وعادات مالية (Smart Wizard & Onboarding)
-* خطوات تعريفية ترشدك لقواعد الادخار الذهبية مثل قاعدة **50/30/20** وتتبع المصاريف الصغيرة.
+- **Financial Goals** — Create and manage multiple savings goals with target amounts and deadlines.
+- **Goals Overview** — See total savings across all goals and overall progress at a glance.
+- **Goal Detail** — Track individual goal progress and contribution history.
+- **Smart Saving Pace** — Calculate the required monthly contribution based on configurable pace modes such as Relaxed, Balanced, and Fast.
+- **Contribution Presets** — Quickly add commonly used contribution amounts.
+- **Contribution History** — Keep a detailed record of contribution amount, date, time, and notes.
+- **Deadline Awareness** — Highlight goals approaching their target date.
+- **Completion Tracking** — Detect fully funded goals and present them as completed achievements.
+- **Goal Management** — Add, contribute to, view, and delete goals through dedicated workflows.
+
+### 🧭 Onboarding & Financial Habits
+
+- **Guided Onboarding** — Introduce the app and its core financial concepts through a structured wizard.
+- **Financial Education** — Present practical budgeting and saving guidance, including the 50/30/20 rule and awareness of small recurring expenses.
+
+### 🔒 Privacy & Offline-First Design
+
+- **Local-First Data** — Financial data is stored locally on the device rather than relying on a cloud backend.
+- **Room Database** — Persistent structured storage backed by SQLite through Android Jetpack Room.
+- **Reactive Updates** — UI data updates automatically using Kotlin `Flow` and `StateFlow`.
+- **No Network Dependency for Core Finance Data** — Core tracking and goal workflows are designed around local data access.
 
 ---
 
-## 🏗️ المعمارية البرمجية (Architecture & Engineering Standards)
+## 🏗️ Architecture
 
-تم بناء التطبيق باتباع معمارية **Feature-First Clean Architecture** وفقاً لأعلى معايير هندسة البرمجيات:
+UrWallet follows a **Feature-First Clean Architecture** with **MVVM** and a reactive data flow:
 
+```text
+UI / Fragment
+     ↓
+ViewModel
+     ↓
+UseCase
+     ↓
+Repository
+     ↓
+DAO
+     ↓
+Room Database
 ```
-lib/ or app/src/main/java/com/example/urwallet/
+
+Project organization is centered around features rather than technical layers:
+
+```text
+app/src/main/java/com/example/urwallet/
 │
 ├── core/
-│   ├── common/              # DateUtils, Formatters, Enums, State Models
-│   ├── database/            # Room Database, Type Converters, Migrations
-│   └── designsystem/        # CategoryIconMapper, Theme, Colors, Dimens
+│   ├── common/          # Date utilities, formatters, enums, state models
+│   ├── database/        # Room database, converters, migrations
+│   └── designsystem/    # Theme, colors, dimensions, category mappings
 │
 └── features/
-    ├── dashboard/           # Dashboard presentation, views, and viewmodels
-    ├── transactions/        # Transaction entities, DAOs, use cases, filters, UI
-    ├── analytics/           # Category analytics domain models, use cases, UI
-    ├── goals/               # Goals domain models, calculators, use cases, adapters, UI
-    │   ├── data/
-    │   │   ├── datasources/local/ (GoalDao, GoalContributionDao)
-    │   │   └── repositories/      (GoalRepositoryImpl)
-    │   ├── domain/
-    │   │   ├── calculator/        (GoalCalculator)
-    │   │   ├── model/             (Goal, GoalSummary, GoalDetail, Contribution)
-    │   │   ├── repository/        (GoalRepository Interface)
-    │   │   └── usecase/           (GetGoals, AddGoal, Contribute, Delete...)
-    │   └── presentation/
-    │       ├── adapter/           (ActiveGoals, CompletedGoals, Contributions)
-    │       ├── add/               (AddGoalBottomSheetFragment)
-    │       ├── contribute/        (ContributeGoalBottomSheetFragment)
-    │       ├── detail/            (GoalDetailFragment)
-    │       └── GoalsFragment.kt & GoalsViewModel.kt
-    └── onboarding/          # Wizard steps, tips, and financial habit engine
+    ├── dashboard/
+    ├── transactions/
+    ├── analytics/
+    ├── goals/
+    └── onboarding/
 ```
 
-### القواعد البرمجية الصارمة المتبعة (Core Rules):
-* **Single Source of Truth:** نسبة اكتمال الأهداف والمبالغ المدخرة مشتقة برمجياً من جدول سجل الإيداعات (`GoalContributionEntity`) لضمان تكامل البيانات بنسبة 100%.
-* **Reactive Data Flow:** تدفق أحادي الاتجاه عبر `Room Flow` -> `Repository` -> `UseCase` -> `ViewModel (StateFlow)` -> `Fragment`.
-* **Clean Separation:** طبقة الـ UI تتعامل فقط مع الـ `StateFlow` ولا تحتوي على أي منطق تجاري (Business Logic).
-* **Dependency Injection:** حقن التبعيات بالكامل عبر **Dagger Hilt** مع فصل الموديولات (`@InstallIn(SingletonComponent::class)`).
+### Engineering Principles
+
+- **Single Source of Truth** — Goal progress and saved amounts are derived from contribution records rather than duplicated mutable totals.
+- **Unidirectional Data Flow** — Data moves from Room through Repository and UseCase layers into `ViewModel` state exposed to the UI.
+- **Separation of Concerns** — UI components focus on presentation while business rules remain in the domain layer.
+- **Dependency Injection** — Dependencies are provided through **Dagger Hilt**.
+- **Reactive State** — `Flow` and `StateFlow` keep the interface synchronized with database changes.
+- **Domain-Driven Calculations** — Goal calculations are centralized in dedicated domain logic instead of being scattered across UI code.
 
 ---
 
-## 🛠️ حزمة التقنيات (Tech Stack)
+## 🛠️ Tech Stack
 
-* **لغة البرمجة:** Kotlin (1.9.24)
-* **واجهات المستخدم:** Native Android XML + Material Design 3 (M3) + ViewBinding & DataBinding
-* **حقن التبعيات:** Hilt / Dagger
-* **قاعدة البيانات:** Android Jetpack Room (SQLite)
-* **البرمجة التفاعلية والتزامنية:** Kotlin Coroutines & Reactive Flow / StateFlow
-* **إدارة التنقل:** Android Jetpack Navigation Component مع SafeArgs
-* **الاختبارات الأحادية:** JUnit 4, MockK, Truth
+| Technology | Purpose |
+| --- | --- |
+| **Kotlin** | Application development |
+| **Android XML + Material 3** | Native UI |
+| **ViewBinding / DataBinding** | View access and binding |
+| **Jetpack Room** | Local SQLite persistence |
+| **Kotlin Coroutines** | Asynchronous programming |
+| **Flow / StateFlow** | Reactive state and data streams |
+| **Dagger Hilt** | Dependency injection |
+| **Navigation Component** | Screen navigation |
+| **Safe Args** | Type-safe navigation arguments |
+| **JUnit 4** | Unit testing |
+| **MockK** | Mocking dependencies in tests |
+| **Truth** | Fluent test assertions |
 
 ---
 
-## 🧪 الاختبارات والجودة (Testing & Verification)
+## 🧪 Testing & Quality
 
-المشروع مغطى باختبارات أحادية شاملة لكل من:
-* محرك حسابات الأهداف (`GoalCalculatorTest`)
-* كافة الـ UseCases (حالات الاستخدام)
-* عمليات الـ Repository ومطابقة النتائج الحسابية
+The project includes unit tests covering key business logic and data flows, including:
 
-لتشغيل الاختبارات الأحادية:
+- Goal calculation logic (`GoalCalculatorTest`)
+- Use cases
+- Repository behavior
+- Financial and goal-related calculations
+
+Run the unit test suite with:
+
 ```bash
 ./gradlew testDebugUnitTest
 ```
-> **النتيجة:** `BUILD SUCCESSFUL` (جميع الاختبارات الـ 62 ناجحة بنسبة 100%).
+
+> **Current test status:** 62 unit tests passing.
 
 ---
 
-## 🚀 البدء والتشغيل (Getting Started)
+## 🚀 Getting Started
 
-### المتطلبات الأساسية (Prerequisites):
-* **Android Studio:** Ladybug (2024.2.1) أو أحدث.
-* **JDK:** Java 17 أو أحدث.
-* **Android SDK:** Min SDK 26 (Android 8.0) | Target SDK 34 (Android 14).
+### Requirements
 
-### خطوات التثبيت:
-1. استنسخ المستودع (Clone):
-   ```bash
-   git clone https://github.com/KareemEzzat91/UrWallet.git
-   cd UrWallet
-   ```
-2. بناء المشروع (Build):
-   ```bash
-   ./gradlew assembleDebug
-   ```
-3. تشغيل التطبيق على محاكي أو جهاز فعلي من خلال Android Studio.
+- **Android Studio** Ladybug (2024.2.1) or newer
+- **JDK 17** or newer
+- **Android SDK** with Min SDK 26 and Target SDK 34
+
+### Clone the repository
+
+```bash
+git clone https://github.com/KareemEzzat91/UrWallet.git
+cd UrWallet
+```
+
+### Build the project
+
+```bash
+./gradlew assembleDebug
+```
+
+Then open the project in Android Studio and run it on an emulator or physical Android device.
 
 ---
 
-## 📄 الترخيص (License)
+## 📁 Project Highlights
 
-هذا المشروع متاح تحت رخصة [MIT License](LICENSE).
+UrWallet is intentionally structured to make the codebase easier to scale and maintain. Each major business capability lives inside its own feature module, while shared concerns are kept inside `core`.
+
+The goals module is a good example of this approach, separating local data sources, repositories, domain models, calculators, use cases, adapters, fragments, and view models into clear responsibilities.
+
+---
+
+## 🔐 Privacy Note
+
+UrWallet is designed around a local-first personal finance model. The application's core financial data is stored locally using Room rather than being dependent on a remote cloud database.
+
+---
+
+## 📄 License
+
+This project is available under the [MIT License](LICENSE).
 
 <div align="center">
-صُنِع بكل ❤️ لدعم الإدارة المالية الذكية في الوطن العربي.
+
+**Built with Kotlin and a focus on privacy, maintainability, and practical personal finance.** ❤️
+
 </div>
