@@ -319,4 +319,41 @@
     <string name="error_income_category_not_allowed">لا يمكن إنشاء ميزانية لفئة دخل</string>
     <string name="more_budgets_title">الميزانيات وسقوف الصرف</string>
     <string name="more_budgets_desc">حدد الميزانية العامة وميزانيات الفئات مع تنبيهات التجاوز</string>
+
+    <!-- Phase 9 Financial Analytics, Health Score & Habits -->
+    <string name="analytics_title">التحليلات المالية</string>
+    <string name="analytics_subtitle">نظرة تفصيلية على نمط إنفاقك وصحتك المالية</string>
+    <string name="habits_button_title">العادات المالية 🧠</string>
+    <string name="action_prev_month">الشهر السابق</string>
+    <string name="action_next_month">الشهر التالي</string>
+    <string name="financial_health_title">مؤشر الصحة المالية</string>
+    <string name="pillar_planning">التخطيط</string>
+    <string name="pillar_saving">الادخار</string>
+    <string name="pillar_control">التحكم</string>
+    <string name="cash_flow_title">التدفق النقدي والسيولة</string>
+    <string name="label_net_savings">صافي التوفير</string>
+    <string name="spending_trend_chart_title">اتجاه الإنفاق اليومي</string>
+    <string name="spending_trend_chart_subtitle">توزيع المصروفات الفعلية على مدار أيام الشهر</string>
+    <string name="chart_no_expenses_in_month">لا توجد مصروفات مسجلة في هذا الشهر</string>
+    <string name="category_breakdown_title">توزيع المصروفات حسب الفئات</string>
+    <string name="habits_banner_title">عاداتك وشخصيتك المالية</string>
+    <string name="habits_banner_subtitle">اكتشف شخصيتك المالية وقاعدة 50/30/20 ويوم ذروة الصرف</string>
+    <string name="analytics_empty_title">لا توجد بيانات لهذا الشهر</string>
+    <string name="analytics_empty_desc">أضف معاملاتك وميزانياتك في هذا الشهر لنعرض لك تحليلاً بيانياً دقيقاً ومؤشر صحتك المالية.</string>
+    <string name="habits_title">العادات والشخصية المالية</string>
+    <string name="habits_subtitle">تحليل ذكي لسلوكك المالي وقاعدة 50/30/20</string>
+    <string name="personality_card_label">شخصيتك المالية</string>
+    <string name="coach_tip_label">نصيحة مدرب محفظتك 💡</string>
+    <string name="peak_spending_day_title">يوم ذروة الإنفاق</string>
+    <string name="daily_average_title">متوسط الصرف اليومي</string>
+    <string name="daily_average_subtitle">معدل إنفاقك لكل يوم</string>
+    <string name="rule_50_30_20_title">قاعدة 50/30/20 المالية</string>
+    <string name="rule_50_30_20_desc">توزيع نفقاتك الشهرية بين الأساسيات والرغبات والادخار</string>
+    <string name="rule_needs_label">الاحتياجات الأساسية (50%)</string>
+    <string name="rule_wants_label">الرغبات والترفيه (30%)</string>
+    <string name="rule_savings_label">الادخار والأهداف (20%)</string>
+    <string name="more_analytics_title">التحليلات والتقارير المالية</string>
+    <string name="more_analytics_desc">مؤشر الصحة المالية، اتجاه الإنفاق، وتوزيع الفئات</string>
+    <string name="more_habits_title">العادات والشخصية المالية</string>
+    <string name="more_habits_desc">شخصيتك المالية، يوم ذروة الإنفاق، وتطبيق قاعدة 50/30/20</string>
 </resources>

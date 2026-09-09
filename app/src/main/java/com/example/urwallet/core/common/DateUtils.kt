@@ -138,4 +138,39 @@ object DateUtils {
             Pair(month - 1, year)
         }
     }
+
+    fun getNextMonth(month: Int, year: Int): Pair<Int, Int> {
+        return if (month >= 12) {
+            Pair(1, year + 1)
+        } else {
+            Pair(month + 1, year)
+        }
+    }
+
+    fun getDaysInMonth(month: Int, year: Int): Int {
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, year)
+            set(Calendar.MONTH, month - 1)
+            set(Calendar.DAY_OF_MONTH, 1)
+        }
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+    }
+
+    fun getDayOfMonth(epochMs: Long): Int {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = epochMs
+        }
+        return calendar.get(Calendar.DAY_OF_MONTH)
+    }
+
+    fun getDayOfWeek(epochMs: Long): Int {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = epochMs
+        }
+        return calendar.get(Calendar.DAY_OF_WEEK)
+    }
+
+    fun getCurrentDayOfMonth(): Int {
+        return Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+    }
 }

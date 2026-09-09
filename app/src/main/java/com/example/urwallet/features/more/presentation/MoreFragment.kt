@@ -31,6 +31,14 @@ class MoreFragment : Fragment() {
         binding.cardBudgetsNav.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_budgetsFragment)
         }
+
+        binding.cardAnalyticsNav.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_analyticsFragment)
+        }
+
+        binding.cardHabitsNav.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_habitsFragment)
+        }
     }
 
     override fun onDestroyView() {
