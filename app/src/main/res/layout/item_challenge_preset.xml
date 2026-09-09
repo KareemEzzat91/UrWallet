@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="1dp"
+    app:strokeColor="@color/divider"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvPresetTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/chipDuration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="أسبوع بلا كافيهات ومطاعم ☕" />
+
+        <TextView
+            android:id="@+id/chipDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill_primary"
+            android:fontFamily="sans-serif-medium"
+            android:paddingStart="10dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="3dp"
+            android:textColor="@color/primary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="7 أيام" />
+
+        <TextView
+            android:id="@+id/tvPresetDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPresetTitle"
+            tools:text="امتنع عن نفقات المطاعم والمقاهي لمدة 7 أيام متتالية واصنع قهوتك ووجباتك بنفسك." />
+
+        <TextView
+            android:id="@+id/chipDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_pill_streak"
+            android:fontFamily="sans-serif-medium"
+            android:paddingStart="8dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="3dp"
+            android:textColor="#E65100"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnJoinPreset"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnJoinPreset"
+            tools:text="متوسط" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnJoinPreset"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/primary"
+            android:fontFamily="sans-serif-bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/btn_join_challenge"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPresetDesc" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

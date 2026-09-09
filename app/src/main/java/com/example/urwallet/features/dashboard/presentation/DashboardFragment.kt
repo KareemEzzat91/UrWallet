@@ -12,10 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.urwallet.R
+import com.example.urwallet.core.common.ChallengeType
 import com.example.urwallet.core.common.DateUtils
 import com.example.urwallet.core.common.Formatters
 import com.example.urwallet.core.common.TransactionType
 import com.example.urwallet.databinding.FragmentDashboardBinding
+import com.example.urwallet.features.challenges.domain.model.ChallengeProgress
 import com.example.urwallet.features.dashboard.domain.model.DashboardSummary
 import com.example.urwallet.features.dashboard.presentation.adapter.RecentTransactionsAdapter
 import com.example.urwallet.features.goals.domain.model.Goal
@@ -137,7 +139,10 @@ class DashboardFragment : Fragment() {
         // 3. Nearest Active Goal Card
         bindNearestGoal(summary.nearestGoal)
 
-        // 4. Recent Transactions
+        // 4. Active Challenge Card
+        bindActiveChallenge(summary.activeChallenge)
+
+        // 5. Recent Transactions
         if (summary.recentTransactions.isNotEmpty()) {
             binding.rvRecentTransactions.isVisible = true
             binding.layoutEmptyRecent.isVisible = false
@@ -178,6 +183,47 @@ class DashboardFragment : Fragment() {
             binding.ivGoalIcon.isVisible = false
             binding.tvGoalEmoji.isVisible = true
             binding.tvGoalEmoji.text = goal.icon.ifBlank { "🎯" }
+        }
+    }
+
+    private fun bindActiveChallenge(challengeProgress: ChallengeProgress?) {
+        if (challengeProgress == null) {
+            binding.cardActiveChallenge.isVisible = false
+            return
+        }
+
+        binding.cardActiveChallenge.isVisible = true
+        val challenge = challengeProgress.challenge
+        binding.tvDashboardChallengeTitle.text = challenge.title
+        binding.tvDashboardStreak.text = getString(R.string.streak_days_format, challengeProgress.currentStreak)
+
+        val pct = challengeProgress.progressPercentage.toInt()
+        binding.progressDashboardChallenge.progress = pct
+
+        val desc = when (challenge.type) {
+            ChallengeType.NO_SPENDING -> {
+                val target = challengeProgress.targetDays ?: 7
+                getString(R.string.challenge_progress_days_format, challengeProgress.completedDays, target)
+            }
+            ChallengeType.SAVE_AMOUNT -> {
+                val target = challengeProgress.targetAmount ?: 0.0
+                val currentFormatted = Formatters.formatCurrency(challengeProgress.currentProgress)
+                val targetFormatted = Formatters.formatCurrency(target)
+                getString(R.string.challenge_progress_amount_format, currentFormatted, targetFormatted)
+            }
+            ChallengeType.REDUCE_CATEGORY -> {
+                val limit = challengeProgress.targetAmount ?: 0.0
+                val spentFormatted = Formatters.formatCurrency(challengeProgress.currentProgress)
+                val limitFormatted = Formatters.formatCurrency(limit)
+                getString(R.string.challenge_progress_limit_format, spentFormatted, limitFormatted)
+            }
+        }
+        binding.tvDashboardChallengeDesc.text = desc
+        binding.tvDashboardChallengeRemaining.text = "باقي ${challengeProgress.remainingDays} أيام"
+
+        binding.cardActiveChallenge.setOnClickListener {
+            val bundle = androidx.core.os.bundleOf("challengeId" to challenge.id)
+            findNavController().navigate(R.id.action_dashboardFragment_to_challengeDetailFragment, bundle)
         }
     }
 

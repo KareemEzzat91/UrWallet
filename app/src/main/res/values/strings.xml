@@ -25,6 +25,8 @@
     <string name="action_confirm">تأكيد</string>
     <string name="action_view_all">عرض الكل</string>
     <string name="action_start_journey">ابدأ رحلتي</string>
+    <string name="action_back">رجوع</string>
+    <string name="action_retry">إعادة المحاولة</string>
 
     <!-- Transaction Types -->
     <string name="type_expense">مصروف</string>
@@ -356,4 +358,37 @@
     <string name="more_analytics_desc">مؤشر الصحة المالية، اتجاه الإنفاق، وتوزيع الفئات</string>
     <string name="more_habits_title">العادات والشخصية المالية</string>
     <string name="more_habits_desc">شخصيتك المالية، يوم ذروة الإنفاق، وتطبيق قاعدة 50/30/20</string>
+    <!-- Phase 10 Saving Challenges -->
+    <string name="challenges_title">تحديات التوفير</string>
+    <string name="challenges_subtitle">حفّز نفسك على الادخار وبناء عادات مالية ذكية</string>
+    <string name="challenges_section_active">التحديات الجارية</string>
+    <string name="challenges_section_presets">تحديات مقترحة</string>
+    <string name="challenges_section_completed">سجل الإنجازات والأوسمة 🏆</string>
+    <string name="challenge_no_active_title">لا توجد تحديات جارية حالياً</string>
+    <string name="challenge_no_active_desc">ابدأ الآن بالانضمام لأحد التحديات المقترحة أدناه لتطوير مهاراتك المالية وحفظ أموالك!</string>
+    <string name="btn_join_challenge">انضم للتحدي</string>
+    <string name="challenge_status_completed">مكتمل 🏆</string>
+    <string name="challenge_type_no_spending">تحدي منع الإنفاق</string>
+    <string name="challenge_type_save_amount">تحدي ادخار مستهدف</string>
+    <string name="challenge_type_reduce_category">تحدي ضبط فئة إنفاق</string>
+    <string name="challenge_subtitle_format">%1$s • باقي %2$d أيام</string>
+    <string name="streak_days_format">%1$d أيام متتالية 🔥</string>
+    <string name="challenge_progress_days_format">أنجزت %1$d من أصل %2$d أيام</string>
+    <string name="challenge_progress_amount_format">ادخرت %1$s من أصل %2$s</string>
+    <string name="challenge_progress_limit_format">أنفقت %1$s من سقف %2$s</string>
+    <string name="day_number_format">اليوم %1$d</string>
+    <string name="day_status_completed">مكتمل ✅</string>
+    <string name="day_status_failed">تم الإنفاق ❌</string>
+    <string name="day_status_today">جاري اليوم ⏳</string>
+    <string name="day_status_pending">في الانتظار ⚪</string>
+    <string name="btn_abandon_challenge">إنهاء / إلغاء التحدي</string>
+    <string name="dialog_abandon_title">هل أنت متأكد من إلغاء التحدي؟</string>
+    <string name="dialog_abandon_message">سيتم حذف هذا التحدي من قائمة التحديات الجارية وسجل التقدم المرتبط به.</string>
+    <string name="dialog_confirm">نعم، إلغاء</string>
+    <string name="dialog_cancel">تراجع</string>
+    <string name="challenge_detail_rules_title">قواعد وإرشادات التحدي</string>
+    <string name="challenge_detail_timeline_title">سجل الأيام والالتزام اليومي</string>
+    <string name="more_challenges_title">تحديات التوفير</string>
+    <string name="more_challenges_desc">تحديات مالية ذكية ومحفزة للادخار وضبط المصروفات</string>
+    <string name="dashboard_challenge_title">تحدي التوفير النشط</string>
 </resources>

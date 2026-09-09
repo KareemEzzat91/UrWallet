@@ -2,6 +2,7 @@ package com.example.urwallet.features.dashboard.domain.usecase
 
 import com.example.urwallet.core.common.DateUtils
 import com.example.urwallet.core.common.TransactionType
+import com.example.urwallet.features.challenges.domain.usecase.GetChallengesUseCase
 import com.example.urwallet.features.dashboard.domain.model.DashboardSummary
 import com.example.urwallet.features.dashboard.domain.model.DashboardTransactionItem
 import com.example.urwallet.features.goals.domain.repository.GoalRepository
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 class GetDashboardSummaryUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-    private val goalRepository: GoalRepository
+    private val goalRepository: GoalRepository,
+    private val getChallengesUseCase: GetChallengesUseCase
 ) {
 
     operator fun invoke(): Flow<DashboardSummary> {
@@ -32,6 +34,7 @@ class GetDashboardSummaryUseCase @Inject constructor(
         val recentTransactionsFlow = transactionRepository.getRecentTransactions(4)
         val categoriesFlow = transactionRepository.getAllCategories()
         val nearestGoalFlow = goalRepository.getNearestActiveGoal()
+        val challengesFlow = getChallengesUseCase()
 
         val financialTotalsFlow = combine(
             totalIncomeFlow,
@@ -62,14 +65,16 @@ class GetDashboardSummaryUseCase @Inject constructor(
         return combine(
             financialTotalsFlow,
             recentWithCategoryFlow,
-            nearestGoalFlow
-        ) { totals, recentItems, nearestGoal ->
+            nearestGoalFlow,
+            challengesFlow
+        ) { totals, recentItems, nearestGoal, challengesResult ->
             DashboardSummary(
                 netBalance = totals.netBalance,
                 monthlyIncome = totals.monthlyIncome,
                 monthlyExpense = totals.monthlyExpense,
                 recentTransactions = recentItems,
-                nearestGoal = nearestGoal
+                nearestGoal = nearestGoal,
+                activeChallenge = challengesResult.activeChallenges.firstOrNull()
             )
         }
     }

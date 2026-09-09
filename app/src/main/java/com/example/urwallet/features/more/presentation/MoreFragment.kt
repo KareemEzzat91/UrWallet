@@ -39,6 +39,10 @@ class MoreFragment : Fragment() {
         binding.cardHabitsNav.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_habitsFragment)
         }
+
+        binding.cardChallengesNav.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_challengesFragment)
+        }
     }
 
     override fun onDestroyView() {

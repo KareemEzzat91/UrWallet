@@ -17,6 +17,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import com.example.urwallet.features.challenges.domain.model.Challenge
+import com.example.urwallet.features.challenges.domain.repository.ChallengeRepository
+import com.example.urwallet.features.challenges.domain.usecase.GetChallengesUseCase
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
@@ -25,15 +28,23 @@ class GetDashboardSummaryUseCaseTest {
 
     private lateinit var fakeTransactionRepository: DashboardFakeTransactionRepository
     private lateinit var fakeGoalRepository: DashboardFakeGoalRepository
+    private lateinit var fakeChallengeRepository: DashboardFakeChallengeRepository
     private lateinit var useCase: GetDashboardSummaryUseCase
 
     @Before
     fun setUp() {
         fakeTransactionRepository = DashboardFakeTransactionRepository()
         fakeGoalRepository = DashboardFakeGoalRepository()
-        useCase = GetDashboardSummaryUseCase(
+        fakeChallengeRepository = DashboardFakeChallengeRepository()
+        val getChallengesUseCase = GetChallengesUseCase(
+            challengeRepository = fakeChallengeRepository,
             transactionRepository = fakeTransactionRepository,
             goalRepository = fakeGoalRepository
+        )
+        useCase = GetDashboardSummaryUseCase(
+            transactionRepository = fakeTransactionRepository,
+            goalRepository = fakeGoalRepository,
+            getChallengesUseCase = getChallengesUseCase
         )
     }
 
@@ -167,4 +178,16 @@ class DashboardFakeGoalRepository : GoalRepository {
     override suspend fun updateGoal(goal: Goal) {}
     override suspend fun addContribution(goalId: Long, amount: Double, note: String?): Long = 1L
     override suspend fun deleteGoal(id: Long) {}
+}
+
+class DashboardFakeChallengeRepository : ChallengeRepository {
+    val challenges = mutableListOf<Challenge>()
+
+    override fun getAllChallenges(): Flow<List<Challenge>> = flowOf(challenges)
+    override fun getActiveChallenges(): Flow<List<Challenge>> = flowOf(challenges.filter { it.isActive && !it.isCompleted })
+    override fun getPrimaryActiveChallenge(): Flow<Challenge?> = flowOf(challenges.firstOrNull { it.isActive && !it.isCompleted })
+    override fun getChallengeById(id: Long): Flow<Challenge?> = flowOf(challenges.find { it.id == id })
+    override suspend fun insertChallenge(challenge: Challenge): Long = 1L
+    override suspend fun updateChallenge(challenge: Challenge) {}
+    override suspend fun deleteChallenge(id: Long) {}
 }

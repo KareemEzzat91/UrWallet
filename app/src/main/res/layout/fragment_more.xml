@@ -233,6 +233,76 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Challenges Navigation Option -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardChallengesNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/urwallet_surface"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/urwallet_card_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <FrameLayout
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_squircle_primary_light">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_trophy"
+                        app:tint="#FFB300" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/more_challenges_title"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/more_challenges_desc"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:rotation="180"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="@color/urwallet_text_tertiary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Placeholder Card for upcoming phases -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

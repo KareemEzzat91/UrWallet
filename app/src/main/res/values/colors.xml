@@ -37,4 +37,15 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
+
+    <!-- Standard Aliases for Material compatibility -->
+    <color name="primary">@color/urwallet_primary</color>
+    <color name="primary_variant">@color/urwallet_primary_dark</color>
+    <color name="background">@color/urwallet_background</color>
+    <color name="surface">@color/urwallet_surface</color>
+    <color name="text_primary">@color/urwallet_text_primary</color>
+    <color name="text_secondary">@color/urwallet_text_secondary</color>
+    <color name="divider">@color/urwallet_divider</color>
+    <color name="income_green">@color/urwallet_income</color>
+    <color name="expense_red">@color/urwallet_expense</color>
 </resources>

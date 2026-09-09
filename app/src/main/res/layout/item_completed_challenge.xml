@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="1dp"
+    app:strokeColor="@color/divider"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="14dp">
+
+        <FrameLayout
+            android:id="@+id/trophyContainer"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_pill_streak"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_trophy"
+                app:tint="#FFB300" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvCompletedTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvCompletedBadge"
+            app:layout_constraintStart_toEndOf="@+id/trophyContainer"
+            app:layout_constraintTop_toTopOf="@+id/trophyContainer"
+            tools:text="أسبوع بلا كافيهات ومطاعم" />
+
+        <TextView
+            android:id="@+id/tvCompletedSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvCompletedTitle"
+            app:layout_constraintStart_toStartOf="@+id/tvCompletedTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvCompletedTitle"
+            tools:text="تم إنجاز التحدي بنجاح 🏆" />
+
+        <TextView
+            android:id="@+id/tvCompletedBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill_success_light"
+            android:fontFamily="sans-serif-bold"
+            android:paddingStart="8dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="3dp"
+            android:text="@string/challenge_status_completed"
+            android:textColor="@color/income_green"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/trophyContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/trophyContainer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

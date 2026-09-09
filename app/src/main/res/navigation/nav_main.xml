@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_dashboardFragment_to_budgetsFragment"
             app:destination="@id/budgetsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_challengesFragment"
+            app:destination="@id/challengesFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_challengeDetailFragment"
+            app:destination="@id/challengeDetailFragment" />
     </fragment>
 
     <fragment
@@ -86,6 +92,9 @@
         <action
             android:id="@+id/action_moreFragment_to_habitsFragment"
             app:destination="@id/habitsFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_challengesFragment"
+            app:destination="@id/challengesFragment" />
     </fragment>
 
     <fragment
@@ -112,5 +121,25 @@
         android:name="com.example.urwallet.features.analytics.presentation.HabitsFragment"
         android:label="@string/habits_title"
         tools:layout="@layout/fragment_habits" />
+
+    <fragment
+        android:id="@+id/challengesFragment"
+        android:name="com.example.urwallet.features.challenges.presentation.ChallengesFragment"
+        android:label="@string/challenges_title"
+        tools:layout="@layout/fragment_challenges">
+        <action
+            android:id="@+id/action_challengesFragment_to_challengeDetailFragment"
+            app:destination="@id/challengeDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/challengeDetailFragment"
+        android:name="com.example.urwallet.features.challenges.presentation.ChallengeDetailFragment"
+        android:label="تفاصيل التحدي"
+        tools:layout="@layout/fragment_challenge_detail">
+        <argument
+            android:name="challengeId"
+            app:argType="long" />
+    </fragment>
 
 </navigation>
