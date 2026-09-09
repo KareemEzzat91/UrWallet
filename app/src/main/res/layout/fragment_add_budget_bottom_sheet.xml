@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_surface_rounded"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Drag Handle -->
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_drag_handle" />
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_add_budget"
+            android:textColor="@color/urwallet_text_primary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Budget Type Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/label_budget_type"
+            android:textColor="@color/urwallet_text_secondary"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupBudgetType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTypeGlobal"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/budget_type_global" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTypeCategory"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/budget_type_category" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Category Selection Section (Visible when category budget selected) -->
+        <LinearLayout
+            android:id="@+id/layoutCategorySelection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_select_category"
+                android:textColor="@color/urwallet_text_secondary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupCategories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true" />
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <!-- Amount Input -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/label_budget_amount"
+            android:textColor="@color/urwallet_text_secondary"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:boxCornerRadiusBottomEnd="@dimen/input_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/input_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/input_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/input_corner_radius"
+            app:boxStrokeColor="@color/urwallet_primary"
+            app:suffixText="@string/currency_symbol">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etBudgetAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_budget_amount"
+                android:inputType="numberDecimal"
+                android:textColor="@color/urwallet_text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Quick Presets -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPreset500"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:text="+500"
+                android:textColor="@color/urwallet_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/urwallet_primary_light"
+                app:cornerRadius="@dimen/chip_corner_radius" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPreset1000"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:text="+1,000"
+                android:textColor="@color/urwallet_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/urwallet_primary_light"
+                app:cornerRadius="@dimen/chip_corner_radius" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPreset2000"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:text="+2,000"
+                android:textColor="@color/urwallet_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/urwallet_primary_light"
+                app:cornerRadius="@dimen/chip_corner_radius" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPreset5000"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:text="+5,000"
+                android:textColor="@color/urwallet_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/urwallet_primary_light"
+                app:cornerRadius="@dimen/chip_corner_radius" />
+        </LinearLayout>
+
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveBudget"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/action_save_budget"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/urwallet_primary"
+            app:cornerRadius="@dimen/input_corner_radius" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -9,7 +9,11 @@
         android:id="@+id/dashboardFragment"
         android:name="com.example.urwallet.features.dashboard.presentation.DashboardFragment"
         android:label="@string/nav_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_budgetsFragment"
+            app:destination="@id/budgetsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/transactionsFragment"
@@ -72,6 +76,16 @@
         android:id="@+id/moreFragment"
         android:name="com.example.urwallet.features.more.presentation.MoreFragment"
         android:label="@string/nav_more"
-        tools:layout="@layout/fragment_more" />
+        tools:layout="@layout/fragment_more">
+        <action
+            android:id="@+id/action_moreFragment_to_budgetsFragment"
+            app:destination="@id/budgetsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/budgetsFragment"
+        android:name="com.example.urwallet.features.budgets.presentation.BudgetsFragment"
+        android:label="@string/nav_budgets"
+        tools:layout="@layout/fragment_budgets" />
 
 </navigation>

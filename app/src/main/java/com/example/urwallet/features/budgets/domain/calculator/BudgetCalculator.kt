@@ -5,13 +5,19 @@ import com.example.urwallet.core.common.Constants
 
 object BudgetCalculator {
 
+    private const val EPSILON = 1e-9
+
     fun calculatePercentage(spent: Double, budgetAmount: Double): Double {
         if (budgetAmount <= 0.0) return 0.0
         return (spent / budgetAmount) * 100.0
     }
 
+    fun calculateVisualProgress(spent: Double, budgetAmount: Double): Int {
+        return calculatePercentage(spent, budgetAmount).toInt().coerceIn(0, 100)
+    }
+
     fun calculateRemaining(spent: Double, budgetAmount: Double): Double {
-        return (budgetAmount - spent).coerceAtLeast(0.0)
+        return budgetAmount - spent
     }
 
     fun determineStatus(
@@ -20,12 +26,12 @@ object BudgetCalculator {
         alertThreshold: Double = Constants.DEFAULT_ALERT_THRESHOLD
     ): BudgetStatus {
         if (budgetAmount <= 0.0) return BudgetStatus.HEALTHY
-        val percentage = (spent / budgetAmount)
+        val ratio = spent / budgetAmount
         val threshold = if (alertThreshold <= 0.0) Constants.DEFAULT_ALERT_THRESHOLD else alertThreshold
 
         return when {
-            percentage >= 1.0 -> BudgetStatus.EXCEEDED
-            percentage >= threshold -> BudgetStatus.NEAR_LIMIT
+            ratio > 1.0 + EPSILON -> BudgetStatus.EXCEEDED
+            ratio >= threshold - EPSILON -> BudgetStatus.NEAR_LIMIT
             else -> BudgetStatus.HEALTHY
         }
     }
@@ -36,6 +42,7 @@ object BudgetCalculator {
         alertThreshold: Double = Constants.DEFAULT_ALERT_THRESHOLD
     ): BudgetCalculationResult {
         val percentage = calculatePercentage(spent, budgetAmount)
+        val visualProgress = calculateVisualProgress(spent, budgetAmount)
         val remaining = calculateRemaining(spent, budgetAmount)
         val status = determineStatus(spent, budgetAmount, alertThreshold)
 
@@ -44,6 +51,7 @@ object BudgetCalculator {
             budgetAmount = budgetAmount,
             remainingAmount = remaining,
             percentage = percentage,
+            visualProgress = visualProgress,
             status = status
         )
     }
@@ -54,5 +62,6 @@ data class BudgetCalculationResult(
     val budgetAmount: Double,
     val remainingAmount: Double,
     val percentage: Double,
+    val visualProgress: Int = (percentage.toInt()).coerceIn(0, 100),
     val status: BudgetStatus
 )

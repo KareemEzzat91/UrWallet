@@ -62,6 +62,9 @@ class GetCategoryAnalyticsUseCaseTest {
         override fun getCategoryBudgets(month: Int, year: Int): Flow<List<Budget>> = flowOf(listOf(testBudget))
         override fun getBudgetForCategory(categoryId: Long, month: Int, year: Int): Flow<Budget?> =
             flowOf(if (categoryId == 1L) testBudget else null)
+        override suspend fun getGlobalBudgetSync(month: Int, year: Int): Budget? = null
+        override suspend fun getBudgetForCategorySync(categoryId: Long, month: Int, year: Int): Budget? =
+            if (categoryId == 1L) testBudget else null
         override suspend fun insertOrUpdateBudget(budget: Budget): Long = 10L
         override suspend fun deleteBudget(id: Long) {}
     }
@@ -158,8 +161,8 @@ class GetCategoryAnalyticsUseCaseTest {
         val budgetStatus = result!!.budgetStatus
         assertNotNull(budgetStatus)
         assertNotNull(budgetStatus!!.calculation)
-        // 1000.0 spent out of 1000.0 budget = 100% -> EXCEEDED
-        assertEquals(BudgetStatus.EXCEEDED, budgetStatus.calculation!!.status)
+        // 1000.0 spent out of 1000.0 budget = 100% -> NEAR_LIMIT (80% to 100% inclusive per Phase 8)
+        assertEquals(BudgetStatus.NEAR_LIMIT, budgetStatus.calculation!!.status)
     }
 
     @Test

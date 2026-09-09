@@ -26,6 +26,12 @@ interface BudgetDao {
     @Query("SELECT * FROM budgets WHERE categoryId = :categoryId AND month = :month AND year = :year LIMIT 1")
     fun getBudgetForCategory(categoryId: Long, month: Int, year: Int): Flow<BudgetEntity?>
 
+    @Query("SELECT * FROM budgets WHERE categoryId IS NULL AND month = :month AND year = :year LIMIT 1")
+    suspend fun getGlobalBudgetSync(month: Int, year: Int): BudgetEntity?
+
+    @Query("SELECT * FROM budgets WHERE categoryId = :categoryId AND month = :month AND year = :year LIMIT 1")
+    suspend fun getBudgetForCategorySync(categoryId: Long, month: Int, year: Int): BudgetEntity?
+
     @Query("DELETE FROM budgets WHERE id = :id")
     suspend fun deleteBudget(id: Long): Int
 }

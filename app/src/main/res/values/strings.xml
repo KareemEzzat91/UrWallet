@@ -46,9 +46,9 @@
     <string name="cat_bonus">مكافأة</string>
 
     <!-- Budget Statuses -->
-    <string name="budget_status_healthy">سليم</string>
-    <string name="budget_status_near_limit" formatted="false">قريب من الحد (80%+)</string>
-    <string name="budget_status_exceeded">تجاوزت الميزانية</string>
+    <string name="budget_status_healthy">إنفاق آمن</string>
+    <string name="budget_status_near_limit">اقتراب من الحد ⚠️</string>
+    <string name="budget_status_exceeded">تجاوزت الميزانية 🚨</string>
 
     <!-- Goal Pace Modes -->
     <string name="pace_relaxed">هادئ</string>
@@ -287,4 +287,36 @@
     <string name="goals_completed_badge">100% مكتمل</string>
     <string name="goals_completed_sub_format">تم توفير %1$s بالكامل 🎉</string>
     <string name="label_contributions_count">سجل الإيداعات (%1$d)</string>
+
+    <!-- Phase 8 Budgets & Overspending Alerts -->
+    <string name="title_budgets">الميزانيات وتنبيهات الإنفاق</string>
+    <string name="nav_budgets">الميزانيات</string>
+    <string name="budgets_subtitle">راقب استهلاكك وحدد أسقف الصرف لكل فئة</string>
+    <string name="action_add_budget">إضافة ميزانية</string>
+    <string name="budget_global_card_title">الميزانية الشهرية العامة</string>
+    <string name="budget_spent_label">تم إنفاق:</string>
+    <string name="budget_remaining_label">المتبقي:</string>
+    <string name="budget_overspent_label">تجاوزت بـ:</string>
+    <string name="budget_limit_label">المستهدف:</string>
+    <string name="budget_progress_format">تم استهلاك %1$d%% من الميزانية (%2$s)</string>
+    <string name="budgets_categories_section_title">ميزانيات الفئات</string>
+    <string name="budgets_empty_title">ابدأ بتنظيم مصاريفك</string>
+    <string name="budgets_empty_desc">حدد ميزانية شهرية عامة أو لكل فئة تساعدك تتابع إنفاقك وتتحكم في مصاريفك.</string>
+    <string name="title_add_budget">تحديد ميزانية شهرية</string>
+    <string name="label_budget_type">نوع الميزانية</string>
+    <string name="budget_type_global">ميزانية شهرية عامة</string>
+    <string name="budget_type_category">ميزانية لفئة محددة</string>
+    <string name="label_select_category">اختر الفئة</string>
+    <string name="label_budget_amount">مبلغ الميزانية (ج.م)</string>
+    <string name="hint_budget_amount">0.00</string>
+    <string name="action_save_budget">حفظ الميزانية</string>
+    <string name="dialog_delete_budget_title">حذف الميزانية</string>
+    <string name="dialog_delete_budget_message">هل أنت متأكد من حذف هذه الميزانية؟ لن تتأثر المعاملات المسجلة.</string>
+    <string name="budget_saved_success">تم حفظ الميزانية بنجاح</string>
+    <string name="budget_deleted_success">تم حذف الميزانية بنجاح</string>
+    <string name="error_invalid_budget_amount">يرجى إدخال مبلغ ميزانية صحيح أكبر من صفر</string>
+    <string name="error_no_category_selected">يرجى اختيار فئة للميزانية</string>
+    <string name="error_income_category_not_allowed">لا يمكن إنشاء ميزانية لفئة دخل</string>
+    <string name="more_budgets_title">الميزانيات وسقوف الصرف</string>
+    <string name="more_budgets_desc">حدد الميزانية العامة وميزانيات الفئات مع تنبيهات التجاوز</string>
 </resources>
