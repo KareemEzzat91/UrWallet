@@ -5,10 +5,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.urwallet.core.common.Constants
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Constants.PREFERENCES_NAME)
@@ -26,6 +29,10 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
  *    PIN authentication uses PBKDF2WithHmacSHA256 key derivation / password hashing
  *    with a cryptographically random salt. This is password hashing, NOT encryption.
  *    Only [pinHash] and [pinSalt] are persisted.
+ *
+ * 3. Notifications & Local Reminders:
+ *    Preferences for daily reminders, reminder time, budget alerts, and goal milestones.
+ *    Also tracks deterministic delivered alert keys to enforce strict threshold crossing idempotency.
  */
 class AppPreferences(private val context: Context) {
 
@@ -37,6 +44,14 @@ class AppPreferences(private val context: Context) {
         private val KEY_PIN_SALT = stringPreferencesKey("pin_salt")
         private val KEY_PIN_HASH = stringPreferencesKey("pin_hash")
         private val KEY_BIOMETRIC_ENABLED = booleanPreferencesKey("is_biometric_enabled")
+
+        // Notification Preferences
+        private val KEY_DAILY_REMINDER_ENABLED = booleanPreferencesKey("is_daily_reminder_enabled")
+        private val KEY_REMINDER_HOUR = intPreferencesKey("reminder_hour")
+        private val KEY_REMINDER_MINUTE = intPreferencesKey("reminder_minute")
+        private val KEY_BUDGET_ALERTS_ENABLED = booleanPreferencesKey("is_budget_alerts_enabled")
+        private val KEY_GOAL_ALERTS_ENABLED = booleanPreferencesKey("is_goal_alerts_enabled")
+        private val KEY_DELIVERED_ALERT_KEYS = stringSetPreferencesKey("delivered_alert_keys")
     }
 
     val isOnboardingCompleted: Flow<Boolean> = context.dataStore.data.map { preferences ->
@@ -111,5 +126,67 @@ class AppPreferences(private val context: Context) {
         context.dataStore.edit { preferences ->
             preferences[KEY_BIOMETRIC_ENABLED] = enabled
         }
+    }
+
+    // --- Phase 12 Notification Preferences ---
+
+    val isDailyReminderEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[KEY_DAILY_REMINDER_ENABLED] ?: true
+    }
+
+    suspend fun setDailyReminderEnabled(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_DAILY_REMINDER_ENABLED] = enabled
+        }
+    }
+
+    val reminderHour: Flow<Int> = context.dataStore.data.map { preferences ->
+        preferences[KEY_REMINDER_HOUR] ?: 21
+    }
+
+    val reminderMinute: Flow<Int> = context.dataStore.data.map { preferences ->
+        preferences[KEY_REMINDER_MINUTE] ?: 0
+    }
+
+    suspend fun setReminderTime(hour: Int, minute: Int) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_REMINDER_HOUR] = hour
+            preferences[KEY_REMINDER_MINUTE] = minute
+        }
+    }
+
+    val isBudgetAlertsEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[KEY_BUDGET_ALERTS_ENABLED] ?: true
+    }
+
+    suspend fun setBudgetAlertsEnabled(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_BUDGET_ALERTS_ENABLED] = enabled
+        }
+    }
+
+    val isGoalAlertsEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[KEY_GOAL_ALERTS_ENABLED] ?: true
+    }
+
+    suspend fun setGoalAlertsEnabled(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_GOAL_ALERTS_ENABLED] = enabled
+        }
+    }
+
+    val deliveredAlertKeys: Flow<Set<String>> = context.dataStore.data.map { preferences ->
+        preferences[KEY_DELIVERED_ALERT_KEYS] ?: emptySet()
+    }
+
+    suspend fun markAlertDelivered(key: String) {
+        context.dataStore.edit { preferences ->
+            val current = preferences[KEY_DELIVERED_ALERT_KEYS] ?: emptySet()
+            preferences[KEY_DELIVERED_ALERT_KEYS] = current + key
+        }
+    }
+
+    suspend fun isAlertDelivered(key: String): Boolean {
+        return deliveredAlertKeys.first().contains(key)
     }
 }

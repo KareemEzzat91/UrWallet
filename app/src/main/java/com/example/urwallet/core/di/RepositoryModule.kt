@@ -57,4 +57,10 @@ abstract class RepositoryModule {
     abstract fun bindRecurringRepository(
         impl: RecurringRepositoryImpl
     ): RecurringRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindNotificationRepository(
+        impl: com.example.urwallet.features.notifications.data.repository.NotificationRepositoryImpl
+    ): com.example.urwallet.features.notifications.domain.repository.NotificationRepository
 }

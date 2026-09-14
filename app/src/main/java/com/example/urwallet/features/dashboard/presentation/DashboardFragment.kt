@@ -73,6 +73,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupNavigationLinks() {
+        binding.btnNotifications.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_notificationSettingsFragment)
+        }
+
         binding.btnViewAllTransactions.setOnClickListener {
             navigateToTab(R.id.transactionsFragment)
         }

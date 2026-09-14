@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_challengeDetailFragment"
             app:destination="@id/challengeDetailFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_notificationSettingsFragment"
+            app:destination="@id/notificationSettingsFragment" />
     </fragment>
 
     <fragment
@@ -98,6 +101,9 @@
         <action
             android:id="@+id/action_moreFragment_to_recurringFragment"
             app:destination="@id/recurringFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_notificationSettingsFragment"
+            app:destination="@id/notificationSettingsFragment" />
     </fragment>
 
     <fragment
@@ -150,5 +156,11 @@
         android:name="com.example.urwallet.features.more.presentation.recurring.RecurringFragment"
         android:label="@string/recurring_title"
         tools:layout="@layout/fragment_recurring" />
+
+    <fragment
+        android:id="@+id/notificationSettingsFragment"
+        android:name="com.example.urwallet.features.notifications.presentation.NotificationSettingsFragment"
+        android:label="@string/notifications_settings_title"
+        tools:layout="@layout/fragment_notification_settings" />
 
 </navigation>

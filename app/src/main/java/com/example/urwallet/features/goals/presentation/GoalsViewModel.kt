@@ -7,6 +7,7 @@ import com.example.urwallet.features.goals.domain.usecase.AddGoalUseCase
 import com.example.urwallet.features.goals.domain.usecase.ContributeToGoalUseCase
 import com.example.urwallet.features.goals.domain.usecase.DeleteGoalUseCase
 import com.example.urwallet.features.goals.domain.usecase.GetGoalsUseCase
+import com.example.urwallet.features.notifications.domain.usecase.CheckGoalMilestoneUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +22,8 @@ class GoalsViewModel @Inject constructor(
     getGoalsUseCase: GetGoalsUseCase,
     private val addGoalUseCase: AddGoalUseCase,
     private val contributeToGoalUseCase: ContributeToGoalUseCase,
-    private val deleteGoalUseCase: DeleteGoalUseCase
+    private val deleteGoalUseCase: DeleteGoalUseCase,
+    private val checkGoalMilestoneUseCase: CheckGoalMilestoneUseCase
 ) : ViewModel() {
 
     val goalsUiState: StateFlow<GoalsUiState> = getGoalsUseCase()
@@ -63,11 +65,15 @@ class GoalsViewModel @Inject constructor(
         amount: Double,
         note: String? = null
     ): Result<Long> {
-        return contributeToGoalUseCase(
+        val result = contributeToGoalUseCase(
             goalId = goalId,
             amount = amount,
             note = note
         )
+        if (result.isSuccess) {
+            checkGoalMilestoneUseCase(goalId = goalId, contributionAmount = amount)
+        }
+        return result
     }
 
     fun deleteGoal(goalId: Long, onResult: (Result<Unit>) -> Unit = {}) {

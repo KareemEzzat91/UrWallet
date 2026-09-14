@@ -1,5 +1,6 @@
 package com.example.urwallet
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -9,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.urwallet.databinding.ActivityMainBinding
+import com.example.urwallet.features.notifications.data.helper.NotificationHelper
 import com.example.urwallet.features.transactions.presentation.AddTransactionBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +29,36 @@ class MainActivity : AppCompatActivity() {
         setupEdgeToEdge()
         setupNavigation()
         setupFab()
+        handleNotificationIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleNotificationIntent(intent)
+    }
+
+    private fun handleNotificationIntent(intent: Intent?) {
+        val target = intent?.getStringExtra(NotificationHelper.EXTRA_NAV_TARGET) ?: return
+        intent.removeExtra(NotificationHelper.EXTRA_NAV_TARGET)
+
+        when (target) {
+            NotificationHelper.NAV_TARGET_ADD_TRANSACTION -> {
+                if (supportFragmentManager.findFragmentByTag(AddTransactionBottomSheetFragment.TAG) == null) {
+                    AddTransactionBottomSheetFragment.newInstance()
+                        .show(supportFragmentManager, AddTransactionBottomSheetFragment.TAG)
+                }
+            }
+            NotificationHelper.NAV_TARGET_BUDGETS -> {
+                navController.navigate(R.id.budgetsFragment)
+            }
+            NotificationHelper.NAV_TARGET_GOALS -> {
+                binding.bottomNav.selectedItemId = R.id.goalsFragment
+            }
+            NotificationHelper.NAV_TARGET_SETTINGS -> {
+                navController.navigate(R.id.notificationSettingsFragment)
+            }
+        }
     }
 
     private fun setupEdgeToEdge() {

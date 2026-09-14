@@ -8,6 +8,7 @@ import com.example.urwallet.core.common.TransactionType
 import com.example.urwallet.features.transactions.domain.model.Category
 import com.example.urwallet.features.transactions.domain.model.Transaction
 import com.example.urwallet.features.transactions.domain.model.TransactionFilterCriteria
+import com.example.urwallet.features.notifications.domain.usecase.CheckBudgetAlertUseCase
 import com.example.urwallet.features.transactions.domain.usecase.AddTransactionUseCase
 import com.example.urwallet.features.transactions.domain.usecase.DeleteTransactionUseCase
 import com.example.urwallet.features.transactions.domain.usecase.GetCategoriesUseCase
@@ -35,7 +36,8 @@ class TransactionsViewModel @Inject constructor(
     private val getFilteredTransactionsUseCase: GetFilteredTransactionsUseCase,
     private val addTransactionUseCase: AddTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val checkBudgetAlertUseCase: CheckBudgetAlertUseCase
 ) : ViewModel() {
 
     // --- Search & Filter State ---
@@ -205,10 +207,14 @@ class TransactionsViewModel @Inject constructor(
                 note = note?.trim()?.ifBlank { null }
             )
 
+            val transactionType = _addTransactionUiState.value.selectedType
             result.fold(
                 onSuccess = {
                     _addTransactionUiState.update {
                         it.copy(isLoading = false, isSaved = true, errorMessage = null)
+                    }
+                    if (transactionType == TransactionType.EXPENSE) {
+                        checkBudgetAlertUseCase(categoryId = categoryId, amount = amount)
                     }
                 },
                 onFailure = { error ->

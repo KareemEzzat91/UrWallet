@@ -277,9 +277,9 @@ gantt
 * [ ] `RecurringTransactionWorker` (WorkManager): Background worker running daily at 00:00 to log due transactions automatically
 
 ### 📦 Phase 12 — Notifications & Local Reminders
-* [ ] `NotificationChannels` setup (Goals, Budgets, Daily Reminders, Challenges)
-* [ ] `DailyReminderReceiver` with `AlarmManager` for scheduled daily logging nudges
-* [ ] Budget warning and goal milestone notifications with direct deep-links
+* [x] `NotificationChannels` setup (Goals, Budgets, Daily Reminders, Challenges)
+* [x] `DailyReminderReceiver` with `AlarmManager` for scheduled daily logging nudges
+* [x] Budget warning and goal milestone notifications with direct deep-links
 
 ### 📦 Phase 13 — App Lock & Security
 * [ ] `AppLockFragment`: 4-digit PIN setup + Biometric toggle

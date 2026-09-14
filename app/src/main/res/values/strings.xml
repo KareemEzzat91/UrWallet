@@ -428,4 +428,53 @@
     <string name="dialog_delete_recurring_msg">هل أنت متأكد من حذف هذه المعاملة المجدولة؟ لن يتم تكرارها مستقبلاً ولكن سيتم الاحتفاظ بالمعاملات السابقة التي تم تسجيلها.</string>
     <string name="more_recurring_title">المعاملات المتكررة والاشتراكات</string>
     <string name="more_recurring_desc">جدولة الفواتير والاشتراكات والرواتب الشهرية آلياً</string>
+
+    <!-- Phase 12 Notifications & Reminders -->
+    <string name="notification_channel_daily_reminder_name">تذكير التسجيل اليومي</string>
+    <string name="notification_channel_daily_reminder_desc">تذكير يومي لتسجيل وتتبع المصاريف والدخل</string>
+    <string name="notification_channel_budgets_name">تنبيهات الميزانية</string>
+    <string name="notification_channel_budgets_desc">تنبيهات عند الاقتراب من حد الميزانية أو تجاوزه</string>
+    <string name="notification_channel_goals_name">إنجازات الأهداف</string>
+    <string name="notification_channel_goals_desc">إشعارات الاحتفال بإنجاز الأهداف والوصول لمحطات الادخار</string>
+    <string name="notification_channel_challenges_name">تحديات التوفير</string>
+    <string name="notification_channel_challenges_desc">تنبيهات أيام التحدي وحماس الاستمرار</string>
+
+    <string name="daily_reminder_title">هل سجلت مصاريف اليوم؟ 📝</string>
+    <string name="daily_reminder_message">دقيقة واحدة لتدوين مصاريفك تحافظ على أموالك وتوازن ميزانيتك!</string>
+
+    <string name="budget_alert_exceeded_title">⚠️ تجاوزت الميزانية!</string>
+    <string name="budget_alert_exceeded_desc">لقد تجاوزت ميزانية %1$s المحددة لهذا الشهر.</string>
+    <string name="budget_alert_warning_title">⚡ اقتربت من حد الميزانية</string>
+    <string name="budget_alert_warning_desc">استهلكت %1$d%% من ميزانية %2$s. انتبه لمصاريفك القادمة!</string>
+    <string name="global_budget_label">الميزانية العامة</string>
+
+    <string name="goal_milestone_completed_title">🎉 مبروك! حققت هدفك</string>
+    <string name="goal_milestone_completed_desc">تهانينا! لقد نجحت في إكمال هدف \"%1$s\" بالكامل.</string>
+    <string name="goal_milestone_half_title">🔥 رائع! قطعت نصف الطريق</string>
+    <string name="goal_milestone_half_desc">وصلت إلى 50%% من هدف \"%1$s\"، واصل التقدم!</string>
+
+    <string name="test_notification_title">إشعار تجريبي من محفظتك 🔔</string>
+    <string name="test_notification_desc">نظام التنبيهات يعمل بنجاح وبشكل محلي تماماً!</string>
+
+    <string name="notifications_settings_title">الإشعارات والتنبيهات</string>
+    <string name="notifications_settings_subtitle">تحكم في مواعيد التذكير والتنبيهات المالية الذكية</string>
+    <string name="settings_daily_reminder_title">تذكير التسجيل اليومي</string>
+    <string name="settings_daily_reminder_desc">تنبيه يومي لمساعدتك في تدوين مصاريفك بانتظام</string>
+    <string name="settings_reminder_time_label">وقت التذكير</string>
+    <string name="settings_budget_alerts_title">تنبيهات الميزانية</string>
+    <string name="settings_budget_alerts_desc">إشعار فوري عند استهلاك 80% أو تجاوز الميزانية</string>
+    <string name="settings_goal_alerts_title">إنجازات أهداف الادخار</string>
+    <string name="settings_goal_alerts_desc">إشعارات تشجيعية عند الوصول إلى 50% وإكمال الهدف</string>
+    <string name="settings_test_notification_btn">إرسال إشعار تجريبي 🔔</string>
+    <string name="settings_test_notification_hint">اضغط لتجربة وصول الإشعار والتأكد من ضبط القنوات</string>
+    <string name="settings_permission_banner_title">إذن الإشعارات متوقف</string>
+    <string name="settings_permission_banner_desc">يرجى منح إذن الإشعارات لتتمكن من استلام التذكيرات والتنبيهات.</string>
+    <string name="settings_permission_grant_btn">تفعيل الإذن</string>
+    <string name="settings_permission_granted">الإشعارات مفعلة ✅</string>
+    <string name="settings_permission_denied">الإشعارات معطلة ⚠️</string>
+    <string name="settings_test_notification_sent">تم إرسال الإشعار التجريبي</string>
+    <string name="settings_exact_alarm_warning">يرجى السماح بالتنبيهات الدقيقة من إعدادات النظام لضمان التوقيت المضبوط.</string>
+
+    <string name="more_notifications_title">التنبيهات والإشعارات</string>
+    <string name="more_notifications_desc">تخصيص مواعيد التذكير اليومي وتنبيهات الميزانيات والأهداف</string>
 </resources>

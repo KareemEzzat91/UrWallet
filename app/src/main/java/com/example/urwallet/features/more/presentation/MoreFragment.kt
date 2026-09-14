@@ -47,6 +47,10 @@ class MoreFragment : Fragment() {
         binding.cardRecurringNav.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_recurringFragment)
         }
+
+        binding.cardNotificationsNav.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_notificationSettingsFragment)
+        }
     }
 
     override fun onDestroyView() {

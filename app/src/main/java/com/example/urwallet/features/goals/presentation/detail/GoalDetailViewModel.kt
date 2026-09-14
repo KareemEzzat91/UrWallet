@@ -24,7 +24,8 @@ class GoalDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getGoalDetailUseCase: GetGoalDetailUseCase,
     private val deleteGoalUseCase: DeleteGoalUseCase,
-    private val contributeToGoalUseCase: ContributeToGoalUseCase
+    private val contributeToGoalUseCase: ContributeToGoalUseCase,
+    private val checkGoalMilestoneUseCase: com.example.urwallet.features.notifications.domain.usecase.CheckGoalMilestoneUseCase
 ) : ViewModel() {
 
     private val goalId = savedStateHandle.get<Long>("goalId") ?: -1L
@@ -55,11 +56,15 @@ class GoalDetailViewModel @Inject constructor(
 
     suspend fun contribute(amount: Double, note: String? = null): Result<Long> {
         val currentId = _goalIdFlow.value
-        return contributeToGoalUseCase(
+        val result = contributeToGoalUseCase(
             goalId = currentId,
             amount = amount,
             note = note
         )
+        if (result.isSuccess) {
+            checkGoalMilestoneUseCase(goalId = currentId, contributionAmount = amount)
+        }
+        return result
     }
 
     fun deleteGoal(onComplete: (Boolean) -> Unit) {
