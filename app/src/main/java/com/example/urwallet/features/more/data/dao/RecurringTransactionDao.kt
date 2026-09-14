@@ -38,4 +38,10 @@ interface RecurringTransactionDao {
 
     @Query("UPDATE recurring_transactions SET isActive = :isActive WHERE id = :id")
     suspend fun toggleActive(id: Long, isActive: Boolean): Int
+
+    @Query("SELECT * FROM recurring_transactions WHERE id = :id LIMIT 1")
+    fun getRecurringTransactionById(id: Long): Flow<RecurringTransactionEntity?>
+
+    @Query("SELECT * FROM recurring_transactions WHERE id = :id LIMIT 1")
+    suspend fun getRecurringTransactionByIdSync(id: Long): RecurringTransactionEntity?
 }

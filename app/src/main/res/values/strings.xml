@@ -391,4 +391,41 @@
     <string name="more_challenges_title">تحديات التوفير</string>
     <string name="more_challenges_desc">تحديات مالية ذكية ومحفزة للادخار وضبط المصروفات</string>
     <string name="dashboard_challenge_title">تحدي التوفير النشط</string>
+
+    <!-- Phase 11 Recurring Transactions -->
+    <string name="recurring_title">المعاملات المتكررة</string>
+    <string name="recurring_subtitle">إدارة الفواتير، الاشتراكات والرواتب المجدولة</string>
+    <string name="recurring_monthly_obligations">الالتزامات الشهرية</string>
+    <string name="recurring_monthly_income">الدخل المتكرر الشهري</string>
+    <string name="recurring_active_count">الاشتراكات النشطة</string>
+    <string name="recurring_filter_all">الكل</string>
+    <string name="recurring_filter_expense">المصروفات</string>
+    <string name="recurring_filter_income">الدخل</string>
+    <string name="recurring_next_occurrence_format">الموعد القادم: %1$s</string>
+    <string name="recurring_empty_title">لا توجد معاملات متكررة حالياً</string>
+    <string name="recurring_empty_desc">أضف فواتيرك الشهرية، اشتراكاتك، أو دخلك المتكرر ليتم تسجيلها تلقائياً بدون تدخل منك.</string>
+    <string name="action_add_recurring">إضافة معاملة متكررة</string>
+    <string name="title_add_recurring">معاملة متكررة جديدة</string>
+    <string name="label_recurring_type">نوع المعاملة</string>
+    <string name="label_recurring_title">عنوان المعاملة</string>
+    <string name="hint_recurring_title">مثل: اشتراك الإنترنت، الإيجار، الراتب...</string>
+    <string name="label_recurring_amount">المبلغ (ج.م)</string>
+    <string name="hint_recurring_amount">0.00</string>
+    <string name="label_recurring_category">الفئة</string>
+    <string name="label_recurring_frequency">وتيرة التكرار</string>
+    <string name="label_recurring_start_date">تاريخ البدء / الاستحقاق الأول</string>
+    <string name="label_recurring_has_end_date">تحديد تاريخ انتهاء</string>
+    <string name="label_recurring_end_date">تاريخ الانتهاء</string>
+    <string name="btn_save_recurring">حفظ المعاملة المتكررة</string>
+    <string name="error_empty_recurring_title">يرجى كتابة عنوان المعاملة</string>
+    <string name="error_invalid_recurring_amount">يرجى كتابة مبلغ صحيح أكبر من صفر</string>
+    <string name="error_recurring_no_category">يرجى اختيار الفئة</string>
+    <string name="error_invalid_end_date">يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء</string>
+    <string name="recurring_created_success">تمت إضافة المعاملة المتكررة بنجاح</string>
+    <string name="recurring_deleted_success">تم حذف المعاملة المتكررة</string>
+    <string name="recurring_status_toggled">تم تغيير حالة المعاملة</string>
+    <string name="dialog_delete_recurring_title">حذف المعاملة المتكررة</string>
+    <string name="dialog_delete_recurring_msg">هل أنت متأكد من حذف هذه المعاملة المجدولة؟ لن يتم تكرارها مستقبلاً ولكن سيتم الاحتفاظ بالمعاملات السابقة التي تم تسجيلها.</string>
+    <string name="more_recurring_title">المعاملات المتكررة والاشتراكات</string>
+    <string name="more_recurring_desc">جدولة الفواتير والاشتراكات والرواتب الشهرية آلياً</string>
 </resources>

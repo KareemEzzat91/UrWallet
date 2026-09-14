@@ -83,6 +83,10 @@ class TransactionRepositoryImpl @Inject constructor(
         transactionDao.deleteTransactionById(id)
     }
 
+    override suspend fun countTransactionsByNoteTag(tagPattern: String): Int {
+        return transactionDao.countTransactionsByNoteTag(tagPattern)
+    }
+
     override fun getAllCategories(): Flow<List<Category>> {
         return categoryDao.getAllCategories().map { list -> list.map { it.toDomain() } }
     }

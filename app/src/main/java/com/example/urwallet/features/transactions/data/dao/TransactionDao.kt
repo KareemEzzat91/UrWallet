@@ -55,6 +55,9 @@ interface TransactionDao {
     @Query("SELECT COUNT(*) FROM transactions WHERE date >= :startOfDay AND date <= :endOfDay")
     fun getTodayTransactionCount(startOfDay: Long, endOfDay: Long): Flow<Int>
 
+    @Query("SELECT COUNT(*) FROM transactions WHERE note LIKE :tagPattern")
+    suspend fun countTransactionsByNoteTag(tagPattern: String): Int
+
     @Query("DELETE FROM transactions")
     suspend fun deleteAllTransactions(): Int
 }

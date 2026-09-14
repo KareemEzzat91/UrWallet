@@ -36,6 +36,18 @@ class RecurringRepositoryImpl @Inject constructor(
         recurringDao.toggleActive(id, isActive)
     }
 
+    override fun getRecurringTransactionById(id: Long): Flow<RecurringTransaction?> {
+        return recurringDao.getRecurringTransactionById(id).map { it?.toDomain() }
+    }
+
+    override suspend fun getDueRecurringTransactionsSync(currentDate: Long): List<RecurringTransaction> {
+        return recurringDao.getDueRecurringTransactionsSync(currentDate).map { it.toDomain() }
+    }
+
+    override suspend fun updateNextOccurrence(id: Long, nextOccurrence: Long) {
+        recurringDao.updateNextOccurrence(id, nextOccurrence)
+    }
+
     // --- Mappers ---
     private fun RecurringTransactionEntity.toDomain() = RecurringTransaction(
         id = id,

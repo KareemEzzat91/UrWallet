@@ -20,6 +20,7 @@ interface TransactionRepository {
     suspend fun updateTransaction(transaction: Transaction)
     suspend fun deleteTransaction(transaction: Transaction)
     suspend fun deleteTransactionById(id: Long)
+    suspend fun countTransactionsByNoteTag(tagPattern: String): Int = 0
 
     // Category methods
     fun getAllCategories(): Flow<List<Category>>

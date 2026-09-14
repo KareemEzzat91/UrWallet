@@ -95,6 +95,9 @@
         <action
             android:id="@+id/action_moreFragment_to_challengesFragment"
             app:destination="@id/challengesFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_recurringFragment"
+            app:destination="@id/recurringFragment" />
     </fragment>
 
     <fragment
@@ -141,5 +144,11 @@
             android:name="challengeId"
             app:argType="long" />
     </fragment>
+
+    <fragment
+        android:id="@+id/recurringFragment"
+        android:name="com.example.urwallet.features.more.presentation.recurring.RecurringFragment"
+        android:label="@string/recurring_title"
+        tools:layout="@layout/fragment_recurring" />
 
 </navigation>
