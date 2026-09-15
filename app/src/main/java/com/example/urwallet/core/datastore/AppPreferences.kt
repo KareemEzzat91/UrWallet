@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -44,6 +45,8 @@ class AppPreferences(private val context: Context) {
         private val KEY_PIN_SALT = stringPreferencesKey("pin_salt")
         private val KEY_PIN_HASH = stringPreferencesKey("pin_hash")
         private val KEY_BIOMETRIC_ENABLED = booleanPreferencesKey("is_biometric_enabled")
+        private val KEY_FAILED_PIN_ATTEMPTS = intPreferencesKey("failed_pin_attempts")
+        private val KEY_PIN_LOCKOUT_UNTIL_TIMESTAMP = longPreferencesKey("pin_lockout_until_timestamp")
 
         // Notification Preferences
         private val KEY_DAILY_REMINDER_ENABLED = booleanPreferencesKey("is_daily_reminder_enabled")
@@ -125,6 +128,37 @@ class AppPreferences(private val context: Context) {
     suspend fun setBiometricEnabled(enabled: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[KEY_BIOMETRIC_ENABLED] = enabled
+        }
+    }
+
+    val failedPinAttempts: Flow<Int> = context.dataStore.data.map { preferences ->
+        preferences[KEY_FAILED_PIN_ATTEMPTS] ?: 0
+    }
+
+    suspend fun incrementFailedPinAttempts(): Int {
+        var newCount = 1
+        context.dataStore.edit { preferences ->
+            val current = preferences[KEY_FAILED_PIN_ATTEMPTS] ?: 0
+            newCount = current + 1
+            preferences[KEY_FAILED_PIN_ATTEMPTS] = newCount
+        }
+        return newCount
+    }
+
+    suspend fun resetFailedPinAttempts() {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_FAILED_PIN_ATTEMPTS] = 0
+            preferences[KEY_PIN_LOCKOUT_UNTIL_TIMESTAMP] = 0L
+        }
+    }
+
+    val pinLockoutUntil: Flow<Long> = context.dataStore.data.map { preferences ->
+        preferences[KEY_PIN_LOCKOUT_UNTIL_TIMESTAMP] ?: 0L
+    }
+
+    suspend fun setPinLockoutUntil(timestamp: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_PIN_LOCKOUT_UNTIL_TIMESTAMP] = timestamp
         }
     }
 

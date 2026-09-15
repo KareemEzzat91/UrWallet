@@ -477,4 +477,41 @@
 
     <string name="more_notifications_title">التنبيهات والإشعارات</string>
     <string name="more_notifications_desc">تخصيص مواعيد التذكير اليومي وتنبيهات الميزانيات والأهداف</string>
+
+    <!-- Phase 13 App Lock & Security -->
+    <string name="security_settings_title">قفل التطبيق والأمان</string>
+    <string name="security_settings_subtitle">حماية بياناتك المالية برمز PIN والبصمة البيومترية</string>
+    <string name="security_app_lock_title">قفل التطبيق برمز PIN</string>
+    <string name="security_app_lock_desc">طلب رمز PIN عند فتح التطبيق للحفاظ على خصوصيتك</string>
+    <string name="security_biometric_title">استخدام البصمة البيومترية</string>
+    <string name="security_biometric_desc">تسجيل الدخول السريع باستخدام بصمة الإصبع أو الوجه</string>
+    <string name="security_biometric_not_supported">الجهاز لا يدعم المصادقة البيومترية أو لم يتم تسجيل بصمة</string>
+    <string name="security_change_pin_title">تغيير رمز PIN</string>
+    <string name="security_change_pin_desc">تحديث رمز الدخول المكون من 4 أرقام</string>
+    <string name="security_disable_lock_dialog_title">تعطيل قفل التطبيق</string>
+    <string name="security_disable_lock_dialog_desc">يرجى إدخال رمز PIN الحالي لتأكيد تعطيل القفل</string>
+    <string name="security_confirm_current_pin">أدخل رمز PIN الحالي</string>
+    <string name="security_pin_setup_step1_title">تعيين رمز PIN الجديد</string>
+    <string name="security_pin_setup_step1_subtitle">أدخل رمز مرور مكون من 4 أرقام لحماية محفظتك</string>
+    <string name="security_pin_setup_step2_title">تأكيد رمز PIN</string>
+    <string name="security_pin_setup_step2_subtitle">أعد إدخال رمز الـ PIN للتأكيد</string>
+    <string name="security_pin_setup_step3_title">تفعيل البصمة البيومترية</string>
+    <string name="security_pin_setup_step3_subtitle">يمكنك الآن تفعيل الدخول السريع بالبصمة</string>
+    <string name="security_pin_mismatch">الرمزان غير متطابقين، يرجى المحاولة مرة أخرى</string>
+    <string name="security_pin_wrong">رمز PIN غير صحيح، حاول مرة أخرى</string>
+    <string name="security_pin_saved_success">تم تفعيل قفل التطبيق بنجاح</string>
+    <string name="security_pin_changed_success">تم تغيير رمز PIN بنجاح</string>
+    <string name="security_lock_disabled_success">تم تعطيل قفل التطبيق</string>
+    <string name="security_lockout_message">تم تجاوز عدد المحاولات. حاول مجدداً بعد %1$d ثانية</string>
+    <string name="security_lock_screen_title">محفظتك محمية 🔒</string>
+    <string name="security_lock_screen_subtitle">أدخل رمز PIN للدخول إلى محفظتك</string>
+    <string name="security_biometric_prompt_title">تأكيد الهوية</string>
+    <string name="security_biometric_prompt_subtitle">استخدم بصمة الإصبع أو الوجه لفتح محفظتك</string>
+    <string name="security_biometric_prompt_negative">استخدام رمز PIN</string>
+    <string name="security_keypad_delete">حذف</string>
+    <string name="security_action_cancel">إلغاء</string>
+    <string name="security_action_confirm">تأكيد</string>
+    <string name="security_action_finish">إنهاء</string>
+    <string name="more_security_title">قفل التطبيق والأمان</string>
+    <string name="more_security_desc">حماية المحفظة برمز PIN مخصص والمصادقة البيومترية</string>
 </resources>

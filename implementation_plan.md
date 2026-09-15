@@ -282,9 +282,9 @@ gantt
 * [x] Budget warning and goal milestone notifications with direct deep-links
 
 ### 📦 Phase 13 — App Lock & Security
-* [ ] `AppLockFragment`: 4-digit PIN setup + Biometric toggle
-* [ ] Custom numeric keypad screen shown on app cold start and resume
-* [ ] Encrypted SHA-256 PIN storage in `DataStore` with BiometricPrompt fallback
+* [x] `SecuritySettingsFragment` & `PinSetupBottomSheetFragment`: 4-digit PIN setup + Biometric toggle
+* [x] Custom numeric keypad screen (`AppLockActivity`) shown on app cold start and resume with `FLAG_SECURE`
+* [x] PBKDF2WithHmacSHA256 PIN hashing in `DataStore` with rate limiting & `BiometricPrompt` fallback
 
 ### 📦 Phase 14 — Data Management & Local Backup
 * [ ] `DataManagementFragment` (Dark mode surface)

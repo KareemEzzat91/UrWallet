@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_surface_rounded"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="24dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/ic_drag_handle" />
+
+    <!-- Step Title -->
+    <TextView
+        android:id="@+id/tvWizardTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/urwallet_text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="تعيين رمز PIN الجديد" />
+
+    <!-- Step Subtitle -->
+    <TextView
+        android:id="@+id/tvWizardSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textColor="@color/urwallet_text_secondary"
+        android:textSize="13sp"
+        tools:text="أدخل رمز مرور مكون من 4 أرقام لحماية محفظتك" />
+
+    <!-- PIN Entry Container (Steps 1 & 2) -->
+    <LinearLayout
+        android:id="@+id/containerPinEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- 4 PIN Dots -->
+        <LinearLayout
+            android:id="@+id/wizardDotsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/wDot1"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/bg_pin_dot_empty" />
+
+            <View
+                android:id="@+id/wDot2"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/bg_pin_dot_empty" />
+
+            <View
+                android:id="@+id/wDot3"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/bg_pin_dot_empty" />
+
+            <View
+                android:id="@+id/wDot4"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/bg_pin_dot_empty" />
+        </LinearLayout>
+
+        <!-- Error Message -->
+        <TextView
+            android:id="@+id/tvWizardError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="@color/urwallet_expense"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="الرمزان غير متطابقين، حاول مرة أخرى"
+            tools:visibility="visible" />
+
+        <!-- Keypad (Compact 3x4) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- Row 1 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/wBtn1"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="1"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/wBtn2"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="2"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/wBtn3"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="3"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <!-- Row 2 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/wBtn4"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="4"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/wBtn5"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="5"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/wBtn6"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="6"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <!-- Row 3 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/wBtn7"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="7"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/wBtn8"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="8"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/wBtn9"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="9"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <!-- Row 4 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp" />
+
+                <TextView
+                    android:id="@+id/wBtn0"
+                    style="@style/UrWalletKeypadButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:text="0"
+                    android:textSize="22sp" />
+
+                <FrameLayout
+                    android:id="@+id/wBtnDelete"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/bg_keypad_button"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/security_keypad_delete"
+                        android:src="@drawable/ic_backspace"
+                        app:tint="@color/urwallet_text_primary" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Biometric Setup Container (Step 3) -->
+    <LinearLayout
+        android:id="@+id/containerBiometricStep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_squircle_primary_light">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_fingerprint"
+                app:tint="@color/urwallet_primary" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/security_pin_setup_step3_title"
+            android:textColor="@color/urwallet_text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:text="@string/security_biometric_desc"
+            android:textColor="@color/urwallet_text_secondary"
+            android:textSize="13sp" />
+
+        <!-- Actions -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEnableBiometric"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="28dp"
+            android:text="تفعيل البصمة الآن"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="14dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSkipBiometric"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:text="تخطي والانتهاء"
+            android:textColor="@color/urwallet_text_secondary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

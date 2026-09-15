@@ -104,6 +104,9 @@
         <action
             android:id="@+id/action_moreFragment_to_notificationSettingsFragment"
             app:destination="@id/notificationSettingsFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_securitySettingsFragment"
+            app:destination="@id/securitySettingsFragment" />
     </fragment>
 
     <fragment
@@ -162,5 +165,11 @@
         android:name="com.example.urwallet.features.notifications.presentation.NotificationSettingsFragment"
         android:label="@string/notifications_settings_title"
         tools:layout="@layout/fragment_notification_settings" />
+
+    <fragment
+        android:id="@+id/securitySettingsFragment"
+        android:name="com.example.urwallet.features.security.presentation.settings.SecuritySettingsFragment"
+        android:label="@string/security_settings_title"
+        tools:layout="@layout/fragment_security_settings" />
 
 </navigation>

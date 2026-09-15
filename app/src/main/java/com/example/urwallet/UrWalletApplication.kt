@@ -7,10 +7,12 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.example.urwallet.core.datastore.AppPreferences
 import com.example.urwallet.features.more.presentation.recurring.RecurringTransactionWorker
 import com.example.urwallet.features.notifications.data.helper.NotificationHelper
 import com.example.urwallet.features.notifications.data.scheduler.AlarmScheduler
+import com.example.urwallet.features.security.domain.session.AppLockManager
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,8 +33,13 @@ class UrWalletApplication : Application() {
     @Inject
     lateinit var appPreferences: AppPreferences
 
+    @Inject
+    lateinit var appLockManager: AppLockManager
+
     override fun onCreate() {
         super.onCreate()
+        appLockManager.syncLockStateBlocking()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(appLockManager)
         notificationHelper.createNotificationChannels()
         scheduleRecurringTransactionsWorker()
         initializeDailyReminder()

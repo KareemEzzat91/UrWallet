@@ -51,6 +51,10 @@ class MoreFragment : Fragment() {
         binding.cardNotificationsNav.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_notificationSettingsFragment)
         }
+
+        binding.cardSecurityNav.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_securitySettingsFragment)
+        }
     }
 
     override fun onDestroyView() {

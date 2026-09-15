@@ -12,13 +12,28 @@ import androidx.navigation.ui.NavigationUI
 import com.example.urwallet.databinding.ActivityMainBinding
 import com.example.urwallet.features.notifications.data.helper.NotificationHelper
 import com.example.urwallet.features.transactions.presentation.AddTransactionBottomSheetFragment
+import android.view.WindowManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.urwallet.features.security.domain.repository.SecurityRepository
+import com.example.urwallet.features.security.domain.session.AppLockManager
+import com.example.urwallet.features.security.presentation.lock.AppLockActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+
+    @Inject
+    lateinit var appLockManager: AppLockManager
+
+    @Inject
+    lateinit var securityRepository: SecurityRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +45,34 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
         setupFab()
         handleNotificationIntent(intent)
+        observeSecurityFlags()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (appLockManager.shouldLockOnForeground()) {
+            AppLockActivity.start(this)
+        } else {
+            lifecycleScope.launch {
+                if (appLockManager.shouldLockSuspend()) {
+                    AppLockActivity.start(this@MainActivity)
+                }
+            }
+        }
+    }
+
+    private fun observeSecurityFlags() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                securityRepository.isAppLockEnabled.collect { isLockEnabled ->
+                    if (isLockEnabled) {
+                        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+                    } else {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    }
+                }
+            }
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
