@@ -35,4 +35,10 @@ interface CategoryDao {
 
     @Query("SELECT COUNT(*) FROM categories")
     suspend fun getCategoryCount(): Int
+
+    @Query("SELECT * FROM categories ORDER BY id ASC")
+    suspend fun getAllCategoriesSync(): List<CategoryEntity>
+
+    @Query("DELETE FROM categories")
+    suspend fun deleteAllCategories(): Int
 }

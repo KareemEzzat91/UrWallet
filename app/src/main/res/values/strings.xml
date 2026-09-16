@@ -514,4 +514,47 @@
     <string name="security_action_finish">إنهاء</string>
     <string name="more_security_title">قفل التطبيق والأمان</string>
     <string name="more_security_desc">حماية المحفظة برمز PIN مخصص والمصادقة البيومترية</string>
+
+    <!-- Phase 14: Data Management & Backup -->
+    <string name="data_management_title">إدارة البيانات والنسخ الاحتياطي</string>
+    <string name="data_management_subtitle">تحكم كامل في بياناتك المالية محلياً دون تخزين سحابي</string>
+    <string name="more_data_management_title">إدارة البيانات والنسخ الاحتياطي</string>
+    <string name="more_data_management_desc">تصدير واستيراد النسخ الاحتياطية وملفات Excel وإدارة البيانات</string>
+
+    <!-- Backup Card -->
+    <string name="backup_card_title">النسخ الاحتياطي الكامل (JSON)</string>
+    <string name="backup_card_desc">نسخة احتياطية شاملة لجميع المعاملات، الأهداف، الميزانيات، والتحديات بتنسيق قياسي مشفر محلياً.</string>
+    <string name="btn_export_json_backup">إنشاء نسخة احتياطية وتصديرها</string>
+    <string name="btn_import_json_backup">استيراد نسخة احتياطية</string>
+
+    <!-- CSV Card -->
+    <string name="csv_card_title">تصدير المعاملات (Excel / CSV)</string>
+    <string name="csv_card_desc">تصدير سجل المعاملات إلى ملف CSV متوافق مع Microsoft Excel باللغة العربية وترميز UTF-8.</string>
+    <string name="btn_export_csv">تصدير المعاملات إلى ملف CSV</string>
+
+    <!-- Danger Zone Card -->
+    <string name="danger_zone_title">منطقة الخطر</string>
+    <string name="danger_zone_desc">حذف جميع المعاملات والأهداف والميزانيات المالية وإعادة ضبط البيانات المالية إلى نقطة البداية.</string>
+    <string name="btn_clear_all_data">حذف جميع البيانات المالية</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_import_strategy_title">طريقة استيراد النسخة</string>
+    <string name="dialog_import_strategy_message">تحتوي النسخة على %1$d معاملة و%2$d هدف و%3$d ميزانية. كيف ترغب في استيرادها؟</string>
+    <string name="strategy_replace_title">استبدال البيانات الحالية (مسح واستعادة)</string>
+    <string name="strategy_replace_desc">حذف البيانات المالية الموجودة حالياً بالكامل واستبدالها بمحتوى النسخة الاحتياطية.</string>
+    <string name="strategy_merge_title">إضافة ودمج (الحفاظ على البيانات الحالية)</string>
+    <string name="strategy_merge_desc">الاحتفاظ بجميع بياناتك الحالية وإضافة سجلات النسخة مع تفادي التكرار.</string>
+    <string name="dialog_clear_data_title">حذف جميع البيانات المالية؟</string>
+    <string name="dialog_clear_data_message">تحذير: هذا الإجراء نهائي وسيتم مسح كافة المعاملات، الأهداف، المساهمات، الميزانيات، والتحديات. سيتم فقط الإبقاء على التصنيفات الافتراضية وإعدادات التطبيق. هل أنت متأكد؟</string>
+    <string name="dialog_clear_data_confirm">نعم، احذف كل شيء</string>
+
+    <!-- Feedback & Messages -->
+    <string name="backup_export_success">تم إنشاء النسخة الاحتياطية بنجاح</string>
+    <string name="csv_export_success">تم تصدير ملف CSV بنجاح</string>
+    <string name="backup_restore_success">تم استرجاع البيانات بنجاح (%1$d معاملة، %2$d هدف)</string>
+    <string name="clear_data_success">تم حذف جميع البيانات المالية وإعادة بذر التصنيفات الافتراضية</string>
+    <string name="error_file_read">تعذر قراءة الملف المحدد</string>
+    <string name="error_invalid_backup">ملف النسخة الاحتياطية غير متوافق أو تالف</string>
+    <string name="share_backup_title">مشاركة النسخة الاحتياطية</string>
+    <string name="share_csv_title">مشاركة ملف المعاملات</string>
 </resources>

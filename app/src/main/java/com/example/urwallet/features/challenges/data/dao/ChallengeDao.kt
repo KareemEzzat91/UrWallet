@@ -34,4 +34,10 @@ interface ChallengeDao {
 
     @Query("DELETE FROM challenges WHERE id = :id")
     suspend fun deleteChallenge(id: Long): Int
+
+    @Query("SELECT * FROM challenges ORDER BY id ASC")
+    suspend fun getAllChallengesSync(): List<ChallengeEntity>
+
+    @Query("DELETE FROM challenges")
+    suspend fun deleteAllChallenges(): Int
 }

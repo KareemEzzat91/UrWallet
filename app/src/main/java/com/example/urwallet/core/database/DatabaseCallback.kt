@@ -18,9 +18,10 @@ class DatabaseCallback(
         }
     }
 
-    private suspend fun populateDefaultCategories(database: UrWalletDatabase) {
-        val categoryDao = database.categoryDao()
-        if (categoryDao.getCategoryCount() > 0) return
+    companion object {
+        suspend fun populateDefaultCategories(database: UrWalletDatabase) {
+            val categoryDao = database.categoryDao()
+            if (categoryDao.getCategoryCount() > 0) return
 
         val defaultCategories = listOf(
             // Expense Categories
@@ -113,5 +114,6 @@ class DatabaseCallback(
         )
 
         categoryDao.insertCategories(defaultCategories)
+    }
     }
 }

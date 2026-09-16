@@ -34,4 +34,13 @@ interface GoalDao {
 
     @Query("UPDATE goals SET isDeleted = 1 WHERE id = :id")
     suspend fun softDeleteGoal(id: Long): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGoals(goals: List<GoalEntity>): List<Long>
+
+    @Query("SELECT * FROM goals ORDER BY id ASC")
+    suspend fun getAllGoalsSync(): List<GoalEntity>
+
+    @Query("DELETE FROM goals")
+    suspend fun deleteAllGoals(): Int
 }

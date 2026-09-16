@@ -44,4 +44,13 @@ interface RecurringTransactionDao {
 
     @Query("SELECT * FROM recurring_transactions WHERE id = :id LIMIT 1")
     suspend fun getRecurringTransactionByIdSync(id: Long): RecurringTransactionEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecurringTransactions(recurring: List<RecurringTransactionEntity>): List<Long>
+
+    @Query("SELECT * FROM recurring_transactions ORDER BY id ASC")
+    suspend fun getAllRecurringTransactionsSync(): List<RecurringTransactionEntity>
+
+    @Query("DELETE FROM recurring_transactions")
+    suspend fun deleteAllRecurringTransactions(): Int
 }

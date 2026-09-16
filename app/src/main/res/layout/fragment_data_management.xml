@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/urwallet_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/urwallet_surface"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingEnd="16dp">
+
+            <FrameLayout
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bg_chip_preset"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/action_back"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="@color/urwallet_text_primary" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:text="@string/data_management_title"
+                android:textColor="@color/urwallet_text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/screen_padding_horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="48dp">
+
+            <!-- Subtitle info banner -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/data_management_subtitle"
+                android:textColor="@color/urwallet_text_secondary"
+                android:textSize="14sp" />
+
+            <!-- Card 1: Full JSON Backup & Restore -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardBackup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/urwallet_surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/urwallet_card_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_squircle_primary_light">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_bills"
+                                app:tint="@color/urwallet_primary" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/backup_card_title"
+                                android:textColor="@color/urwallet_text_primary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/backup_card_desc"
+                                android:textColor="@color/urwallet_text_secondary"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnExportJsonBackup"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/btn_export_json_backup"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/urwallet_primary"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_arrow_back"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/white" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnImportJsonBackup"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/btn_import_json_backup"
+                        android:textColor="@color/urwallet_primary"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="@color/urwallet_primary"
+                        app:strokeWidth="1.5dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 2: Export Transactions CSV -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardCsv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/urwallet_surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/urwallet_card_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_squircle_primary_light">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_education"
+                                app:tint="@color/urwallet_primary" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/csv_card_title"
+                                android:textColor="@color/urwallet_text_primary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/csv_card_desc"
+                                android:textColor="@color/urwallet_text_secondary"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnExportCsv"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/btn_export_csv"
+                        android:textColor="@color/urwallet_primary"
+                        app:cornerRadius="12dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 3: Danger Zone -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDangerZone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/urwallet_surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#FFCDD2"
+                app:strokeWidth="1.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_squircle_expense">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="⚠️"
+                                android:textSize="20sp" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/danger_zone_title"
+                                android:textColor="#D32F2F"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/danger_zone_desc"
+                                android:textColor="@color/urwallet_text_secondary"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnClearAllData"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/btn_clear_all_data"
+                        android:textColor="#FFFFFF"
+                        app:backgroundTint="#D32F2F"
+                        app:cornerRadius="12dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Loading Overlay -->
+    <FrameLayout
+        android:id="@+id/layoutLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardBackgroundColor="@color/urwallet_surface"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <ProgressBar
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:indeterminateTint="@color/urwallet_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="جاري معالجة البيانات..."
+                    android:textColor="@color/urwallet_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

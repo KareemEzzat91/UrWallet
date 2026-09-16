@@ -24,4 +24,13 @@ interface GoalContributionDao {
 
     @Query("SELECT COALESCE(SUM(amount), 0.0) FROM goal_contributions WHERE date >= :startDate AND date <= :endDate")
     fun getMonthlyContributionsSum(startDate: Long, endDate: Long): Flow<Double>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertContributions(contributions: List<GoalContributionEntity>): List<Long>
+
+    @Query("SELECT * FROM goal_contributions ORDER BY date DESC")
+    suspend fun getAllContributionsSync(): List<GoalContributionEntity>
+
+    @Query("DELETE FROM goal_contributions")
+    suspend fun deleteAllContributions(): Int
 }

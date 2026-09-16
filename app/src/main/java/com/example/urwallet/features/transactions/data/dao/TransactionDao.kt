@@ -60,4 +60,7 @@ interface TransactionDao {
 
     @Query("DELETE FROM transactions")
     suspend fun deleteAllTransactions(): Int
+
+    @Query("SELECT * FROM transactions ORDER BY date DESC")
+    suspend fun getAllTransactionsSync(): List<TransactionEntity>
 }

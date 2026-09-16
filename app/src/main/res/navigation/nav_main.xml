@@ -107,7 +107,16 @@
         <action
             android:id="@+id/action_moreFragment_to_securitySettingsFragment"
             app:destination="@id/securitySettingsFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_dataManagementFragment"
+            app:destination="@id/dataManagementFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/dataManagementFragment"
+        android:name="com.example.urwallet.features.backup.presentation.DataManagementFragment"
+        android:label="@string/data_management_title"
+        tools:layout="@layout/fragment_data_management" />
 
     <fragment
         android:id="@+id/budgetsFragment"

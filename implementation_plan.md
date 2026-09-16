@@ -287,11 +287,11 @@ gantt
 * [x] PBKDF2WithHmacSHA256 PIN hashing in `DataStore` with rate limiting & `BiometricPrompt` fallback
 
 ### 📦 Phase 14 — Data Management & Local Backup
-* [ ] `DataManagementFragment` (Dark mode surface)
-* [ ] Export transactions to CSV
-* [ ] Encrypted full JSON database backup export
-* [ ] Import backup file with conflict resolution
-* [ ] "حذف جميع البيانات" (Clear All Data) with destructive confirmation dialog
+* [x] `DataManagementFragment` (Dark mode surface)
+* [x] Export transactions to CSV
+* [x] Encrypted full JSON database backup export
+* [x] Import backup file with conflict resolution
+* [x] "حذف جميع البيانات" (Clear All Data) with destructive confirmation dialog
 
 ### 📦 Phase 15 — Polish, RTL, Skeleton Loaders & QA
 * [ ] Verify 100% RTL alignment (all arrows, padding, alignments)
