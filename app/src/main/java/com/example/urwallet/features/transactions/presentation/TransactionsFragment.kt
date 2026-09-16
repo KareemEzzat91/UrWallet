@@ -17,6 +17,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.urwallet.R
 import com.example.urwallet.core.common.TransactionType
+import com.example.urwallet.core.designsystem.performHapticClick
+import com.example.urwallet.core.designsystem.showSuccessSnackbar
+import com.example.urwallet.core.designsystem.startSkeletonShimmer
+import com.example.urwallet.core.designsystem.stopSkeletonShimmer
 import com.example.urwallet.databinding.FragmentTransactionsBinding
 import com.example.urwallet.features.transactions.domain.model.Transaction
 import com.example.urwallet.features.transactions.presentation.adapter.GroupedTransactionAdapter
@@ -49,7 +53,16 @@ class TransactionsFragment : Fragment() {
         setupSearch()
         setupFilters()
         setupReportsBanner()
+        setupEmptyState()
         observeTransactions()
+    }
+
+    private fun setupEmptyState() {
+        binding.btnEmptyAddTransaction.setOnClickListener {
+            it.performHapticClick()
+            AddTransactionBottomSheetFragment.newInstance()
+                .show(parentFragmentManager, AddTransactionBottomSheetFragment.TAG)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -119,11 +132,7 @@ class TransactionsFragment : Fragment() {
             .setNegativeButton(R.string.action_cancel, null)
             .setPositiveButton(R.string.action_delete) { _, _ ->
                 viewModel.deleteTransaction(transactionId)
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.transaction_deleted_success),
-                    Toast.LENGTH_SHORT
-                ).show()
+                showSuccessSnackbar(getString(R.string.transaction_deleted_success))
             }
             .show()
     }
@@ -163,13 +172,17 @@ class TransactionsFragment : Fragment() {
     private fun renderState(state: TransactionsUiState) {
         when (state) {
             is TransactionsUiState.Loading -> {
-                binding.progressBar.isVisible = true
+                binding.layoutSkeletonTransactions.isVisible = true
+                binding.layoutSkeletonTransactions.startSkeletonShimmer()
+                binding.progressBar.isVisible = false
                 binding.rvTransactions.isVisible = false
                 binding.layoutEmptyState.isVisible = false
                 binding.layoutNoSearchResults.isVisible = false
                 binding.tvErrorMessage.isVisible = false
             }
             is TransactionsUiState.Empty -> {
+                binding.layoutSkeletonTransactions.stopSkeletonShimmer()
+                binding.layoutSkeletonTransactions.isVisible = false
                 binding.progressBar.isVisible = false
                 binding.rvTransactions.isVisible = false
                 binding.layoutEmptyState.isVisible = true
@@ -177,6 +190,8 @@ class TransactionsFragment : Fragment() {
                 binding.tvErrorMessage.isVisible = false
             }
             is TransactionsUiState.NoSearchResults -> {
+                binding.layoutSkeletonTransactions.stopSkeletonShimmer()
+                binding.layoutSkeletonTransactions.isVisible = false
                 binding.progressBar.isVisible = false
                 binding.rvTransactions.isVisible = false
                 binding.layoutEmptyState.isVisible = false
@@ -184,6 +199,8 @@ class TransactionsFragment : Fragment() {
                 binding.tvErrorMessage.isVisible = false
             }
             is TransactionsUiState.Success -> {
+                binding.layoutSkeletonTransactions.stopSkeletonShimmer()
+                binding.layoutSkeletonTransactions.isVisible = false
                 binding.progressBar.isVisible = false
                 binding.rvTransactions.isVisible = true
                 binding.layoutEmptyState.isVisible = false
@@ -192,6 +209,8 @@ class TransactionsFragment : Fragment() {
                 transactionAdapter.submitList(state.items)
             }
             is TransactionsUiState.Error -> {
+                binding.layoutSkeletonTransactions.stopSkeletonShimmer()
+                binding.layoutSkeletonTransactions.isVisible = false
                 binding.progressBar.isVisible = false
                 binding.rvTransactions.isVisible = false
                 binding.layoutEmptyState.isVisible = false

@@ -11,6 +11,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.urwallet.R
+import com.example.urwallet.core.designsystem.UrWalletFeedback
+import com.example.urwallet.core.designsystem.performHapticClick
+import com.example.urwallet.core.designsystem.performHapticWarning
 import com.example.urwallet.databinding.FragmentAddBudgetBottomSheetBinding
 import com.example.urwallet.features.budgets.presentation.BudgetsViewModel
 import com.example.urwallet.features.transactions.domain.model.Category
@@ -109,11 +112,13 @@ class AddBudgetBottomSheetFragment : BottomSheetDialogFragment() {
             val amount = amountStr.toDoubleOrNull() ?: 0.0
 
             if (amount <= 0.0) {
+                binding.root.performHapticWarning()
                 binding.etBudgetAmount.error = getString(R.string.error_invalid_budget_amount)
                 return@setOnClickListener
             }
 
             if (isCategoryBudget && selectedCategoryId == null) {
+                binding.root.performHapticWarning()
                 Toast.makeText(requireContext(), R.string.error_no_category_selected, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -126,10 +131,16 @@ class AddBudgetBottomSheetFragment : BottomSheetDialogFragment() {
                 )
 
                 if (result.isSuccess) {
-                    Toast.makeText(requireContext(), R.string.budget_saved_success, Toast.LENGTH_SHORT).show()
+                    activity?.let { act ->
+                        val root = act.findViewById<View>(android.R.id.content)
+                        if (root != null) {
+                            UrWalletFeedback.showSuccessSnackbar(root, getString(R.string.budget_saved_success))
+                        }
+                    }
                     dismiss()
                 } else {
                     binding.btnSaveBudget.isEnabled = true
+                    binding.root.performHapticWarning()
                     Toast.makeText(
                         requireContext(),
                         result.exceptionOrNull()?.localizedMessage ?: "فشل حفظ الميزانية",

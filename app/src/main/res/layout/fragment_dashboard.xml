@@ -65,15 +65,10 @@
                 android:src="@drawable/ic_bell" />
         </LinearLayout>
 
-        <!-- Loading State -->
-        <ProgressBar
-            android:id="@+id/progressLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="48dp"
-            android:indeterminateTint="@color/urwallet_primary"
-            android:visibility="gone" />
+        <!-- Skeleton Loading State -->
+        <include
+            android:id="@+id/layoutSkeleton"
+            layout="@layout/layout_skeleton_dashboard" />
 
         <!-- Error State -->
         <TextView

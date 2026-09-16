@@ -10,6 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.urwallet.R
 import com.example.urwallet.core.common.DateUtils
 import com.example.urwallet.core.common.GoalPaceMode
+import com.example.urwallet.core.designsystem.UrWalletFeedback
+import com.example.urwallet.core.designsystem.performHapticClick
+import com.example.urwallet.core.designsystem.performHapticWarning
 import com.example.urwallet.databinding.FragmentAddGoalBottomSheetBinding
 import com.example.urwallet.features.goals.presentation.GoalsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -145,14 +148,17 @@ class AddGoalBottomSheetFragment : BottomSheetDialogFragment() {
             val targetAmount = amountStr.toDoubleOrNull() ?: 0.0
 
             if (name.isBlank()) {
+                binding.root.performHapticWarning()
                 binding.etGoalName.error = getString(R.string.error_empty_goal_name)
                 return@setOnClickListener
             }
             if (targetAmount <= 0.0) {
+                binding.root.performHapticWarning()
                 binding.etTargetAmount.error = getString(R.string.error_invalid_goal_target)
                 return@setOnClickListener
             }
             if (selectedDeadlineEpochMs <= System.currentTimeMillis()) {
+                binding.root.performHapticWarning()
                 Toast.makeText(requireContext(), R.string.error_invalid_deadline, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -168,10 +174,16 @@ class AddGoalBottomSheetFragment : BottomSheetDialogFragment() {
                 )
 
                 if (result.isSuccess) {
-                    Toast.makeText(requireContext(), R.string.goal_saved_success, Toast.LENGTH_SHORT).show()
+                    activity?.let { act ->
+                        val root = act.findViewById<View>(android.R.id.content)
+                        if (root != null) {
+                            UrWalletFeedback.showSuccessSnackbar(root, getString(R.string.goal_saved_success))
+                        }
+                    }
                     dismiss()
                 } else {
                     binding.btnSaveGoal.isEnabled = true
+                    binding.root.performHapticWarning()
                     Toast.makeText(
                         requireContext(),
                         result.exceptionOrNull()?.localizedMessage ?: "فشل حفظ الهدف",

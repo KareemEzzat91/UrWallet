@@ -14,6 +14,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.urwallet.R
 import com.example.urwallet.core.common.TransactionType
+import com.example.urwallet.core.designsystem.UrWalletFeedback
+import com.example.urwallet.core.designsystem.performHapticClick
+import com.example.urwallet.core.designsystem.performHapticWarning
 import com.example.urwallet.databinding.FragmentAddTransactionBottomSheetBinding
 import com.example.urwallet.features.transactions.presentation.adapter.CategoryChipAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -48,6 +51,7 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setupCategoryRecyclerView() {
         categoryAdapter = CategoryChipAdapter { category ->
+            binding.root.performHapticClick()
             viewModel.selectCategory(category.id)
         }
         binding.rvCategories.adapter = categoryAdapter
@@ -55,10 +59,11 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setupTypeToggle() {
         binding.btnExpense.setOnClickListener {
+            it.performHapticClick()
             viewModel.selectType(TransactionType.EXPENSE)
         }
-
         binding.btnIncome.setOnClickListener {
+            it.performHapticClick()
             viewModel.selectType(TransactionType.INCOME)
         }
     }
@@ -127,6 +132,7 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
         if (state.errorMessage != null) {
             binding.tvFormError.text = state.errorMessage
             binding.tvFormError.isVisible = true
+            binding.root.performHapticWarning()
         } else {
             binding.tvFormError.isVisible = false
         }
@@ -139,11 +145,12 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
 
         // 5. Success Handling
         if (state.isSaved) {
-            Toast.makeText(
-                context,
-                getString(R.string.transaction_saved_success),
-                Toast.LENGTH_SHORT
-            ).show()
+            activity?.let { act ->
+                val root = act.findViewById<View>(android.R.id.content)
+                if (root != null) {
+                    UrWalletFeedback.showSuccessSnackbar(root, getString(R.string.transaction_saved_success))
+                }
+            }
             viewModel.resetAddTransactionState()
             dismiss()
         }

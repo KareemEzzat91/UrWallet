@@ -8,6 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.urwallet.R
+import com.example.urwallet.core.designsystem.UrWalletFeedback
+import com.example.urwallet.core.designsystem.performHapticClick
+import com.example.urwallet.core.designsystem.performHapticWarning
 import com.example.urwallet.databinding.FragmentContributeGoalBottomSheetBinding
 import com.example.urwallet.features.goals.presentation.GoalsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -53,6 +56,7 @@ class ContributeGoalBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setupPresets() {
         fun setPresetAmount(amount: Double) {
+            binding.root.performHapticClick()
             val currentAmount = binding.etContributeAmount.text?.toString()?.toDoubleOrNull() ?: 0.0
             val newAmount = currentAmount + amount
             binding.etContributeAmount.setText(String.format(java.util.Locale.US, "%.0f", newAmount))
@@ -72,6 +76,7 @@ class ContributeGoalBottomSheetFragment : BottomSheetDialogFragment() {
             val note = binding.etContributeNote.text?.toString()?.trim()
 
             if (amount <= 0.0) {
+                binding.root.performHapticWarning()
                 binding.etContributeAmount.error = getString(R.string.error_invalid_contribution_amount)
                 return@setOnClickListener
             }
@@ -85,10 +90,16 @@ class ContributeGoalBottomSheetFragment : BottomSheetDialogFragment() {
                 )
 
                 if (result.isSuccess) {
-                    Toast.makeText(requireContext(), R.string.contribution_added_success, Toast.LENGTH_SHORT).show()
+                    activity?.let { act ->
+                        val root = act.findViewById<View>(android.R.id.content)
+                        if (root != null) {
+                            UrWalletFeedback.showSuccessSnackbar(root, getString(R.string.contribution_added_success))
+                        }
+                    }
                     dismiss()
                 } else {
                     binding.btnSubmitContribution.isEnabled = true
+                    binding.root.performHapticWarning()
                     Toast.makeText(
                         requireContext(),
                         result.exceptionOrNull()?.localizedMessage ?: "فشل تسجيل الإيداع",

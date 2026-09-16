@@ -22,6 +22,10 @@ import com.example.urwallet.features.dashboard.domain.model.DashboardSummary
 import com.example.urwallet.features.dashboard.presentation.adapter.RecentTransactionsAdapter
 import com.example.urwallet.features.goals.domain.model.Goal
 import com.example.urwallet.core.designsystem.CategoryIconMapper
+import com.example.urwallet.core.designsystem.performHapticClick
+import com.example.urwallet.core.designsystem.startSkeletonShimmer
+import com.example.urwallet.core.designsystem.stopSkeletonShimmer
+import com.example.urwallet.features.transactions.presentation.AddTransactionBottomSheetFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -70,18 +74,28 @@ class DashboardFragment : Fragment() {
             navigateToTab(R.id.transactionsFragment)
         }
         binding.rvRecentTransactions.adapter = recentTransactionsAdapter
+
+        // Tap on empty state to launch Add Transaction Bottom Sheet
+        binding.layoutEmptyRecent.setOnClickListener {
+            it.performHapticClick()
+            AddTransactionBottomSheetFragment.newInstance()
+                .show(parentFragmentManager, AddTransactionBottomSheetFragment.TAG)
+        }
     }
 
     private fun setupNavigationLinks() {
         binding.btnNotifications.setOnClickListener {
+            it.performHapticClick()
             findNavController().navigate(R.id.action_dashboardFragment_to_notificationSettingsFragment)
         }
 
         binding.btnViewAllTransactions.setOnClickListener {
+            it.performHapticClick()
             navigateToTab(R.id.transactionsFragment)
         }
 
         binding.cardNearestGoal.setOnClickListener {
+            it.performHapticClick()
             navigateToTab(R.id.goalsFragment)
         }
     }
@@ -103,18 +117,21 @@ class DashboardFragment : Fragment() {
     private fun renderState(state: DashboardUiState) {
         when (state) {
             is DashboardUiState.Loading -> {
-                binding.progressLoading.isVisible = true
+                binding.layoutSkeleton.root.isVisible = true
+                binding.layoutSkeleton.root.startSkeletonShimmer()
                 binding.layoutDashboardContent.isVisible = false
                 binding.tvErrorMessage.isVisible = false
             }
             is DashboardUiState.Error -> {
-                binding.progressLoading.isVisible = false
+                binding.layoutSkeleton.root.stopSkeletonShimmer()
+                binding.layoutSkeleton.root.isVisible = false
                 binding.layoutDashboardContent.isVisible = false
                 binding.tvErrorMessage.isVisible = true
                 binding.tvErrorMessage.text = state.message
             }
             is DashboardUiState.Success -> {
-                binding.progressLoading.isVisible = false
+                binding.layoutSkeleton.root.stopSkeletonShimmer()
+                binding.layoutSkeleton.root.isVisible = false
                 binding.layoutDashboardContent.isVisible = true
                 binding.tvErrorMessage.isVisible = false
                 bindSummaryData(state.summary)
