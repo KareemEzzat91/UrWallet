@@ -1,30 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z">
+
+    <!-- Ambient Gold Aura behind Coin -->
+    <path
+        android:pathData="M52,42m-18,0a18,18 0 1,0 36,0a18,18 0 1,0 -36,0">
         <aapt:attr name="android:fillColor">
             <gradient
-                android:endX="85.84757"
-                android:endY="92.4963"
-                android:startX="42.9492"
-                android:startY="49.59793"
-                android:type="linear">
-                <item
-                    android:color="#44000000"
-                    android:offset="0.0" />
-                <item
-                    android:color="#00000000"
-                    android:offset="1.0" />
+                android:centerX="52"
+                android:centerY="42"
+                android:gradientRadius="18"
+                android:type="radial">
+                <item android:offset="0.0" android:color="#55FFB300" />
+                <item android:offset="0.6" android:color="#20FFB300" />
+                <item android:offset="1.0" android:color="#00FFB300" />
             </gradient>
         </aapt:attr>
     </path>
+
+    <!-- Sparkle 1 (Top Left) -->
     <path
-        android:fillColor="#FFFFFF"
-        android:fillType="nonZero"
-        android:pathData="M65.3,45.828l3.8,-6.6c0.2,-0.4 0.1,-0.9 -0.3,-1.1c-0.4,-0.2 -0.9,-0.1 -1.1,0.3l-3.9,6.7c-6.3,-2.8 -13.4,-2.8 -19.7,0l-3.9,-6.7c-0.2,-0.4 -0.7,-0.5 -1.1,-0.3C38.8,38.328 38.7,38.828 38.9,39.228l3.8,6.6C36.2,49.428 31.7,56.028 31,63.928h46C76.3,56.028 71.8,49.428 65.3,45.828zM43.4,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2c-0.3,-0.7 -0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C45.3,56.528 44.5,57.328 43.4,57.328L43.4,57.328zM64.6,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2s-0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C66.5,56.528 65.6,57.328 64.6,57.328L64.6,57.328z"
-        android:strokeWidth="1"
-        android:strokeColor="#00000000" />
+        android:pathData="M36,25 Q36,29 32,29 Q36,29 36,33 Q36,29 40,29 Q36,29 36,25 Z"
+        android:fillColor="#FFE082" />
+
+    <!-- Sparkle 2 (Top Right) -->
+    <path
+        android:pathData="M70,23 Q70,26.5 67,26.5 Q70,26.5 70,30 Q70,26.5 73,26.5 Q70,26.5 70,23 Z"
+        android:fillColor="#FFF9C4" />
+
+    <!-- Sparkle 3 (Small Accent) -->
+    <path
+        android:pathData="M31,44 Q31,46 29.5,46 Q31,46 31,48 Q31,46 32.5,46 Q31,46 31,44 Z"
+        android:fillColor="#FFE082" />
+
+    <!-- The Gold Coin nested in the 'م' Wallet -->
+    <path
+        android:pathData="M52,42m-13.5,0a13.5,13.5 0 1,0 27,0a13.5,13.5 0 1,0 -27,0">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="40"
+                android:startY="30"
+                android:endX="64"
+                android:endY="54"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#FFF176" />
+                <item android:offset="0.3" android:color="#FFD54F" />
+                <item android:offset="0.7" android:color="#FFB300" />
+                <item android:offset="1.0" android:color="#FF8F00" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Coin Inner Embossed Ring -->
+    <path
+        android:pathData="M52,42m-11,0a11,11 0 1,0 22,0a11,11 0 1,0 -22,0"
+        android:strokeWidth="1.2"
+        android:strokeColor="#FFFDE7"
+        android:fillColor="#00000000" />
+
+    <!-- Coin Center 'م' Calligraphic Monogram Stamp -->
+    <path
+        android:pathData="M52,36 C49.5,36 47.5,38 47.5,40.5 C47.5,43 49.5,45 52,45 C54.5,45 56.5,43 56.5,40.5 C56.5,38 54.5,36 52,36 Z M52,45 L52,49"
+        android:strokeWidth="1.6"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+
+    <!-- 'م' Wallet Outer Neon Glow Ribbon -->
+    <path
+        android:pathData="M35,46 L33,63 C32.5,69 37,74 43,74 L65,74 C71,74 76,69 76,63 L76,52 C76,47 72,43 67,43 L60,43"
+        android:strokeWidth="9"
+        android:strokeColor="#2E00E5FF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+
+    <!-- 'م' Wallet Main Cardholder Pocket Body -->
+    <path
+        android:pathData="M35,46 L33,63 C32.5,69 37,74 43,74 L65,74 C71,74 76,69 76,63 L76,52 C76,47 72,43 67,43 L60,43"
+        android:strokeWidth="5.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="32"
+                android:startY="74"
+                android:endX="76"
+                android:endY="43"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#00E5FF" />
+                <item android:offset="0.5" android:color="#40C4FF" />
+                <item android:offset="1.0" android:color="#80D8FF" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Wallet Inner Card Slot Arch -->
+    <path
+        android:pathData="M37,56 C44,61 60,61 69,56"
+        android:strokeWidth="2.2"
+        android:strokeColor="#6000E5FF"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+
+    <!-- Wallet Side Clasp / Lock Tab -->
+    <path
+        android:pathData="M72,55 L81,55 C83.2,55 85,56.8 85,59 C85,61.2 83.2,63 81,63 L72,63 Z"
+        android:strokeWidth="3.5"
+        android:strokeColor="#00E5FF"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+
+    <!-- Clasp Glowing Cyan Button -->
+    <path
+        android:pathData="M79,59m-2,0a2,2 0 1,0 4,0a2,2 0 1,0 -4,0"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Arabic Calligraphic Baseline Wave (The Stem of 'م' extending into 'محفظتك') -->
+    <path
+        android:pathData="M24,80 C32,80 37,84 46,84 C58,84 68,78 78,82 C82,83.5 86,84 90,82"
+        android:strokeWidth="8"
+        android:strokeColor="#2500E5FF"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+
+    <path
+        android:pathData="M24,80 C32,80 37,84 46,84 C58,84 68,78 78,82 C82,83.5 86,84 90,82"
+        android:strokeWidth="4.2"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="24"
+                android:startY="84"
+                android:endX="90"
+                android:endY="80"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#80D8FF" />
+                <item android:offset="0.5" android:color="#00E5FF" />
+                <item android:offset="1.0" android:color="#40C4FF" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Arabic Diacritic / Nuqta Accent (Diamond Dot) representing 'محفظتك' -->
+    <path
+        android:pathData="M66,88 L69,85 L72,88 L69,91 Z"
+        android:fillColor="#00E5FF" />
 </vector>
