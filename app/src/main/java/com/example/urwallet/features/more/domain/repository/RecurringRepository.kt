@@ -15,4 +15,11 @@ interface RecurringRepository {
     fun getRecurringTransactionById(id: Long): Flow<RecurringTransaction?> = emptyFlow()
     suspend fun getDueRecurringTransactionsSync(currentDate: Long): List<RecurringTransaction> = emptyList()
     suspend fun updateNextOccurrence(id: Long, nextOccurrence: Long) {}
+    suspend fun processOccurrence(
+        recurringId: Long,
+        occurrenceTag: String,
+        transaction: com.example.urwallet.features.transactions.domain.model.Transaction,
+        nextOccurrence: Long,
+        hasEnded: Boolean
+    ): Boolean = false
 }

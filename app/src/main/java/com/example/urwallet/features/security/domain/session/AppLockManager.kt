@@ -1,7 +1,5 @@
 package com.example.urwallet.features.security.domain.session
 
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.example.urwallet.features.security.domain.repository.SecurityRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,19 +13,17 @@ import javax.inject.Singleton
 /**
  * Singleton managing runtime session authentication and lifecycle lock state.
  *
- * Implements [DefaultLifecycleObserver] registered with [androidx.lifecycle.ProcessLifecycleOwner].
- *
  * Rules:
  * 1. [isUnlocked] is STRICTLY an in-memory session flag. It is NEVER persisted.
- * 2. Activity recreation (e.g. rotation) does NOT trigger ProcessLifecycleOwner ON_STOP.
- * 3. Moving to background sets [isBackgrounded] = true in ON_STOP.
- * 4. Returning to foreground in ON_START resets [isUnlocked] = false if App Lock is enabled.
+ * 2. Activity recreation (e.g. rotation) does NOT trigger background state.
+ * 3. Moving to background sets [isBackgrounded] = true.
+ * 4. Returning to foreground resets [isUnlocked] = false if App Lock is enabled.
  * 5. [isLockScreenShowing] prevents duplicate launches of [AppLockActivity].
  */
 @Singleton
 class AppLockManager @Inject constructor(
     private val securityRepository: SecurityRepository
-) : DefaultLifecycleObserver {
+) {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -58,18 +54,26 @@ class AppLockManager @Inject constructor(
         }
     }
 
-    override fun onStop(owner: LifecycleOwner) {
-        // App entered background
+    /**
+     * Called when the application process transitions to the background.
+     */
+    fun onAppBackgrounded() {
         markBackgrounded()
     }
 
-    override fun onStart(owner: LifecycleOwner) {
-        // App returned to foreground
+    /**
+     * Called when the application process transitions to the foreground.
+     */
+    fun onAppForegrounded() {
         if (isAppLockEnabledCached && isBackgrounded) {
             isUnlocked = false
         }
         isBackgrounded = false
     }
+
+    // Convenience aliases
+    fun onStop() = onAppBackgrounded()
+    fun onStart() = onAppForegrounded()
 
     fun markBackgrounded() {
         isBackgrounded = true

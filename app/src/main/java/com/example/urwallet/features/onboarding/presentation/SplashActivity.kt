@@ -20,11 +20,14 @@ class SplashActivity : AppCompatActivity() {
     @Inject
     lateinit var appPreferences: AppPreferences
 
+    @Inject
+    lateinit var appLockManager: com.example.urwallet.features.security.domain.session.AppLockManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        // Keep splash visible while we check onboarding state
+        // Keep splash visible while we check onboarding & security state
         var keepSplash = true
         splashScreen.setKeepOnScreenCondition { keepSplash }
 
@@ -32,10 +35,14 @@ class SplashActivity : AppCompatActivity() {
             val onboardingCompleted = appPreferences.isOnboardingCompleted.first()
             keepSplash = false
 
-            val intent = if (onboardingCompleted) {
-                Intent(this@SplashActivity, MainActivity::class.java)
-            } else {
+            val intent = if (!onboardingCompleted) {
                 Intent(this@SplashActivity, OnboardingActivity::class.java)
+            } else if (appLockManager.shouldLockSuspend()) {
+                Intent(this@SplashActivity, com.example.urwallet.features.security.presentation.lock.AppLockActivity::class.java).apply {
+                    putExtra(com.example.urwallet.features.security.presentation.lock.AppLockActivity.EXTRA_NAVIGATE_TO_MAIN, true)
+                }
+            } else {
+                Intent(this@SplashActivity, MainActivity::class.java)
             }
 
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -110,7 +110,16 @@
         <action
             android:id="@+id/action_moreFragment_to_dataManagementFragment"
             app:destination="@id/dataManagementFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.example.urwallet.features.more.presentation.categories.CategoriesFragment"
+        android:label="@string/categories_management_title"
+        tools:layout="@layout/fragment_categories" />
 
     <fragment
         android:id="@+id/dataManagementFragment"

@@ -6,11 +6,14 @@ import java.util.Locale
 
 object Formatters {
 
+    @Volatile
+    var activeCurrencySymbol: String = Constants.DEFAULT_CURRENCY_SYMBOL
+
     private val ARABIC_LOCALE = Locale("ar")
 
     fun formatCurrency(
         amount: Double,
-        currencySymbol: String = Constants.DEFAULT_CURRENCY_SYMBOL,
+        currencySymbol: String = activeCurrencySymbol,
         includeDecimals: Boolean = true
     ): String {
         val pattern = if (includeDecimals && amount % 1.0 != 0.0) "#,##0.00" else "#,##0"
@@ -31,7 +34,7 @@ object Formatters {
     fun formatSignedAmount(
         amount: Double,
         type: TransactionType,
-        currencySymbol: String = Constants.DEFAULT_CURRENCY_SYMBOL
+        currencySymbol: String = activeCurrencySymbol
     ): String {
         val formatted = formatCurrency(amount, currencySymbol)
         return when (type) {

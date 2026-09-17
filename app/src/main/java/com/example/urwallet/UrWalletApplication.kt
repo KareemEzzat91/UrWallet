@@ -9,10 +9,11 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.example.urwallet.core.datastore.AppPreferences
-import com.example.urwallet.features.more.presentation.recurring.RecurringTransactionWorker
+import com.example.urwallet.features.more.data.worker.RecurringTransactionWorker
 import com.example.urwallet.features.notifications.data.helper.NotificationHelper
 import com.example.urwallet.features.notifications.data.scheduler.AlarmScheduler
 import com.example.urwallet.features.security.domain.session.AppLockManager
+import com.example.urwallet.core.common.Formatters
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,13 +37,28 @@ class UrWalletApplication : Application() {
     @Inject
     lateinit var appLockManager: AppLockManager
 
+    @Inject
+    lateinit var appLockLifecycleObserver: com.example.urwallet.features.security.presentation.session.AppLockLifecycleObserver
+
     override fun onCreate() {
         super.onCreate()
         appLockManager.syncLockStateBlocking()
-        ProcessLifecycleOwner.get().lifecycle.addObserver(appLockManager)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(appLockLifecycleObserver)
         notificationHelper.createNotificationChannels()
         scheduleRecurringTransactionsWorker()
         initializeDailyReminder()
+        initializeCurrency()
+    }
+
+    private fun initializeCurrency() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                appPreferences.currencySymbol.collect { symbol ->
+                    Formatters.activeCurrencySymbol = symbol
+                }
+            } catch (_: Exception) {
+            }
+        }
     }
 
     private fun initializeDailyReminder() {

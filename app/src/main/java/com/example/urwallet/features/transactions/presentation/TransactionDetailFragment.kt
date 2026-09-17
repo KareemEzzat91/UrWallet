@@ -55,6 +55,14 @@ class TransactionDetailFragment : Fragment() {
             findNavController().popBackStack()
         }
 
+        binding.btnEdit.setOnClickListener {
+            val state = viewModel.uiState.value
+            if (state is TransactionDetailUiState.Success) {
+                AddTransactionBottomSheetFragment.newInstanceForEdit(state.transaction)
+                    .show(childFragmentManager, AddTransactionBottomSheetFragment.TAG)
+            }
+        }
+
         binding.btnDelete.setOnClickListener {
             showDeleteConfirmationDialog()
         }

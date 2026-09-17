@@ -14,8 +14,10 @@ import com.example.urwallet.features.transactions.domain.usecase.DeleteTransacti
 import com.example.urwallet.features.transactions.domain.usecase.GetCategoriesUseCase
 import com.example.urwallet.features.transactions.domain.usecase.GetFilteredTransactionsUseCase
 import com.example.urwallet.features.transactions.domain.usecase.GetTransactionsUseCase
+import com.example.urwallet.features.transactions.domain.usecase.UpdateTransactionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -24,6 +26,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,6 +38,7 @@ class TransactionsViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getFilteredTransactionsUseCase: GetFilteredTransactionsUseCase,
     private val addTransactionUseCase: AddTransactionUseCase,
+    private val updateTransactionUseCase: UpdateTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val checkBudgetAlertUseCase: CheckBudgetAlertUseCase
@@ -128,13 +132,12 @@ class TransactionsViewModel @Inject constructor(
         _filterCriteria.value = TransactionFilterCriteria()
     }
 
-    // --- Add Transaction Form State ---
-    // TODO(architecture): isSaved is a boolean state field, not a true one-time event.
-    //   This works correctly in practice because resetAddTransactionState() is called
-    //   immediately in the Fragment after dismiss(). For future cleanup, replace with
-    //   a Channel<UiEffect> pattern (e.g. SharedFlow) to guarantee exactly-once delivery.
+    // --- Add / Edit Transaction Form State & One-Time Events ---
     private val _addTransactionUiState = MutableStateFlow(AddTransactionUiState())
     val addTransactionUiState: StateFlow<AddTransactionUiState> = _addTransactionUiState.asStateFlow()
+
+    private val _transactionUiEvents = Channel<TransactionUiEvent>(Channel.BUFFERED)
+    val transactionUiEvents = _transactionUiEvents.receiveAsFlow()
 
     private var categoriesJob: kotlinx.coroutines.Job? = null
 
@@ -180,6 +183,21 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
+    fun prepareEditTransaction(transaction: Transaction) {
+        _addTransactionUiState.update {
+            it.copy(
+                selectedType = transaction.type,
+                selectedCategoryId = transaction.categoryId,
+                editingTransactionId = transaction.id,
+                editingDate = transaction.date,
+                errorMessage = null,
+                isSaved = false,
+                isUpdated = false
+            )
+        }
+        loadCategoriesForCurrentType()
+    }
+
     fun saveTransaction(amountStr: String, title: String, note: String?) {
         val amount = amountStr.trim().toDoubleOrNull()
         if (amount == null || amount <= 0.0) {
@@ -198,31 +216,62 @@ class TransactionsViewModel @Inject constructor(
 
         _addTransactionUiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-        viewModelScope.launch {
-            val result = addTransactionUseCase(
-                amount = amount,
-                type = _addTransactionUiState.value.selectedType,
-                categoryId = categoryId,
-                title = title.trim(),
-                note = note?.trim()?.ifBlank { null }
-            )
+        val editingId = _addTransactionUiState.value.editingTransactionId
+        val editingDate = _addTransactionUiState.value.editingDate ?: System.currentTimeMillis()
+        val transactionType = _addTransactionUiState.value.selectedType
 
-            val transactionType = _addTransactionUiState.value.selectedType
-            result.fold(
-                onSuccess = {
-                    _addTransactionUiState.update {
-                        it.copy(isLoading = false, isSaved = true, errorMessage = null)
+        viewModelScope.launch {
+            if (editingId != null) {
+                val result = updateTransactionUseCase(
+                    id = editingId,
+                    amount = amount,
+                    type = transactionType,
+                    categoryId = categoryId,
+                    title = title.trim(),
+                    note = note?.trim()?.ifBlank { null },
+                    date = editingDate
+                )
+                result.fold(
+                    onSuccess = {
+                        _addTransactionUiState.update {
+                            it.copy(isLoading = false, isUpdated = true, errorMessage = null)
+                        }
+                        if (transactionType == TransactionType.EXPENSE) {
+                            checkBudgetAlertUseCase(categoryId = categoryId, amount = amount)
+                        }
+                        _transactionUiEvents.send(TransactionUiEvent.Updated)
+                    },
+                    onFailure = { error ->
+                        _addTransactionUiState.update {
+                            it.copy(isLoading = false, errorMessage = error.message ?: "فشل تعديل المعاملة")
+                        }
                     }
-                    if (transactionType == TransactionType.EXPENSE) {
-                        checkBudgetAlertUseCase(categoryId = categoryId, amount = amount)
+                )
+            } else {
+                val result = addTransactionUseCase(
+                    amount = amount,
+                    type = transactionType,
+                    categoryId = categoryId,
+                    title = title.trim(),
+                    note = note?.trim()?.ifBlank { null }
+                )
+                result.fold(
+                    onSuccess = {
+                        _addTransactionUiState.update {
+                            it.copy(isLoading = false, isSaved = true, errorMessage = null)
+                        }
+                        if (transactionType == TransactionType.EXPENSE) {
+                            checkBudgetAlertUseCase(categoryId = categoryId, amount = amount)
+                        }
+                        _transactionUiEvents.send(TransactionUiEvent.Saved)
+                    },
+                    onFailure = { error ->
+                        _addTransactionUiState.update {
+                            it.copy(isLoading = false, errorMessage = error.message ?: "فشل حفظ المعاملة")
+                        }
                     }
-                },
-                onFailure = { error ->
-                    _addTransactionUiState.update {
-                        it.copy(isLoading = false, errorMessage = error.message ?: "فشل حفظ المعاملة")
-                    }
-                }
-            )
+                )
+            }
         }
     }
 
@@ -233,7 +282,10 @@ class TransactionsViewModel @Inject constructor(
                 selectedCategoryId = null,
                 isLoading = false,
                 isSaved = false,
-                errorMessage = null
+                isUpdated = false,
+                errorMessage = null,
+                editingTransactionId = null,
+                editingDate = null
             )
         }
         loadCategoriesForCurrentType()

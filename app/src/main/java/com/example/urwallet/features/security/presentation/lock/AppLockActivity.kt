@@ -101,7 +101,14 @@ class AppLockActivity : AppCompatActivity() {
                     binding.btnBiometric.isVisible = state.isBiometricEnabled && biometricAuthManager.canAuthenticate(this@AppLockActivity)
 
                     if (state.isSuccess) {
-                        setResult(RESULT_OK)
+                        if (intent.getBooleanExtra(EXTRA_NAVIGATE_TO_MAIN, false)) {
+                            val mainIntent = Intent(this@AppLockActivity, com.example.urwallet.MainActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            }
+                            startActivity(mainIntent)
+                        } else {
+                            setResult(RESULT_OK)
+                        }
                         finish()
                     }
 
@@ -191,9 +198,12 @@ class AppLockActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(context: Context) {
+        const val EXTRA_NAVIGATE_TO_MAIN = "extra_navigate_to_main"
+
+        fun start(context: Context, navigateToMainOnSuccess: Boolean = false) {
             val intent = Intent(context, AppLockActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                putExtra(EXTRA_NAVIGATE_TO_MAIN, navigateToMainOnSuccess)
             }
             context.startActivity(intent)
         }

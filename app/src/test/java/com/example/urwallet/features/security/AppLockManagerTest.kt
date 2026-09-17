@@ -1,7 +1,5 @@
 package com.example.urwallet.features.security
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import com.example.urwallet.features.security.domain.session.AppLockManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,18 +13,12 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class FakeLifecycleOwner : LifecycleOwner {
-    override val lifecycle: Lifecycle
-        get() = throw UnsupportedOperationException("Not needed in unit test")
-}
-
 @OptIn(ExperimentalCoroutinesApi::class)
 class AppLockManagerTest {
 
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var fakeRepository: FakeSecurityRepository
     private lateinit var appLockManager: AppLockManager
-    private val fakeLifecycleOwner = FakeLifecycleOwner()
 
     @Before
     fun setUp() {
@@ -82,11 +74,11 @@ class AppLockManagerTest {
         assertTrue(appLockManager.isUnlocked)
 
         // App goes to background
-        appLockManager.onStop(fakeLifecycleOwner)
+        appLockManager.onAppBackgrounded()
         assertTrue(appLockManager.isBackgrounded)
 
         // App returns to foreground
-        appLockManager.onStart(fakeLifecycleOwner)
+        appLockManager.onAppForegrounded()
         assertFalse(appLockManager.isUnlocked)
         assertTrue(appLockManager.shouldLockOnForeground())
     }
@@ -101,7 +93,7 @@ class AppLockManagerTest {
         assertTrue(appLockManager.isUnlocked)
 
         // Simulated Activity recreation / transition where process ON_STOP did not fire
-        appLockManager.onStart(fakeLifecycleOwner)
+        appLockManager.onAppForegrounded()
         assertTrue(appLockManager.isUnlocked)
         assertFalse(appLockManager.shouldLockOnForeground())
     }
@@ -136,5 +128,43 @@ class AppLockManagerTest {
 
         assertTrue(appLockManager.isUnlocked)
         assertFalse(appLockManager.shouldLockOnForeground())
+    }
+
+    @Test
+    fun coldStart_shouldLockSuspend_returnsTrue_whenEnabled() = runTest {
+        fakeRepository.appLockEnabledFlow.value = true
+        appLockManager = AppLockManager(fakeRepository)
+
+        val shouldLock = appLockManager.shouldLockSuspend()
+        assertTrue(shouldLock)
+        assertFalse(appLockManager.isUnlocked)
+    }
+
+    @Test
+    fun coldStart_shouldLockSuspend_returnsFalse_whenDisabled() = runTest {
+        fakeRepository.appLockEnabledFlow.value = false
+        appLockManager = AppLockManager(fakeRepository)
+
+        val shouldLock = appLockManager.shouldLockSuspend()
+        assertFalse(shouldLock)
+        assertTrue(appLockManager.isUnlocked)
+    }
+
+    @Test
+    fun processDeath_restart_locksSession_andRequiresAuthentication() = runTest {
+        // App was unlocked before process death
+        fakeRepository.appLockEnabledFlow.value = true
+        val manager1 = AppLockManager(fakeRepository)
+        testDispatcher.scheduler.advanceUntilIdle()
+        manager1.unlock()
+        assertTrue(manager1.isUnlocked)
+
+        // Process killed and recreated: new AppLockManager initialized
+        val manager2 = AppLockManager(fakeRepository)
+        manager2.syncLockStateBlocking()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        assertFalse(manager2.isUnlocked)
+        assertTrue(manager2.shouldLockOnForeground())
     }
 }

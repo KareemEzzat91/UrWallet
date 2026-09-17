@@ -8,7 +8,7 @@ import com.example.urwallet.features.budgets.domain.usecase.DeleteBudgetUseCase
 import com.example.urwallet.features.budgets.domain.usecase.GetBudgetsSummaryUseCase
 import com.example.urwallet.features.budgets.domain.usecase.SaveBudgetUseCase
 import com.example.urwallet.features.transactions.domain.model.Category
-import com.example.urwallet.features.transactions.domain.repository.CategoryRepository
+import com.example.urwallet.features.transactions.domain.usecase.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ class BudgetsViewModel @Inject constructor(
     getBudgetsSummaryUseCase: GetBudgetsSummaryUseCase,
     private val saveBudgetUseCase: SaveBudgetUseCase,
     private val deleteBudgetUseCase: DeleteBudgetUseCase,
-    categoryRepository: CategoryRepository
+    getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {
 
     val budgetsUiState: StateFlow<BudgetsUiState> = getBudgetsSummaryUseCase()
@@ -41,8 +41,7 @@ class BudgetsViewModel @Inject constructor(
             initialValue = BudgetsUiState.Loading
         )
 
-    val expenseCategories: StateFlow<List<Category>> = categoryRepository
-        .getCategoriesByType(CategoryType.EXPENSE)
+    val expenseCategories: StateFlow<List<Category>> = getCategoriesUseCase(CategoryType.EXPENSE)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),

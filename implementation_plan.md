@@ -300,7 +300,7 @@ gantt
 * [ ] Success snackbars with haptic feedback
 * [ ] End-to-end QA pass across all 10 user journeys (A–J)
 
----
+--- 
 
 ## 🔍 Verification & Acceptance Criteria
 

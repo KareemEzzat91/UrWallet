@@ -5,16 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.urwallet.R
+import com.example.urwallet.core.common.Constants
+import com.example.urwallet.core.common.Formatters
+import com.example.urwallet.core.datastore.AppPreferences
 import com.example.urwallet.databinding.FragmentMoreBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MoreFragment : Fragment() {
 
     private var _binding: FragmentMoreBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +73,61 @@ class MoreFragment : Fragment() {
         binding.cardDataManagementNav.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_dataManagementFragment)
         }
+
+        binding.cardCategoriesNav.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_categoriesFragment)
+        }
+
+        binding.cardCurrencyNav.setOnClickListener {
+            showCurrencySelectionDialog()
+        }
+
+        observeCurrency()
+    }
+
+    private fun observeCurrency() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                appPreferences.currencySymbol.collect { symbol ->
+                    binding.tvCurrencySymbolIcon.text = symbol
+                    val currency = Constants.SUPPORTED_CURRENCIES.find { it.symbol == symbol }
+                    binding.tvCurrentCurrency.text = currency?.displayNameAr ?: symbol
+                }
+            }
+        }
+    }
+
+    private fun showCurrencySelectionDialog() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val currentSymbol = appPreferences.currencySymbol.first()
+            val items = Constants.SUPPORTED_CURRENCIES.map { it.displayNameAr }.toTypedArray()
+            val currentIndex = Constants.SUPPORTED_CURRENCIES.indexOfFirst { it.symbol == currentSymbol }.let {
+                if (it >= 0) it else 0
+            }
+
+            var selectedIndex = currentIndex
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_select_currency_title)
+                .setSingleChoiceItems(items, currentIndex) { _, which ->
+                    selectedIndex = which
+                }
+                .setPositiveButton(R.string.security_action_confirm) { dialog, _ ->
+                    val selectedCurrency = Constants.SUPPORTED_CURRENCIES[selectedIndex]
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        appPreferences.setCurrencySymbol(selectedCurrency.symbol)
+                        appPreferences.setCurrencyCode(selectedCurrency.code)
+                        Formatters.activeCurrencySymbol = selectedCurrency.symbol
+                        Snackbar.make(
+                            binding.root,
+                            R.string.currency_updated_success,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.security_action_cancel, null)
+                .show()
+        }
     }
 
     override fun onDestroyView() {
@@ -66,3 +135,4 @@ class MoreFragment : Fragment() {
         _binding = null
     }
 }
+

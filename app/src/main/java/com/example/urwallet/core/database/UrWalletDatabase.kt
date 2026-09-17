@@ -32,7 +32,7 @@ import com.example.urwallet.features.transactions.data.entity.TransactionEntity
         ChallengeEntity::class
     ],
     version = 3,
-    exportSchema = false
+    exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class UrWalletDatabase : RoomDatabase() {
@@ -49,6 +49,10 @@ abstract class UrWalletDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: UrWalletDatabase? = null
 
+        val ALL_MIGRATIONS: Array<androidx.room.migration.Migration> = arrayOf(
+            // Future schema migrations will be added here
+        )
+
         fun getInstance(context: Context): UrWalletDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
@@ -61,8 +65,8 @@ abstract class UrWalletDatabase : RoomDatabase() {
                 UrWalletDatabase::class.java,
                 Constants.DATABASE_NAME
             )
+                .addMigrations(*ALL_MIGRATIONS)
                 .addCallback(DatabaseCallback { INSTANCE ?: buildDatabase(context) })
-                .fallbackToDestructiveMigration()
                 .build()
         }
     }

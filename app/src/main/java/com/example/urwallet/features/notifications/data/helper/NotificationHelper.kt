@@ -1,6 +1,7 @@
 package com.example.urwallet.features.notifications.data.helper
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -119,6 +120,7 @@ open class NotificationHelper {
      * Dispatches daily reminder notification prompting the user to log transactions.
      * Tapping deep links directly to AddTransactionBottomSheet.
      */
+    @SuppressLint("MissingPermission")
     open fun showDailyReminderNotification() {
         val ctx = context ?: return
         if (!hasNotificationPermission()) return
@@ -153,6 +155,7 @@ open class NotificationHelper {
      * Dispatches a budget threshold warning or exceeded notification.
      * Tapping deep links directly to BudgetsFragment.
      */
+    @SuppressLint("MissingPermission")
     open fun showBudgetAlertNotification(
         budgetName: String,
         percentage: Int,
@@ -210,6 +213,7 @@ open class NotificationHelper {
      * Dispatches a celebratory goal milestone notification (50% or 100%).
      * Tapping deep links directly to GoalsFragment.
      */
+    @SuppressLint("MissingPermission")
     open fun showGoalMilestoneNotification(
         goalName: String,
         milestonePercentage: Int,
@@ -262,6 +266,7 @@ open class NotificationHelper {
     /**
      * Dispatches an immediate test notification for user verification.
      */
+    @SuppressLint("MissingPermission")
     open fun showTestNotification() {
         val ctx = context ?: return
         if (!hasNotificationPermission()) return

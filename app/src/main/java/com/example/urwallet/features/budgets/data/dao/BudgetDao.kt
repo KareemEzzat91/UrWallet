@@ -17,6 +17,22 @@ interface BudgetDao {
     @Update
     suspend fun updateBudget(budget: BudgetEntity): Int
 
+    @androidx.room.Transaction
+    suspend fun insertOrUpdateBudget(budget: BudgetEntity): Long {
+        val existing = if (budget.categoryId == null) {
+            getGlobalBudgetSync(budget.month, budget.year)
+        } else {
+            getBudgetForCategorySync(budget.categoryId, budget.month, budget.year)
+        }
+        return if (existing != null) {
+            val updated = budget.copy(id = existing.id)
+            updateBudget(updated)
+            existing.id
+        } else {
+            insertBudget(budget)
+        }
+    }
+
     @Query("SELECT * FROM budgets WHERE categoryId IS NULL AND month = :month AND year = :year LIMIT 1")
     fun getGlobalBudget(month: Int, year: Int): Flow<BudgetEntity?>
 

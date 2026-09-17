@@ -13,9 +13,22 @@ class DatabaseCallback(
 
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
+        createBudgetUniquenessIndex(db)
         CoroutineScope(Dispatchers.IO).launch {
             populateDefaultCategories(databaseProvider())
         }
+    }
+
+    override fun onOpen(db: SupportSQLiteDatabase) {
+        super.onOpen(db)
+        createBudgetUniquenessIndex(db)
+    }
+
+    private fun createBudgetUniquenessIndex(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            "CREATE UNIQUE INDEX IF NOT EXISTS index_budgets_global_unique " +
+            "ON budgets(month, year) WHERE categoryId IS NULL"
+        )
     }
 
     companion object {

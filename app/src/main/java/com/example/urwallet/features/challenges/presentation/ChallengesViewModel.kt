@@ -7,7 +7,7 @@ import com.example.urwallet.features.challenges.domain.usecase.AbandonChallengeU
 import com.example.urwallet.features.challenges.domain.usecase.GetChallengePresetsUseCase
 import com.example.urwallet.features.challenges.domain.usecase.GetChallengesUseCase
 import com.example.urwallet.features.challenges.domain.usecase.JoinChallengeUseCase
-import com.example.urwallet.features.transactions.domain.repository.CategoryRepository
+import com.example.urwallet.features.transactions.domain.usecase.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +32,7 @@ class ChallengesViewModel @Inject constructor(
     private val getChallengePresetsUseCase: GetChallengePresetsUseCase,
     private val joinChallengeUseCase: JoinChallengeUseCase,
     private val abandonChallengeUseCase: AbandonChallengeUseCase,
-    private val categoryRepository: CategoryRepository
+    private val getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {
 
     private val _uiEvents = Channel<ChallengesUiEvent>(Channel.BUFFERED)
@@ -66,7 +66,7 @@ class ChallengesViewModel @Inject constructor(
             try {
                 var categoryId: Long? = null
                 if (preset.categoryName != null) {
-                    val categories = categoryRepository.getAllCategories().firstOrNull() ?: emptyList()
+                    val categories = getCategoriesUseCase().firstOrNull() ?: emptyList()
                     val matched = categories.firstOrNull { it.name.contains(preset.categoryName, ignoreCase = true) }
                     categoryId = matched?.id
                 }

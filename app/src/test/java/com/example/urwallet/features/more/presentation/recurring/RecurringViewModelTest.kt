@@ -126,7 +126,7 @@ class RecurringViewModelTest {
         val addRecurringUseCase = AddRecurringTransactionUseCase(recurringRepo)
         val deleteRecurringUseCase = DeleteRecurringTransactionUseCase(recurringRepo)
         val toggleRecurringUseCase = ToggleRecurringTransactionUseCase(recurringRepo)
-        val processDueUseCase = ProcessDueRecurringTransactionsUseCase(recurringRepo, txRepo)
+        val processDueUseCase = ProcessDueRecurringTransactionsUseCase(recurringRepo)
         val getCategoriesUseCase = GetCategoriesUseCase(txRepo)
 
         viewModel = RecurringViewModel(

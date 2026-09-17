@@ -33,21 +33,7 @@ class BudgetRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertOrUpdateBudget(budget: Budget): Long {
-        val existing = if (budget.isGlobal) {
-            budgetDao.getGlobalBudgetSync(budget.month, budget.year)
-        } else {
-            budget.categoryId?.let { catId ->
-                budgetDao.getBudgetForCategorySync(catId, budget.month, budget.year)
-            }
-        }
-
-        return if (existing != null) {
-            val updated = budget.copy(id = existing.id)
-            budgetDao.updateBudget(updated.toEntity())
-            existing.id
-        } else {
-            budgetDao.insertBudget(budget.toEntity())
-        }
+        return budgetDao.insertOrUpdateBudget(budget.toEntity())
     }
 
     override suspend fun deleteBudget(id: Long) {

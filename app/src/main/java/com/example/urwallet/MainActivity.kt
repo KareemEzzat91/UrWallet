@@ -16,7 +16,6 @@ import android.view.WindowManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.urwallet.features.security.domain.repository.SecurityRepository
 import com.example.urwallet.features.security.domain.session.AppLockManager
 import com.example.urwallet.features.security.presentation.lock.AppLockActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,13 +32,18 @@ class MainActivity : AppCompatActivity() {
     lateinit var appLockManager: AppLockManager
 
     @Inject
-    lateinit var securityRepository: SecurityRepository
+    lateinit var getSecuritySettingsUseCase: com.example.urwallet.features.security.domain.usecase.GetSecuritySettingsUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (appLockManager.shouldLockOnForeground()) {
+            binding.root.isVisible = false
+            AppLockActivity.start(this)
+        }
 
         setupEdgeToEdge()
         setupNavigation()
@@ -51,11 +55,16 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (appLockManager.shouldLockOnForeground()) {
+            binding.root.isVisible = false
             AppLockActivity.start(this)
         } else {
+            binding.root.isVisible = true
             lifecycleScope.launch {
                 if (appLockManager.shouldLockSuspend()) {
+                    binding.root.isVisible = false
                     AppLockActivity.start(this@MainActivity)
+                } else {
+                    binding.root.isVisible = true
                 }
             }
         }
@@ -64,8 +73,8 @@ class MainActivity : AppCompatActivity() {
     private fun observeSecurityFlags() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                securityRepository.isAppLockEnabled.collect { isLockEnabled ->
-                    if (isLockEnabled) {
+                getSecuritySettingsUseCase().collect { settings ->
+                    if (settings.isAppLockEnabled) {
                         window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
                     } else {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)

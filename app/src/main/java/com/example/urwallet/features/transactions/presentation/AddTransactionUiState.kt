@@ -9,8 +9,12 @@ data class AddTransactionUiState(
     val selectedCategoryId: Long? = null,
     val isLoading: Boolean = false,
     val isSaved: Boolean = false,
-    val errorMessage: String? = null
+    val isUpdated: Boolean = false,
+    val errorMessage: String? = null,
+    val editingTransactionId: Long? = null,
+    val editingDate: Long? = null
 ) {
     /** True when no categories exist for the currently selected transaction type. */
     val noCategoriesAvailable: Boolean get() = categories.isEmpty()
+    val isEditMode: Boolean get() = editingTransactionId != null
 }

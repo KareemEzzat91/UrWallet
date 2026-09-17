@@ -168,6 +168,8 @@
     <string name="empty_transactions_desc">ابدأ بتسجيل أول معاملة عبر زر (+) بالأسفل لتتبع مصاريفك ودخلك بدقة.</string>
     <string name="dialog_delete_transaction_title">حذف المعاملة</string>
     <string name="dialog_delete_transaction_message">هل أنت متأكد من حذف هذه المعاملة؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="title_edit_transaction">تعديل المعاملة</string>
+    <string name="transaction_updated_success">تم تعديل المعاملة بنجاح</string>
 
     <!-- Phase 5 Dashboard Strings -->
     <string name="dashboard_net_balance_label">الرصيد الإجمالي</string>
@@ -557,4 +559,32 @@
     <string name="error_invalid_backup">ملف النسخة الاحتياطية غير متوافق أو تالف</string>
     <string name="share_backup_title">مشاركة النسخة الاحتياطية</string>
     <string name="share_csv_title">مشاركة ملف المعاملات</string>
+
+    <!-- Phase 16: Categories Management -->
+    <string name="categories_management_title">إدارة التصنيفات</string>
+    <string name="categories_management_desc">عرض وإضافة وتعديل التصنيفات المخصصة</string>
+    <string name="category_add_title">إضافة تصنيف جديد</string>
+    <string name="category_edit_title">تعديل التصنيف</string>
+    <string name="category_name_label">اسم التصنيف</string>
+    <string name="category_name_hint">مثال: مشتريات المنزل</string>
+    <string name="category_type_label">نوع التصنيف</string>
+    <string name="category_icon_label">الأيقونة</string>
+    <string name="category_color_label">اللون</string>
+    <string name="category_save_btn">حفظ التصنيف</string>
+    <string name="category_default_badge">افتراضي</string>
+    <string name="category_custom_badge">مخصص</string>
+    <string name="category_delete_confirm_title">حذف التصنيف</string>
+    <string name="category_delete_confirm_message">هل أنت متأكد من حذف هذا التصنيف؟ لن يتم حذف أي معاملات قديمة مسجلة به.</string>
+    <string name="category_delete_default_error">لا يمكن حذف التصنيفات الأساسية للنظام</string>
+    <string name="category_name_empty_error">يرجى كتابة اسم التصنيف</string>
+    <string name="category_added_success">تمت إضافة التصنيف بنجاح</string>
+    <string name="category_updated_success">تم تعديل التصنيف بنجاح</string>
+    <string name="category_deleted_success">تم حذف التصنيف بنجاح</string>
+    <string name="categories_empty_message">لا توجد تصنيفات</string>
+
+    <!-- Phase 16: Currency Settings -->
+    <string name="currency_settings_title">عملة العرض</string>
+    <string name="currency_settings_desc">تحديد العملة المستخدمة في عرض القيم المالية</string>
+    <string name="dialog_select_currency_title">اختر عملة العرض</string>
+    <string name="currency_updated_success">تم تغيير عملة العرض بنجاح</string>
 </resources>
