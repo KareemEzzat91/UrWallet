@@ -1,58 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="32dp">
+    android:paddingHorizontal="24dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="16dp">
 
-    <!-- Illustration area -->
+    <!-- Category / Feature Tag Badge -->
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_tag_pill"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="7dp"
+        android:textColor="#00E5FF"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="تتبع ذكي ومصاريف" />
+
+    <!-- 3D Illustration Container -->
     <FrameLayout
-        android:layout_width="240dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="40dp">
+        android:id="@+id/illustration_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="12dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toBottomOf="@id/tv_tag"
+        app:layout_constraintBottom_toTopOf="@id/content_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="280dp">
 
-        <!-- Soft glow circle behind illustration -->
+        <!-- Glowing halo effect -->
         <View
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:background="@drawable/bg_onboarding_slide" />
-
-        <ImageView
-            android:id="@+id/iv_illustration"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:contentDescription="@string/cd_onboarding_illustration"
-            tools:src="@drawable/ic_onboarding_tracking" />
+            android:background="@drawable/bg_illustration_glow" />
+
+        <!-- 3D Artwork Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1.5dp"
+            app:strokeColor="#3300E5FF"
+            app:cardBackgroundColor="#000666">
+
+            <ImageView
+                android:id="@+id/iv_illustration"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/cd_onboarding_illustration"
+                tools:src="@drawable/img_onboarding_slide1" />
+
+        </com.google.android.material.card.MaterialCardView>
+
     </FrameLayout>
 
-    <!-- Slide title -->
-    <TextView
-        android:id="@+id/tv_title"
+    <!-- Typography Content Container -->
+    <LinearLayout
+        android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="26sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
         android:gravity="center"
-        android:lineSpacingMultiplier="1.2"
         android:layout_marginBottom="16dp"
-        tools:text="اعرف فلوسك رايحة فين" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Slide subtitle -->
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#CCE8EAF6"
-        android:textSize="15sp"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.5"
-        tools:text="سجل مصاريفك بسهولة" />
+        <!-- Slide Title -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="10dp"
+            tools:text="اعرف فلوسك رايحة فين" />
 
-</LinearLayout>
+        <!-- Slide Subtitle -->
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#CCE8EAF6"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:lineSpacingExtra="6dp"
+            tools:text="سجل مصاريفك بسهولة وشوف تفاصيل انفاقك بصورة واضحة في اي وقت." />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

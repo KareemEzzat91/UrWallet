@@ -64,10 +64,13 @@
     <string name="freq_yearly">سنوي</string>
 
     <!-- Onboarding Slides -->
+    <string name="onboarding_slide1_tag">تتبع ذكي ومصاريف</string>
     <string name="onboarding_slide1_title">اعرف فلوسك رايحة فين</string>
     <string name="onboarding_slide1_subtitle">سجل مصاريفك بسهولة وشوف تفاصيل انفاقك بصورة واضحة في اي وقت.</string>
+    <string name="onboarding_slide2_tag">أهداف وادخار آلي</string>
     <string name="onboarding_slide2_title">حقق اهدافك المالية</string>
     <string name="onboarding_slide2_subtitle">حدد هدفك واختار وتيرة الادخار المناسبة وخلي محفظتك تحسب المبلغ الشهري عشانك.</string>
+    <string name="onboarding_slide3_tag">تحليلات وعادات مالية</string>
     <string name="onboarding_slide3_title">طور عاداتك المالية</string>
     <string name="onboarding_slide3_subtitle">محفظتك مش بس تطبيق - هو مدربك المالي الشخصي. تحديات وتحليل ونصايح ذكية كل يوم.</string>
 

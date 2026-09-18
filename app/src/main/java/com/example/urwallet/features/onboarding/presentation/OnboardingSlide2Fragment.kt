@@ -1,4 +1,4 @@
-﻿package com.example.urwallet.features.onboarding.presentation
+package com.example.urwallet.features.onboarding.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +20,8 @@ class OnboardingSlide2Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ivIllustration.setImageResource(R.drawable.ic_onboarding_goals)
+        binding.tvTag.setText(R.string.onboarding_slide2_tag)
+        binding.ivIllustration.setImageResource(R.drawable.img_onboarding_slide2)
         binding.tvTitle.setText(R.string.onboarding_slide2_title)
         binding.tvSubtitle.setText(R.string.onboarding_slide2_subtitle)
     }

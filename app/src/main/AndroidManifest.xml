@@ -34,7 +34,7 @@
         <activity
             android:name=".features.onboarding.presentation.OnboardingActivity"
             android:exported="false"
-            android:theme="@style/Theme.UrWallet"
+            android:theme="@style/Theme.UrWallet.Onboarding"
             android:launchMode="singleTop"
             android:noHistory="true" />
 

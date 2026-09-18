@@ -42,6 +42,14 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
     </style>
 
+    <!-- Custom Onboarding Activity Theme -->
+    <style name="Theme.UrWallet.Onboarding" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:statusBarColor">#000438</item>
+        <item name="android:navigationBarColor">#0A1172</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+    </style>
+
     <!-- Custom Shapes -->
     <style name="ShapeAppearance.UrWallet.Small" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerSize">@dimen/input_corner_radius</item>
