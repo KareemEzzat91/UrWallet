@@ -20,6 +20,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -42,6 +44,7 @@ class UrWalletApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
         appLockManager.syncLockStateBlocking()
         ProcessLifecycleOwner.get().lifecycle.addObserver(appLockLifecycleObserver)
         notificationHelper.createNotificationChannels()

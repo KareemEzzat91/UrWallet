@@ -39,15 +39,21 @@ class ActiveGoalsAdapter(
         fun bind(goal: Goal) {
             val context = binding.root.context
 
-            // Icon & Name
-            binding.ivGoalIcon.setImageResource(CategoryIconMapper.getIconDrawableRes(goal.icon))
+            // Category Pastel Squircle Icon & Tint (with smart emoji and name fallback)
+            binding.flGoalIconContainer.setBackgroundResource(CategoryIconMapper.getGoalPastelBgRes(goal.icon, goal.name))
+            binding.ivGoalIcon.setImageResource(CategoryIconMapper.getGoalDrawableRes(goal.icon, goal.name))
+            binding.ivGoalIcon.imageTintList = android.content.res.ColorStateList.valueOf(
+                context.getColor(CategoryIconMapper.getGoalIconTintRes(goal.icon, goal.name))
+            )
             binding.tvGoalName.text = goal.name
 
-            // Deadline
-            binding.tvDeadline.text = context.getString(
-                R.string.goals_deadline_format,
-                DateUtils.formatDisplayDate(goal.deadline)
-            )
+            // Pace Mode Badge with subtle status dot
+            val paceLabel = when (goal.paceMode) {
+                com.example.urwallet.core.common.GoalPaceMode.RELAXED -> "● وتيرة هادئة"
+                com.example.urwallet.core.common.GoalPaceMode.BALANCED -> "● وتيرة متوازنة"
+                com.example.urwallet.core.common.GoalPaceMode.AGGRESSIVE -> "● وتيرة مكثفة"
+            }
+            binding.tvPaceBadge.text = paceLabel
 
             // Days Remaining
             val daysRemaining = GoalCalculator.calculateDaysRemaining(goal.deadline)
@@ -55,26 +61,50 @@ class ActiveGoalsAdapter(
                 R.string.goals_days_left_format,
                 daysRemaining
             )
-            if (daysRemaining <= 15) {
-                binding.tvDaysRemaining.setBackgroundResource(R.drawable.bg_pill_warning)
-                binding.tvDaysRemaining.setTextColor(context.getColor(R.color.urwallet_expense))
+
+            // Progress Bar & Percentage (Accurate 0% handling)
+            val progressInt = goal.progressPercentage.toInt().coerceIn(0, 100)
+            binding.progressIndicatorCircular.progress = progressInt
+            binding.progressIndicator.progress = progressInt
+            binding.tvProgressPercentage.text = "$progressInt%"
+
+            if (progressInt == 0) {
+                binding.progressIndicator.trackColor = android.graphics.Color.parseColor("#F1F5F9")
+                binding.progressIndicator.setIndicatorColor(android.graphics.Color.TRANSPARENT)
             } else {
-                binding.tvDaysRemaining.setBackgroundResource(R.drawable.bg_pill_primary)
-                binding.tvDaysRemaining.setTextColor(context.getColor(R.color.urwallet_primary))
+                binding.progressIndicator.trackColor = android.graphics.Color.parseColor("#F1F5F9")
+                binding.progressIndicator.setIndicatorColor(context.getColor(R.color.urwallet_accent))
             }
 
-            // Progress Ring & Text
-            val progressInt = goal.progressPercentage.toInt().coerceIn(0, 100)
-            binding.progressIndicator.progress = progressInt
-            binding.tvProgressPercentage.text = String.format(Locale.getDefault(), "%d%%", progressInt)
+            // Financials (Hero Saved Amount + Target Subtitle)
+            binding.tvSavedAndTarget.text = Formatters.formatCurrency(goal.savedAmount, includeDecimals = false)
+            binding.tvTargetSub.text = "من ${Formatters.formatCurrency(goal.targetAmount, includeDecimals = false)}"
+            binding.tvRemainingAmount.text = Formatters.formatCurrency(goal.remainingAmount, includeDecimals = false)
 
-            // Financials
-            binding.tvSavedAndTarget.text = "${Formatters.formatCurrency(goal.savedAmount)} / ${Formatters.formatCurrency(goal.targetAmount)}"
-            binding.tvRemainingAmount.text = "${context.getString(R.string.goals_remaining_label)} ${Formatters.formatCurrency(goal.remainingAmount)}"
+            // Monthly Needed Target (Clean rounded number)
+            if (goal.monthlyTarget > 0) {
+                binding.tvMonthlyNeeded.visibility = android.view.View.VISIBLE
+                val monthlyClean = Formatters.formatCurrency(goal.monthlyTarget, includeDecimals = false)
+                binding.tvMonthlyNeeded.text = context.getString(
+                    R.string.goals_monthly_needed_format,
+                    monthlyClean
+                )
+            } else {
+                binding.tvMonthlyNeeded.visibility = android.view.View.GONE
+            }
 
-            // Click Listeners
-            binding.cardGoal.setOnClickListener { onGoalClick(goal) }
-            binding.btnQuickContribute.setOnClickListener { onContributeClick(goal) }
+            // Click Listeners with Haptic Feedback
+            binding.cardGoal.setOnClickListener {
+                it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+                onGoalClick(goal)
+            }
+            binding.btnGoalDetailChevron.setOnClickListener {
+                binding.cardGoal.performClick()
+            }
+            binding.btnQuickContribute.setOnClickListener {
+                it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+                onContributeClick(goal)
+            }
         }
     }
 

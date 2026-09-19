@@ -7,14 +7,19 @@
         android:title="@string/nav_dashboard" />
 
     <item
+        android:id="@+id/goalsFragment"
+        android:icon="@drawable/selector_nav_goals"
+        android:title="@string/nav_goals_short" />
+
+    <item
+        android:id="@+id/menu_placeholder"
+        android:enabled="false"
+        android:title="" />
+
+    <item
         android:id="@+id/transactionsFragment"
         android:icon="@drawable/selector_nav_transactions"
         android:title="@string/nav_transactions" />
-
-    <item
-        android:id="@+id/goalsFragment"
-        android:icon="@drawable/selector_nav_goals"
-        android:title="@string/nav_goals" />
 
     <item
         android:id="@+id/moreFragment"

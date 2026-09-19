@@ -52,6 +52,34 @@ class AddGoalBottomSheetFragment : BottomSheetDialogFragment() {
         setupPaceSelector()
         setupIconPicker()
         setupSaveButton()
+        applyPresetArguments()
+    }
+
+    private fun applyPresetArguments() {
+        arguments?.getString(ARG_NAME)?.let { binding.etGoalName.setText(it) }
+        val target = arguments?.getDouble(ARG_TARGET) ?: 0.0
+        if (target > 0) {
+            binding.etTargetAmount.setText(target.toInt().toString())
+        }
+        arguments?.getString(ARG_ICON)?.let {
+            updateSelectedIconVisual(it)
+        }
+    }
+
+    private fun updateSelectedIconVisual(selected: String) {
+        selectedIcon = selected
+        val iconViews = mapOf(
+            binding.iconEmergency to "ic_goal_emergency",
+            binding.iconTravel to "ic_goal_travel",
+            binding.iconHome to "ic_goal_home",
+            binding.iconRetirement to "ic_goal_retirement",
+            binding.iconCustom to "ic_goal_custom"
+        )
+        iconViews.forEach { (view, name) ->
+            view.setBackgroundResource(
+                if (name == selected) R.drawable.bg_pill_primary else R.drawable.bg_icon_circle
+            )
+        }
     }
 
     private fun initDefaultDeadline() {
@@ -123,15 +151,6 @@ class AddGoalBottomSheetFragment : BottomSheetDialogFragment() {
             binding.iconCustom to "ic_goal_custom"
         )
 
-        fun updateSelectedIconVisual(selected: String) {
-            selectedIcon = selected
-            iconViews.forEach { (view, name) ->
-                view.setBackgroundResource(
-                    if (name == selected) R.drawable.bg_pill_primary else R.drawable.bg_icon_circle
-                )
-            }
-        }
-
         iconViews.forEach { (view, name) ->
             view.setOnClickListener {
                 updateSelectedIconVisual(name)
@@ -201,6 +220,22 @@ class AddGoalBottomSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "AddGoalBottomSheetFragment"
-        fun newInstance() = AddGoalBottomSheetFragment()
+        private const val ARG_NAME = "arg_name"
+        private const val ARG_ICON = "arg_icon"
+        private const val ARG_TARGET = "arg_target"
+
+        fun newInstance(
+            initialName: String? = null,
+            initialIcon: String? = null,
+            initialTarget: Double? = null
+        ): AddGoalBottomSheetFragment {
+            return AddGoalBottomSheetFragment().apply {
+                arguments = android.os.Bundle().apply {
+                    initialName?.let { putString(ARG_NAME, it) }
+                    initialIcon?.let { putString(ARG_ICON, it) }
+                    initialTarget?.let { putDouble(ARG_TARGET, it) }
+                }
+            }
+        }
     }
 }

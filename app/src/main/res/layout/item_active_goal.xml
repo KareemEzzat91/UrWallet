@@ -10,8 +10,9 @@
     android:layout_marginVertical="6dp"
     android:clickable="true"
     android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/urwallet_surface"
-    app:cardCornerRadius="18dp"
+    app:cardCornerRadius="22dp"
     app:cardElevation="2dp"
     app:strokeColor="@color/urwallet_card_border"
     app:strokeWidth="1dp">
@@ -22,7 +23,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Top Header: Icon, Name & Deadline, Days Left -->
+        <!-- Header Row: Category Squircle, Name & Days, Pace Pill & Chevron -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,9 +31,10 @@
             android:orientation="horizontal">
 
             <FrameLayout
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:background="@drawable/bg_squircle_primary_light">
+                android:id="@+id/flGoalIconContainer"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_squircle_pastel_amber">
 
                 <ImageView
                     android:id="@+id/ivGoalIcon"
@@ -40,15 +42,15 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_nav_goals_filled"
-                    app:tint="@color/urwallet_primary" />
+                    android:src="@drawable/ic_shield"
+                    app:tint="@color/urwallet_warning" />
             </FrameLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -63,78 +65,72 @@
                     android:textStyle="bold"
                     tools:text="صندوق الطوارئ" />
 
-                <TextView
-                    android:id="@+id/tvDeadline"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/urwallet_text_secondary"
-                    android:textSize="12sp"
-                    tools:text="الموعد: 15 أكتوبر 2026" />
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_calendar"
+                        app:tint="@color/urwallet_text_tertiary" />
+
+                    <TextView
+                        android:id="@+id/tvDaysRemaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp"
+                        tools:text="متبقي 364 يوم" />
+                </LinearLayout>
             </LinearLayout>
 
-            <!-- Days Remaining Badge -->
-            <TextView
-                android:id="@+id/tvDaysRemaining"
+            <!-- Pace Badge & Chevron -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_pill_primary"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                tools:text="متبقي 45 يوم" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvPaceBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill_pace_green"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:textColor="#00732C"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    tools:text="● وتيرة متوازنة" />
+
+                <ImageView
+                    android:id="@+id/btnGoalDetailChevron"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="6dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_chevron_left"
+                    app:tint="@color/urwallet_text_tertiary" />
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Subtle Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="12dp"
-            android:background="@color/urwallet_divider" />
-
-        <!-- Progress & Financial Details -->
+        <!-- Middle Section: Financial Numbers & Circular Progress Ring -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- Radial Progress Ring -->
-            <FrameLayout
-                android:layout_width="54dp"
-                android:layout_height="54dp">
-
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/progressIndicator"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_gravity="center"
-                    app:indicatorColor="@color/urwallet_primary"
-                    app:indicatorSize="54dp"
-                    app:trackColor="@color/urwallet_primary_light"
-                    app:trackCornerRadius="3dp"
-                    app:trackThickness="6dp"
-                    tools:progress="65" />
-
-                <TextView
-                    android:id="@+id/tvProgressPercentage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/urwallet_primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    tools:text="65%" />
-            </FrameLayout>
-
-            <!-- Financial Details -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -143,39 +139,142 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/urwallet_text_primary"
-                    android:textSize="14sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
-                    tools:text="3,250 / 5,000 ج.م" />
+                    tools:text="0 ج.م" />
 
                 <TextView
-                    android:id="@+id/tvRemainingAmount"
+                    android:id="@+id/tvTargetSub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/urwallet_text_secondary"
-                    android:textSize="12sp"
-                    tools:text="المتبقي: 1,750 ج.م" />
+                    android:textSize="13sp"
+                    tools:text="من 5,000 ج.م" />
             </LinearLayout>
 
-            <!-- Quick Deposit Action Button -->
+            <!-- Circular Progress Ring (56dp) -->
+            <FrameLayout
+                android:layout_width="56dp"
+                android:layout_height="56dp">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressIndicatorCircular"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    app:indicatorColor="@color/urwallet_accent"
+                    app:indicatorSize="56dp"
+                    app:trackColor="#EEF2F6"
+                    app:trackCornerRadius="3dp"
+                    app:trackThickness="5dp"
+                    tools:progress="0" />
+
+                <TextView
+                    android:id="@+id/tvProgressPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/urwallet_text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="0%" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Linear Progress Bar -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:indicatorColor="@color/urwallet_accent"
+            app:trackColor="#F1F5F9"
+            app:trackCornerRadius="3dp"
+            app:trackThickness="6dp"
+            tools:progress="0" />
+
+        <!-- Bottom Action Row: Remaining, Monthly Needed, Vertical Line, and Cyan Deposit CTA -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_chart_pie"
+                        app:tint="@color/urwallet_accent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/goals_remaining_label"
+                        android:textColor="@color/urwallet_text_tertiary"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tvRemainingAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        tools:text="5,000 ج.م" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvMonthlyNeeded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/urwallet_text_tertiary"
+                    android:textSize="11sp"
+                    tools:text="مطلوب 417 ج.م شهرياً" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="#15000000" />
+
+            <!-- Primary Cyan Deposit Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnQuickContribute"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:paddingHorizontal="14dp"
+                android:layout_height="44dp"
+                android:paddingHorizontal="22dp"
                 android:paddingVertical="0dp"
                 android:text="@string/action_contribute"
-                android:textColor="@color/urwallet_primary"
-                android:textSize="13sp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/urwallet_primary_light"
-                app:cornerRadius="@dimen/chip_corner_radius"
+                app:backgroundTint="@color/urwallet_accent"
+                app:cornerRadius="14dp"
                 app:icon="@drawable/ic_add"
                 app:iconGravity="textStart"
-                app:iconPadding="4dp"
+                app:iconPadding="6dp"
                 app:iconSize="16dp"
-                app:iconTint="@color/urwallet_primary" />
+                app:iconTint="@color/white" />
         </LinearLayout>
 
     </LinearLayout>

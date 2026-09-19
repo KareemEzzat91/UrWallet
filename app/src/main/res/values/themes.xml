@@ -25,6 +25,10 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.UrWallet.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.UrWallet.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.UrWallet.Large</item>
+
+        <!-- Global Typography (Cairo Font) -->
+        <item name="fontFamily">@font/cairo</item>
+        <item name="android:fontFamily">@font/cairo</item>
     </style>
 
     <!-- Splash Screen API Theme -->
@@ -40,6 +44,8 @@
         <item name="android:navigationBarColor">#0A1172</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="fontFamily">@font/cairo</item>
+        <item name="android:fontFamily">@font/cairo</item>
     </style>
 
     <!-- Custom Onboarding Activity Theme -->
@@ -48,6 +54,8 @@
         <item name="android:navigationBarColor">#0A1172</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="fontFamily">@font/cairo</item>
+        <item name="android:fontFamily">@font/cairo</item>
     </style>
 
     <!-- Custom Shapes -->
@@ -70,7 +78,7 @@
     <!-- Bottom Navigation Styles -->
     <style name="Widget.UrWallet.BottomNavigationView.ActiveIndicator"
         parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/urwallet_primary_light</item>
+        <item name="android:color">@color/transparent</item>
         <item name="shapeAppearance">@style/ShapeAppearance.UrWallet.Pill</item>
     </style>
 
@@ -78,13 +86,15 @@
         parent="TextAppearance.Material3.LabelMedium">
         <item name="android:textSize">11sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/cairo</item>
+        <item name="fontFamily">@font/cairo</item>
     </style>
 
     <style name="TextAppearance.UrWallet.BottomNav.Inactive"
         parent="TextAppearance.Material3.LabelMedium">
         <item name="android:textSize">11sp</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/cairo</item>
+        <item name="fontFamily">@font/cairo</item>
     </style>
 
     <!-- Keypad Button Style -->
@@ -97,6 +107,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/urwallet_text_primary</item>
         <item name="android:background">@drawable/bg_keypad_button</item>
+        <item name="android:fontFamily">@font/cairo</item>
+        <item name="fontFamily">@font/cairo</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>

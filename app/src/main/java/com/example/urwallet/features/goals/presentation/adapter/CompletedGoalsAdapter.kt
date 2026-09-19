@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.urwallet.R
 import com.example.urwallet.core.common.Formatters
 import com.example.urwallet.core.designsystem.CategoryIconMapper
 import com.example.urwallet.databinding.ItemCompletedGoalBinding
@@ -32,10 +33,17 @@ class CompletedGoalsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(goal: Goal) {
+            val context = binding.root.context
             binding.ivGoalIcon.setImageResource(CategoryIconMapper.getIconDrawableRes(goal.icon))
             binding.tvGoalName.text = goal.name
-            binding.tvAchievedAmount.text = "تم توفير ${Formatters.formatCurrency(goal.targetAmount)} بالكامل"
-            binding.cardCompletedGoal.setOnClickListener { onGoalClick(goal) }
+            binding.tvAchievedAmount.text = context.getString(
+                R.string.goals_completed_sub_format,
+                Formatters.formatCurrency(goal.targetAmount)
+            )
+            binding.cardCompletedGoal.setOnClickListener {
+                it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+                onGoalClick(goal)
+            }
         }
     }
 

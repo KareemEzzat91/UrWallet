@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/screen_padding_horizontal"
-        android:paddingTop="@dimen/screen_padding_top"
+        android:paddingTop="24dp"
         android:paddingBottom="120dp">
 
         <!-- Top Header Row -->
@@ -23,46 +23,62 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <FrameLayout
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_squircle_pastel_blue">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_nav_goals_filled"
+                    app:tint="@color/urwallet_accent" />
+            </FrameLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/nav_goals"
+                    android:text="الأهداف المالية"
                     android:textColor="@color/urwallet_text_primary"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="خطط وادخر لتحقيق طموحاتك"
+                    android:text="@string/goals_header_subtitle"
                     android:textColor="@color/urwallet_text_secondary"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddGoalHeader"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:paddingHorizontal="14dp"
-                android:text="@string/action_add_goal"
-                android:textColor="@color/urwallet_primary"
+                android:paddingHorizontal="16dp"
+                android:text="@string/goals_action_new_goal"
+                android:textColor="@color/white"
                 android:textSize="13sp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/urwallet_primary_light"
-                app:cornerRadius="@dimen/chip_corner_radius"
+                app:backgroundTint="#001B3A"
+                app:cornerRadius="20dp"
                 app:icon="@drawable/ic_add"
                 app:iconGravity="textStart"
                 app:iconPadding="4dp"
                 app:iconSize="16dp"
-                app:iconTint="@color/urwallet_primary" />
+                app:iconTint="@color/white" />
         </LinearLayout>
 
         <!-- Loading Indicator -->
@@ -83,58 +99,64 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <!-- Hero Overview Card -->
+            <!-- Compact Focused Summary Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardGoalsOverview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_gradient_primary"
+                    android:background="@drawable/bg_card_goals_hero"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="18dp">
 
-                    <!-- Overview Top Row -->
+                    <!-- Top Row: Icon + Title on right, Motivational Motto on left -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_nav_goals_filled"
-                            app:tint="@color/urwallet_income_light" />
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
                             android:layout_weight="1"
-                            android:text="@string/goals_total_savings_title"
-                            android:textColor="#CCFFFFFF"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_chart_pie"
+                                app:tint="@color/urwallet_accent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:text="@string/goals_total_savings_title"
+                                android:textColor="#B3FFFFFF"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Motivational Badge on Left -->
                         <TextView
-                            android:id="@+id/tvOverviewActiveCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_pill_glass"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="4dp"
-                            android:textColor="@color/white"
+                            android:text="@string/goals_hero_motto"
+                            android:textColor="#80FFFFFF"
                             android:textSize="11sp"
-                            android:textStyle="bold"
-                            tools:text="2 أهداف نشطة" />
+                            android:lineSpacingExtra="2dp"
+                            android:gravity="start" />
                     </LinearLayout>
 
                     <!-- Big Total Saved Amount -->
@@ -142,73 +164,265 @@
                         android:id="@+id/tvTotalGoalsSavings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:textColor="@color/white"
-                        android:textSize="28sp"
+                        android:textSize="32sp"
                         android:textStyle="bold"
-                        tools:text="24,500 ج.م" />
+                        tools:text="0 ج.م" />
 
                     <!-- Overall Linear Progress Bar -->
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/overviewProgressBar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        app:indicatorColor="@color/urwallet_income_light"
-                        app:trackColor="#33FFFFFF"
+                        android:layout_marginTop="10dp"
+                        app:indicatorColor="@color/urwallet_accent"
+                        app:trackColor="#26FFFFFF"
                         app:trackCornerRadius="3dp"
                         app:trackThickness="6dp"
-                        tools:progress="65" />
+                        tools:progress="0" />
 
-                    <!-- Overview Progress Description -->
-                    <TextView
-                        android:id="@+id/tvOverviewProgressDesc"
-                        android:layout_width="wrap_content"
+                    <!-- Progress Info Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textColor="#B3FFFFFF"
-                        android:textSize="12sp"
-                        tools:text="تم توفير 65% من إجمالي المستهدف (40,000 ج.م)" />
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvOverviewProgressDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#B3FFFFFF"
+                            android:textSize="12sp"
+                            tools:text="من 5,000 ج.م" />
+
+                        <TextView
+                            android:id="@+id/tvOverviewProgressPercentage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/urwallet_accent"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:text="0%" />
+                    </LinearLayout>
+
+                    <!-- Dual Status Glass Pills at Bottom -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+
+                        <!-- Active Goals Pill -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="38dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_pill_glass"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="10dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_nav_goals_filled"
+                                app:tint="@color/urwallet_accent" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:layout_weight="1"
+                                android:text="@string/goals_tab_active"
+                                android:textColor="#CCFFFFFF"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvOverviewActiveCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                tools:text="1" />
+                        </LinearLayout>
+
+                        <!-- Completed Goals Pill -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="38dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_pill_glass"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="10dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_check_circle"
+                                app:tint="@color/urwallet_income_light" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:layout_weight="1"
+                                android:text="@string/goals_tab_completed"
+                                android:textColor="#CCFFFFFF"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvOverviewCompletedCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                tools:text="0" />
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Active Goals Section -->
+            <!-- Filter Tabs Bar (Active / Completed / All) -->
+            <LinearLayout
+                android:id="@+id/layoutGoalsTabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Tab 1: Active Goals -->
+                <LinearLayout
+                    android:id="@+id/tabActiveGoals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingVertical="6dp"
+                    android:paddingEnd="16dp">
+
+                    <TextView
+                        android:id="@+id/tvTabActiveLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/goals_tab_active"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvTabActiveCount"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_squircle_pastel_blue"
+                        android:gravity="center"
+                        android:textColor="@color/urwallet_accent"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        tools:text="1" />
+                </LinearLayout>
+
+                <!-- Tab 2: Completed Goals -->
+                <LinearLayout
+                    android:id="@+id/tabCompletedGoals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="12dp">
+
+                    <TextView
+                        android:id="@+id/tvTabCompletedLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/goals_tab_completed"
+                        android:textColor="@color/urwallet_text_tertiary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvTabCompletedCount"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="6dp"
+                        android:background="#F1F5F9"
+                        android:gravity="center"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        tools:text="0" />
+                </LinearLayout>
+
+                <!-- Tab 3: All Goals -->
+                <LinearLayout
+                    android:id="@+id/tabAllGoals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingVertical="6dp"
+                    android:paddingStart="12dp">
+
+                    <TextView
+                        android:id="@+id/tvTabAllLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/goals_tab_all"
+                        android:textColor="@color/urwallet_text_tertiary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvTabAllCount"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="6dp"
+                        android:background="#F1F5F9"
+                        android:gravity="center"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        tools:text="1" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Active Goals Section / RecyclerView -->
             <LinearLayout
                 android:id="@+id/layoutActiveSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvActiveSectionHeader"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/tvActiveSectionHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/goals_active_section_title"
-                        android:textColor="@color/urwallet_text_primary"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvActiveGoalsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_pill_primary"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="2dp"
-                        android:textColor="@color/white"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        tools:text="2" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tvActiveGoalsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvActiveGoals"
@@ -216,49 +430,30 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="2"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_active_goal" />
             </LinearLayout>
 
-            <!-- Completed Goals Section -->
+            <!-- Completed Goals Section / RecyclerView -->
             <LinearLayout
                 android:id="@+id/layoutCompletedSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:visibility="gone">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvCompletedSectionHeader"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/tvCompletedSectionHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/goals_completed_section_title"
-                        android:textColor="@color/urwallet_income"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCompletedGoalsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_pill_income"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="2dp"
-                        android:textColor="@color/urwallet_income"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        tools:text="1" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tvCompletedGoalsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCompletedGoals"
@@ -268,6 +463,349 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="1"
                     tools:listitem="@layout/item_completed_goal" />
+            </LinearLayout>
+
+            <!-- Useful Insight Card ("💡 اقتراح ادخار") -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSavingsInsight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card_insight"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
+
+                    <FrameLayout
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_squircle_pastel_teal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_lightbulb"
+                            app:tint="@color/urwallet_accent" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/goals_insight_title"
+                            android:textColor="@color/urwallet_text_primary"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvInsightMessage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/urwallet_text_secondary"
+                            android:textSize="12sp"
+                            tools:text="خصص 417 ج.م شهرياً للوصول لهدفك في الموعد المحدد." />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_chevron_left"
+                        app:tint="@color/urwallet_text_tertiary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Suggested Goals Section ("أهداف أخرى قد تهمك") -->
+            <LinearLayout
+                android:id="@+id/layoutSuggestedGoalsSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <!-- Header Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/goals_suggested_section_title"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnSuggestedViewAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="عرض الكل  ‹"
+                        android:textColor="@color/urwallet_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 3 Preset Goal Cards in a Responsive Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <!-- Preset 1: Car -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPresetCar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/urwallet_surface"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="1.5dp"
+                        app:strokeColor="@color/urwallet_card_border"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingVertical="14dp"
+                            android:paddingHorizontal="6dp">
+
+                            <FrameLayout
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:background="@drawable/bg_squircle_pastel_blue">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_transport"
+                                    app:tint="@color/urwallet_accent" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/goals_suggested_car_title"
+                                android:textColor="@color/urwallet_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/goals_suggested_car_desc"
+                                android:textColor="@color/urwallet_text_tertiary"
+                                android:textSize="9.5sp" />
+
+                            <FrameLayout
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_squircle_pastel_blue">
+
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_add"
+                                    app:tint="@color/urwallet_accent" />
+                            </FrameLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Preset 2: Home -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPresetHome"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="3dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/urwallet_surface"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="1.5dp"
+                        app:strokeColor="@color/urwallet_card_border"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingVertical="14dp"
+                            android:paddingHorizontal="6dp">
+
+                            <FrameLayout
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:background="@drawable/bg_squircle_pastel_green">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_goal_home"
+                                    app:tint="@color/urwallet_income" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/goals_suggested_home_title"
+                                android:textColor="@color/urwallet_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/goals_suggested_home_desc"
+                                android:textColor="@color/urwallet_text_tertiary"
+                                android:textSize="9.5sp" />
+
+                            <FrameLayout
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_squircle_pastel_blue">
+
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_add"
+                                    app:tint="@color/urwallet_accent" />
+                            </FrameLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Preset 3: Travel -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPresetTravel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/urwallet_surface"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="1.5dp"
+                        app:strokeColor="@color/urwallet_card_border"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingVertical="14dp"
+                            android:paddingHorizontal="6dp">
+
+                            <FrameLayout
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:background="@drawable/bg_squircle_pastel_blue">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_goal_travel"
+                                    app:tint="@color/urwallet_accent" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/goals_suggested_travel_title"
+                                android:textColor="@color/urwallet_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/goals_suggested_travel_desc"
+                                android:textColor="@color/urwallet_text_tertiary"
+                                android:textSize="9.5sp" />
+
+                            <FrameLayout
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_squircle_pastel_blue">
+
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_add"
+                                    app:tint="@color/urwallet_accent" />
+                            </FrameLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -285,13 +823,13 @@
             tools:visibility="visible">
 
             <FrameLayout
-                android:layout_width="88dp"
-                android:layout_height="88dp"
+                android:layout_width="92dp"
+                android:layout_height="92dp"
                 android:background="@drawable/bg_squircle_primary_light">
 
                 <ImageView
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
                     android:layout_gravity="center"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_nav_goals_filled"
@@ -304,7 +842,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/goals_empty_title"
                 android:textColor="@color/urwallet_text_primary"
-                android:textSize="19sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -313,7 +851,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:lineSpacingExtra="4dp"
-                android:paddingHorizontal="20dp"
+                android:paddingHorizontal="24dp"
                 android:text="@string/goals_empty_desc"
                 android:textColor="@color/urwallet_text_secondary"
                 android:textSize="14sp" />
@@ -324,13 +862,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="52dp"
                 android:layout_marginTop="28dp"
-                android:paddingHorizontal="28dp"
+                android:paddingHorizontal="32dp"
                 android:text="@string/action_add_goal"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/urwallet_primary"
-                app:cornerRadius="@dimen/chip_corner_radius"
+                app:backgroundTint="#001B3A"
+                app:cornerRadius="26dp"
                 app:icon="@drawable/ic_add"
                 app:iconPadding="8dp"
                 app:iconTint="@color/white" />

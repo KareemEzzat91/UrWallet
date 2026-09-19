@@ -174,19 +174,34 @@
     <string name="title_edit_transaction">تعديل المعاملة</string>
     <string name="transaction_updated_success">تم تعديل المعاملة بنجاح</string>
 
+    <string name="nav_goals_short">أهداف</string>
+
     <!-- Phase 5 Dashboard Strings -->
     <string name="dashboard_net_balance_label">الرصيد الإجمالي</string>
-    <string name="dashboard_monthly_income">دخل الشهر</string>
-    <string name="dashboard_monthly_expense">مصروف الشهر</string>
+    <string name="dashboard_monthly_income">الدخل</string>
+    <string name="dashboard_monthly_expense">المصروفات</string>
     <string name="dashboard_recent_transactions">آخر المعاملات</string>
     <string name="dashboard_nearest_goal">الهدف الأقرب</string>
     <string name="dashboard_no_recent_transactions">لا توجد معاملات مسجلة بعد</string>
+    <string name="dashboard_empty_recent_hint">سجل أول معاملة لتتبع مصاريفك ونفقاتك بذكاء</string>
+    <string name="dashboard_btn_add_first_transaction">➕ إضافة معاملة جديدة</string>
     <string name="dashboard_goal_saved_format">تم توفير: %1$s</string>
     <string name="dashboard_goal_target_format">من: %1$s</string>
     <string name="greeting_morning">صباح الخير 👋</string>
     <string name="greeting_afternoon">مساء الخير 👋</string>
     <string name="greeting_evening">مساء النور 👋</string>
     <string name="cd_nearest_goal_icon">أيقونة الهدف الأقرب</string>
+    <string name="cd_toggle_balance_privacy">إخفاء أو إظهار الرصيد</string>
+    <string name="action_quick_expense">مصروف</string>
+    <string name="action_quick_income">دخل</string>
+    <string name="action_quick_goal">إيداع هدف</string>
+    <string name="action_quick_analytics">تقارير</string>
+    <string name="dashboard_balance_hidden_mask">•••••• ج.م</string>
+    <string name="dashboard_daily_quote">🌱 خطوة صغيرة اليوم .. لمستقبل أفضل</string>
+    <string name="dashboard_this_month">📅 هذا الشهر</string>
+    <string name="dashboard_goal_remaining_format">متبقي %1$s</string>
+    <string name="dashboard_goal_amounts_ratio">%1$s / %2$s</string>
+    <string name="dashboard_goal_security_subtitle">بداية الأمان لمستقبلك</string>
     <!-- Empty-category state in Add Transaction BottomSheet -->
     <string name="msg_no_categories_for_type">لا توجد تصنيفات لهذا النوع. يمكنك إضافة تصنيفات من إعدادات التصنيفات.</string>
 
@@ -294,6 +309,24 @@
     <string name="goals_completed_badge">100% مكتمل</string>
     <string name="goals_completed_sub_format">تم توفير %1$s بالكامل 🎉</string>
     <string name="label_contributions_count">سجل الإيداعات (%1$d)</string>
+    <string name="goal_pace_relaxed_label">وتيرة هادئة</string>
+    <string name="goal_pace_balanced_label">وتيرة متوازنة</string>
+    <string name="goal_pace_aggressive_label">وتيرة مكثفة</string>
+    <string name="goals_header_subtitle">خطط وادخر لتحقيق طموحاتك المالية</string>
+    <string name="goals_action_new_goal">+ هدف جديد</string>
+    <string name="goals_tab_active">الأهداف النشطة</string>
+    <string name="goals_tab_completed">الأهداف المكتملة</string>
+    <string name="goals_tab_all">جميع الأهداف</string>
+    <string name="goals_hero_motto">خطوة اليوم .. \nلمستقبل أفضل 🌱</string>
+    <string name="goals_insight_title">اقتراح ادخار</string>
+    <string name="goals_suggested_section_title">أهداف أخرى قد تهمك</string>
+    <string name="goals_view_all">عرض الكل</string>
+    <string name="goals_suggested_car_title">شراء سيارة</string>
+    <string name="goals_suggested_car_desc">امتلك سيارتك الخاصة</string>
+    <string name="goals_suggested_home_title">شراء منزل</string>
+    <string name="goals_suggested_home_desc">ابدأ مستقبلك</string>
+    <string name="goals_suggested_travel_title">رحلة سفر</string>
+    <string name="goals_suggested_travel_desc">حقق حلمك بالسفر</string>
 
     <!-- Phase 8 Budgets & Overspending Alerts -->
     <string name="title_budgets">الميزانيات وتنبيهات الإنفاق</string>

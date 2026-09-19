@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.decorView.layoutDirection = android.view.View.LAYOUT_DIRECTION_RTL
 
         if (appLockManager.shouldLockOnForeground()) {
             binding.root.isVisible = false
@@ -126,19 +127,34 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        // Connect BottomNavigationView to NavController
-        NavigationUI.setupWithNavController(binding.bottomNav, navController)
+        // Connect BottomNavigationView to NavController with Center Placeholder support
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.menu_placeholder -> {
+                    AddTransactionBottomSheetFragment.newInstance()
+                        .show(supportFragmentManager, AddTransactionBottomSheetFragment.TAG)
+                    false
+                }
+                else -> {
+                    NavigationUI.onNavDestinationSelected(item, navController)
+                }
+            }
+        }
 
         val topLevelDestinations = setOf(
             R.id.dashboardFragment,
-            R.id.transactionsFragment,
             R.id.goalsFragment,
+            R.id.transactionsFragment,
             R.id.moreFragment
         )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isTopLevel = destination.id in topLevelDestinations
             setBottomBarVisibility(isTopLevel)
+            val menuItem = binding.bottomNav.menu.findItem(destination.id)
+            if (menuItem != null && !menuItem.isChecked) {
+                menuItem.isChecked = true
+            }
         }
     }
 

@@ -1,40 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollDashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
     android:background="@color/urwallet_background"
     android:fillViewport="true">
 
     <LinearLayout
+        android:id="@+id/layoutMainContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/screen_padding_horizontal"
-        android:paddingTop="@dimen/screen_padding_top"
-        android:paddingBottom="100dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="120dp">
 
-        <!-- Top App Bar (Greeting + Avatar + Notifications) -->
-        <LinearLayout
+        <!-- Top App Bar (Header: Avatar + Greeting + Quote + Notifications) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutTopHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:paddingBottom="8dp">
 
-            <ImageView
-                android:id="@+id/ivAvatar"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:contentDescription="@string/cd_avatar"
-                android:src="@drawable/ic_avatar_placeholder" />
+            <!-- Avatar Container with subtle border -->
+            <FrameLayout
+                android:id="@+id/flAvatarContainer"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_pastel_circle_goal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
+                <ImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/cd_avatar"
+                    android:src="@drawable/ic_avatar_placeholder" />
+            </FrameLayout>
+
+            <!-- Greeting, Date and Daily Motivational Quote -->
             <LinearLayout
+                android:id="@+id/layoutGreeting"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/flAvatarContainer"
+                app:layout_constraintEnd_toStartOf="@id/btnNotifications"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <TextView
                     android:id="@+id/tvGreeting"
@@ -43,27 +63,63 @@
                     android:textColor="@color/urwallet_text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    tools:text="مرحباً 👋" />
+                    tools:text="مساء النور 👋" />
 
                 <TextView
                     android:id="@+id/tvSubtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="@string/dashboard_subtitle_placeholder"
                     android:textColor="@color/urwallet_text_secondary"
-                    android:textSize="13sp" />
+                    android:textSize="12sp"
+                    tools:text="الجمعة، 18 سبتمبر 2026" />
+
+                <TextView
+                    android:id="@+id/tvDailyQuote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/dashboard_daily_quote"
+                    android:textColor="#00897B"
+                    android:textSize="11sp" />
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/btnNotifications"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/cd_notifications"
-                android:padding="8dp"
-                android:src="@drawable/ic_bell" />
-        </LinearLayout>
+            <!-- Notification Button with Unread Badge -->
+            <FrameLayout
+                android:id="@+id/flNotifications"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageButton
+                    android:id="@+id/btnNotifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_skip_button"
+                    android:contentDescription="@string/cd_notifications"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_bell"
+                    app:tint="@color/urwallet_text_primary" />
+
+                <TextView
+                    android:id="@+id/tvNotificationBadge"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/bg_badge_red_circle"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Skeleton Loading State -->
         <include
@@ -88,146 +144,390 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
-
-            <!-- Hero Balance Card -->
+            <!-- Hero Balance Card (Next-Gen Fintech Card) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardHeroBalance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp"
-                app:strokeWidth="0dp">
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp"
+                app:strokeWidth="1.2dp"
+                app:strokeColor="#3300B4D8"
+                app:cardBackgroundColor="#001B3A">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_gradient_primary"
+                    android:background="@drawable/bg_card_balance_wave"
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <!-- Header Row: Label + Month -->
-                    <LinearLayout
+                    <!-- Header Row: Label + Privacy Toggle (Start) & Month Pill (End) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/dashboard_net_balance_label"
-                            android:textColor="#B3FFFFFF"
-                            android:textSize="13sp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
 
+                            <TextView
+                                android:id="@+id/tvNetBalanceLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dashboard_net_balance_label"
+                                android:textColor="#B3FFFFFF"
+                                android:textSize="13sp" />
+
+                            <!-- Balance Privacy Eye Toggle -->
+                            <ImageButton
+                                android:id="@+id/btnToggleBalancePrivacy"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="6dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/cd_toggle_balance_privacy"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_eye_open"
+                                app:tint="#CCFFFFFF" />
+                        </LinearLayout>
+
+                        <!-- Month Tag Pill -->
                         <TextView
                             android:id="@+id/tvCurrentMonth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#B3FFFFFF"
+                            android:background="@drawable/bg_tag_pill"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="4dp"
+                            android:text="@string/dashboard_this_month"
+                            android:textColor="#00E5FF"
                             android:textSize="12sp"
-                            tools:text="سبتمبر 2026" />
-                    </LinearLayout>
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:text="📅 هذا الشهر" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!-- Net Balance Amount -->
                     <TextView
                         android:id="@+id/tvNetBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="14dp"
                         android:textColor="@color/white"
-                        android:textSize="32sp"
+                        android:textSize="34sp"
                         android:textStyle="bold"
-                        tools:text="12,450.00 ج.م" />
+                        tools:text="-200 ج.م" />
 
-                    <!-- Divider -->
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="16dp"
-                        android:background="#26FFFFFF" />
-
-                    <!-- Monthly Stats (Income & Expense) -->
+                    <!-- Monthly Stats (Income & Expense Translucent Sub-Cards) -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
                         android:orientation="horizontal">
 
-                        <!-- Monthly Income Column -->
+                        <!-- Monthly Expense Sub-Card (Right in RTL) -->
                         <LinearLayout
+                            android:id="@+id/layoutExpensePill"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="6dp"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:background="@drawable/bg_card_pill_expense_modern"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="10dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/dashboard_monthly_income"
-                                android:textColor="#B3FFFFFF"
-                                android:textSize="12sp" />
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvMonthlyIncome"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textColor="@color/urwallet_income_light"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                tools:text="+ 15,000.00 ج.م" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dashboard_monthly_expense"
+                                    android:textColor="#B3FFFFFF"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/tvMonthlyExpense"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#FF5252"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    tools:text="200 ج.م" />
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_pastel_circle_expense"
+                                android:backgroundTint="#33FF5252">
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_trending_down"
+                                    app:tint="#FF5252" />
+                            </FrameLayout>
                         </LinearLayout>
 
-                        <!-- Vertical Divider -->
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginHorizontal="12dp"
-                            android:background="#26FFFFFF" />
-
-                        <!-- Monthly Expense Column -->
+                        <!-- Monthly Income Sub-Card (Left in RTL) -->
                         <LinearLayout
+                            android:id="@+id/layoutIncomePill"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:background="@drawable/bg_card_pill_income_modern"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="10dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/dashboard_monthly_expense"
-                                android:textColor="#B3FFFFFF"
-                                android:textSize="12sp" />
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvMonthlyExpense"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textColor="#FF8A80"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                tools:text="- 2,550.00 ج.م" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dashboard_monthly_income"
+                                    android:textColor="#B3FFFFFF"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/tvMonthlyIncome"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#00E676"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    tools:text="0 ج.م" />
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_pastel_circle_income"
+                                android:backgroundTint="#3300E676">
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_trending_up"
+                                    app:tint="#00E676" />
+                            </FrameLayout>
                         </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Nearest Active Goal Card -->
+            <!-- Quick Actions Bar (Row of 4 Pastel Shortcuts) -->
+            <LinearLayout
+                android:id="@+id/layoutQuickActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- 1. Quick Expense -->
+                <LinearLayout
+                    android:id="@+id/btnQuickExpense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_quick_action_modern"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="14dp"
+                    android:paddingHorizontal="4dp">
+
+                    <FrameLayout
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_pastel_circle_expense">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_trending_down"
+                            app:tint="@color/urwallet_pastel_expense_text" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/action_quick_expense"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 2. Quick Income -->
+                <LinearLayout
+                    android:id="@+id/btnQuickIncome"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_quick_action_modern"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="14dp"
+                    android:paddingHorizontal="4dp">
+
+                    <FrameLayout
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_pastel_circle_income">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_trending_up"
+                            app:tint="@color/urwallet_pastel_income_text" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/action_quick_income"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 3. Quick Goal Contribution -->
+                <LinearLayout
+                    android:id="@+id/btnQuickGoal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_quick_action_modern"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="14dp"
+                    android:paddingHorizontal="4dp">
+
+                    <FrameLayout
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_pastel_circle_goal">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_nav_goals"
+                            app:tint="@color/urwallet_pastel_goal_text" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/action_quick_goal"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 4. Quick Reports -->
+                <LinearLayout
+                    android:id="@+id/btnQuickAnalytics"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_quick_action_modern"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="14dp"
+                    android:paddingHorizontal="4dp">
+
+                    <FrameLayout
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_pastel_circle_reports">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_reports"
+                            app:tint="@color/urwallet_pastel_reports_text" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/action_quick_analytics"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Nearest Active Goal Card (Modern Fintech Card) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardNearestGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/urwallet_surface"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
                 app:strokeColor="@color/urwallet_card_border"
                 app:strokeWidth="1dp"
                 tools:visibility="visible">
@@ -236,28 +536,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
+                    <!-- Goal Header: Icon + Titles + Percentage + Chevron -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <!-- Icon Container -->
+                        <!-- Icon Container in Pastel Sky Circle -->
                         <FrameLayout
                             android:id="@+id/flGoalIconContainer"
-                            android:layout_width="44dp"
-                            android:layout_height="44dp"
-                            android:background="@drawable/bg_icon_circle"
-                            android:backgroundTint="@color/urwallet_primary_light">
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:background="@drawable/bg_pastel_circle_goal">
 
                             <TextView
                                 android:id="@+id/tvGoalEmoji"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:textSize="20sp"
+                                android:textSize="22sp"
                                 tools:text="🛡️" />
 
                             <ImageView
@@ -267,7 +567,7 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/cd_nearest_goal_icon"
                                 android:visibility="gone"
-                                app:tint="@color/urwallet_primary"
+                                app:tint="@color/urwallet_pastel_goal_text"
                                 tools:src="@drawable/ic_goal_emergency" />
                         </FrameLayout>
 
@@ -297,56 +597,88 @@
                                 android:textSize="16sp"
                                 android:textStyle="bold"
                                 tools:text="صندوق الطوارئ" />
+
+                            <TextView
+                                android:id="@+id/tvGoalSubtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:text="@string/dashboard_goal_security_subtitle"
+                                android:textColor="@color/urwallet_text_tertiary"
+                                android:textSize="11sp" />
                         </LinearLayout>
 
-                        <!-- Progress Percentage Badge -->
-                        <TextView
-                            android:id="@+id/tvGoalPercentage"
+                        <!-- Percentage Badge & Chevron -->
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/urwallet_primary"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            tools:text="65%" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvGoalPercentage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_goal_badge_modern"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="4dp"
+                                android:textColor="@color/urwallet_pastel_goal_text"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                tools:text="0%" />
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginStart="6dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_chevron_left"
+                                app:tint="@color/urwallet_text_tertiary" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                    <!-- Goal Progress Indicator -->
+                    <!-- Goal Progress Indicator (Accurate 0% handling) -->
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/progressGoal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="14dp"
                         android:max="100"
-                        app:indicatorColor="@color/urwallet_primary"
-                        app:trackColor="@color/urwallet_primary_light"
+                        app:indicatorColor="@color/urwallet_accent"
+                        app:trackColor="#E2E8F0"
                         app:trackCornerRadius="4dp"
                         app:trackThickness="8dp"
-                        tools:progress="65" />
+                        tools:progress="0" />
 
-                    <!-- Goal Target / Saved Amounts -->
-                    <LinearLayout
+                    <!-- Goal Amounts: Saved Ratio & Remaining (Fixed RTL Layout) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvGoalSaved"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/urwallet_text_secondary"
-                            android:textSize="12sp"
-                            tools:text="تم توفير: 6,500 ج.م" />
+                        android:layout_marginTop="10dp">
 
                         <TextView
                             android:id="@+id/tvGoalTarget"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/urwallet_text_secondary"
-                            android:textSize="12sp"
-                            tools:text="من: 10,000 ج.م" />
-                    </LinearLayout>
+                            android:textSize="13sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:text="متبقي 5,000 ج.م" />
+
+                        <TextView
+                            android:id="@+id/tvGoalSaved"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/urwallet_text_secondary"
+                            android:textSize="13sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:text="0 / 5,000 ج.م" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -357,9 +689,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/urwallet_surface"
-                app:cardCornerRadius="18dp"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="2dp"
                 app:strokeColor="@color/urwallet_card_border"
                 app:strokeWidth="1dp"
@@ -369,7 +703,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -378,8 +712,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:contentDescription="@null"
                             android:src="@drawable/ic_trophy"
                             app:tint="#FFB300" />
@@ -389,10 +723,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_weight="1"
-                            android:fontFamily="sans-serif-bold"
                             android:text="@string/dashboard_challenge_title"
                             android:textColor="@color/urwallet_text_primary"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -401,9 +735,9 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:paddingStart="8dp"
-                            android:paddingTop="3dp"
+                            android:paddingTop="4dp"
                             android:paddingEnd="10dp"
-                            android:paddingBottom="3dp">
+                            android:paddingBottom="4dp">
 
                             <ImageView
                                 android:layout_width="14dp"
@@ -416,9 +750,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:fontFamily="sans-serif-bold"
                                 android:textColor="#E65100"
-                                android:textSize="11sp"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
                                 tools:text="3 أيام 🔥" />
                         </LinearLayout>
 
@@ -428,10 +762,10 @@
                         android:id="@+id/tvDashboardChallengeTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="sans-serif-bold"
+                        android:layout_marginTop="12dp"
                         android:textColor="@color/urwallet_text_primary"
                         android:textSize="15sp"
+                        android:textStyle="bold"
                         tools:text="أسبوع بلا كافيهات ومطاعم ☕" />
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -446,63 +780,69 @@
                         app:trackThickness="8dp"
                         tools:progress="57" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="10dp">
 
                         <TextView
                             android:id="@+id/tvDashboardChallengeDesc"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif"
                             android:textColor="@color/urwallet_text_secondary"
                             android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             tools:text="أنجزت 4 من 7 أيام" />
 
                         <TextView
                             android:id="@+id/tvDashboardChallengeRemaining"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
                             android:textColor="@color/urwallet_text_secondary"
                             android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             tools:text="باقي 3 أيام" />
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Recent Transactions Section -->
-            <LinearLayout
+            <!-- Recent Transactions Section Header (Fixed RTL Alignment) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginTop="24dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/tvRecentHeader"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/dashboard_recent_transactions"
                     android:textColor="@color/urwallet_text_primary"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
                 <TextView
                     android:id="@+id/btnViewAllTransactions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="6dp"
-                    android:text="@string/action_view_all"
+                    android:padding="8dp"
+                    android:text="عرض الكل &lt;"
                     android:textColor="@color/urwallet_primary"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Recent Transactions RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
@@ -515,28 +855,74 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/item_recent_transaction" />
 
-            <!-- Empty Recent Transactions View -->
+            <!-- Empty Recent Transactions View (Polished Fintech Empty State) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/layoutEmptyRecent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/urwallet_surface"
-                app:cardCornerRadius="14dp"
+                app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/urwallet_card_border"
                 app:strokeWidth="1dp"
                 tools:visibility="visible">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="24dp"
-                    android:text="@string/dashboard_no_recent_transactions"
-                    android:textColor="@color/urwallet_text_secondary"
-                    android:textSize="14sp" />
+                    android:orientation="vertical"
+                    android:paddingVertical="32dp"
+                    android:paddingHorizontal="24dp">
+
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/bg_icon_circle"
+                        android:backgroundTint="@color/urwallet_primary_light">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_reports"
+                            app:tint="@color/urwallet_primary" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="@string/dashboard_no_recent_transactions"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="@string/dashboard_empty_recent_hint"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/btnEmptyAddTransaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/dashboard_btn_add_first_transaction"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        style="@style/Widget.Material3.Button.TonalButton" />
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>

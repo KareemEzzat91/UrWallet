@@ -41,11 +41,20 @@ class RecentTransactionsAdapter(
             val transaction = item.transaction
             val category = item.category
 
-            binding.tvTitle.text = transaction.title
-
             val categoryName = category?.name ?: context.getString(R.string.cat_other)
-            val dateStr = DateUtils.formatDateArabic(transaction.date)
-            binding.tvSubtitle.text = "$categoryName • $dateStr"
+            binding.tvTitle.text = categoryName
+
+            val datePart = DateUtils.formatDateArabic(transaction.date)
+            val timePart = DateUtils.formatTimeArabic(transaction.date)
+            binding.tvSubtitle.text = "$datePart • $timePart"
+
+            val noteText = transaction.title.takeIf { it.isNotBlank() && it != categoryName } ?: transaction.note
+            if (!noteText.isNullOrBlank()) {
+                binding.tvNote.visibility = android.view.View.VISIBLE
+                binding.tvNote.text = noteText
+            } else {
+                binding.tvNote.visibility = android.view.View.GONE
+            }
 
             val iconRes = CategoryIconMapper.getIconDrawableRes(category?.icon ?: "ic_other")
             binding.ivIcon.setImageResource(iconRes)
@@ -53,14 +62,15 @@ class RecentTransactionsAdapter(
             val color = CategoryIconMapper.parseColorSafely(category?.color ?: "#78909C")
             binding.flIconContainer.backgroundTintList = ColorStateList.valueOf(color)
 
-            binding.tvAmount.text = Formatters.formatSignedAmount(
-                amount = transaction.amount,
-                type = transaction.type
-            )
+            val amountFormatted = Formatters.formatCurrency(transaction.amount)
+            binding.tvAmount.text = when (transaction.type) {
+                TransactionType.INCOME -> "+ $amountFormatted"
+                TransactionType.EXPENSE -> "\u200E-$amountFormatted"
+            }
 
             val amountColor = when (transaction.type) {
-                TransactionType.INCOME -> ContextCompat.getColor(context, R.color.urwallet_income)
-                TransactionType.EXPENSE -> ContextCompat.getColor(context, R.color.urwallet_expense)
+                TransactionType.INCOME -> ContextCompat.getColor(context, R.color.urwallet_pastel_income_text)
+                TransactionType.EXPENSE -> ContextCompat.getColor(context, R.color.urwallet_pastel_expense_text)
             }
             binding.tvAmount.setTextColor(amountColor)
 

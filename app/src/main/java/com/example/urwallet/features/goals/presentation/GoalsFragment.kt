@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.urwallet.R
+import com.example.urwallet.core.common.Formatters
 import com.example.urwallet.databinding.FragmentGoalsBinding
 import com.example.urwallet.features.goals.presentation.adapter.ActiveGoalsAdapter
 import com.example.urwallet.features.goals.presentation.adapter.CompletedGoalsAdapter
@@ -25,6 +26,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class GoalsFragment : Fragment() {
 
+    private enum class FilterTab { ACTIVE, COMPLETED, ALL }
+
     private var _binding: FragmentGoalsBinding? = null
     private val binding get() = _binding!!
 
@@ -32,6 +35,9 @@ class GoalsFragment : Fragment() {
 
     private lateinit var activeGoalsAdapter: ActiveGoalsAdapter
     private lateinit var completedGoalsAdapter: CompletedGoalsAdapter
+
+    private var currentFilter = FilterTab.ACTIVE
+    private var lastSuccessState: GoalsUiState.Success? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +52,7 @@ class GoalsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupAdapters()
+        setupFilterTabs()
         setupAddGoalActions()
         observeGoalsState()
     }
@@ -80,14 +87,103 @@ class GoalsFragment : Fragment() {
         binding.rvCompletedGoals.adapter = completedGoalsAdapter
     }
 
+    private fun setupFilterTabs() {
+        binding.tabActiveGoals.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            selectFilter(FilterTab.ACTIVE)
+        }
+        binding.tabCompletedGoals.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            selectFilter(FilterTab.COMPLETED)
+        }
+        binding.tabAllGoals.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            selectFilter(FilterTab.ALL)
+        }
+        updateTabsVisual()
+    }
+
+    private fun selectFilter(filter: FilterTab) {
+        currentFilter = filter
+        updateTabsVisual()
+        applyFilterToSections()
+    }
+
+    private fun updateTabsVisual() {
+        val context = context ?: return
+        val primaryColor = context.getColor(R.color.urwallet_text_primary)
+        val tertiaryColor = context.getColor(R.color.urwallet_text_tertiary)
+        val accentColor = context.getColor(R.color.urwallet_accent)
+
+        // Tab 1: Active
+        binding.tvTabActiveLabel.setTextColor(if (currentFilter == FilterTab.ACTIVE) primaryColor else tertiaryColor)
+        binding.tvTabActiveLabel.setTypeface(null, if (currentFilter == FilterTab.ACTIVE) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
+        binding.tvTabActiveCount.setBackgroundResource(if (currentFilter == FilterTab.ACTIVE) R.drawable.bg_squircle_pastel_blue else R.drawable.bg_pill_pace)
+        binding.tvTabActiveCount.setTextColor(if (currentFilter == FilterTab.ACTIVE) accentColor else tertiaryColor)
+
+        // Tab 2: Completed
+        binding.tvTabCompletedLabel.setTextColor(if (currentFilter == FilterTab.COMPLETED) primaryColor else tertiaryColor)
+        binding.tvTabCompletedLabel.setTypeface(null, if (currentFilter == FilterTab.COMPLETED) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
+        binding.tvTabCompletedCount.setBackgroundResource(if (currentFilter == FilterTab.COMPLETED) R.drawable.bg_pill_income else R.drawable.bg_pill_pace)
+        binding.tvTabCompletedCount.setTextColor(if (currentFilter == FilterTab.COMPLETED) context.getColor(R.color.urwallet_income) else tertiaryColor)
+
+        // Tab 3: All
+        binding.tvTabAllLabel.setTextColor(if (currentFilter == FilterTab.ALL) primaryColor else tertiaryColor)
+        binding.tvTabAllLabel.setTypeface(null, if (currentFilter == FilterTab.ALL) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
+        binding.tvTabAllCount.setBackgroundResource(if (currentFilter == FilterTab.ALL) R.drawable.bg_squircle_pastel_blue else R.drawable.bg_pill_pace)
+        binding.tvTabAllCount.setTextColor(if (currentFilter == FilterTab.ALL) accentColor else tertiaryColor)
+    }
+
+    private fun applyFilterToSections() {
+        val state = lastSuccessState ?: return
+        when (currentFilter) {
+            FilterTab.ACTIVE -> {
+                binding.layoutActiveSection.isVisible = state.activeGoals.isNotEmpty()
+                binding.layoutCompletedSection.isVisible = false
+            }
+            FilterTab.COMPLETED -> {
+                binding.layoutActiveSection.isVisible = false
+                binding.layoutCompletedSection.isVisible = state.completedGoals.isNotEmpty()
+            }
+            FilterTab.ALL -> {
+                binding.layoutActiveSection.isVisible = state.activeGoals.isNotEmpty()
+                binding.layoutCompletedSection.isVisible = state.completedGoals.isNotEmpty()
+            }
+        }
+    }
+
     private fun setupAddGoalActions() {
-        val openAddGoalSheet = {
-            AddGoalBottomSheetFragment.newInstance()
+        val openAddGoalSheet = { initialName: String?, initialIcon: String?, initialTarget: Double? ->
+            AddGoalBottomSheetFragment.newInstance(initialName, initialIcon, initialTarget)
                 .show(childFragmentManager, AddGoalBottomSheetFragment.TAG)
         }
 
-        binding.btnAddGoalHeader.setOnClickListener { openAddGoalSheet() }
-        binding.btnEmptyAddGoal.setOnClickListener { openAddGoalSheet() }
+        binding.btnAddGoalHeader.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            openAddGoalSheet(null, null, null)
+        }
+        binding.btnEmptyAddGoal.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            openAddGoalSheet(null, null, null)
+        }
+
+        // Suggested Preset Goal Cards
+        binding.cardPresetCar.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            openAddGoalSheet("شراء سيارة", "ic_transport", 150000.0)
+        }
+        binding.cardPresetHome.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            openAddGoalSheet("شراء منزل", "ic_goal_home", 500000.0)
+        }
+        binding.cardPresetTravel.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            openAddGoalSheet("رحلة سفر", "ic_goal_travel", 20000.0)
+        }
+        binding.btnSuggestedViewAll.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            openAddGoalSheet(null, null, null)
+        }
     }
 
     private fun observeGoalsState() {
@@ -119,6 +215,7 @@ class GoalsFragment : Fragment() {
                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
             }
             is GoalsUiState.Success -> {
+                lastSuccessState = state
                 binding.progressLoading.isVisible = false
                 binding.layoutEmptyState.isVisible = false
                 binding.layoutGoalsContent.isVisible = true
@@ -128,36 +225,42 @@ class GoalsFragment : Fragment() {
                 val totalTarget = state.activeGoals.sumOf { it.targetAmount } + state.completedGoals.sumOf { it.targetAmount }
                 val totalPercentage = if (totalTarget > 0) ((totalSaved / totalTarget) * 100).toInt().coerceIn(0, 100) else 0
 
-                binding.tvTotalGoalsSavings.text = com.example.urwallet.core.common.Formatters.formatCurrency(totalSaved)
+                binding.tvTotalGoalsSavings.text = Formatters.formatCurrency(totalSaved, includeDecimals = false)
                 binding.overviewProgressBar.progress = totalPercentage
+                binding.tvOverviewProgressDesc.text = "من ${Formatters.formatCurrency(totalTarget, includeDecimals = false)}"
+                binding.tvOverviewProgressPercentage.text = "$totalPercentage%"
 
-                if (state.activeGoals.isNotEmpty()) {
-                    binding.tvOverviewActiveCount.text = getString(R.string.goals_overview_active_format, state.activeGoals.size)
-                    binding.tvOverviewProgressDesc.text = getString(
-                        R.string.goals_overview_progress_format,
-                        totalPercentage,
-                        com.example.urwallet.core.common.Formatters.formatCurrency(totalTarget)
-                    )
+                // Pills Count
+                binding.tvOverviewActiveCount.text = state.activeGoals.size.toString()
+                binding.tvOverviewCompletedCount.text = state.completedGoals.size.toString()
+
+                // Tabs Count
+                binding.tvTabActiveCount.text = state.activeGoals.size.toString()
+                binding.tvTabCompletedCount.text = state.completedGoals.size.toString()
+                binding.tvTabAllCount.text = (state.activeGoals.size + state.completedGoals.size).toString()
+
+                // Savings Insight Card ("💡 اقتراح ادخار")
+                val activeWithMonthly = state.activeGoals.firstOrNull { it.monthlyTarget > 0 }
+                if (activeWithMonthly != null) {
+                    val monthlyClean = Formatters.formatCurrency(activeWithMonthly.monthlyTarget, includeDecimals = false)
+                    binding.tvInsightMessage.text = "خصص $monthlyClean شهرياً للوصول لهدفك في الموعد المحدد."
+                    binding.cardSavingsInsight.isVisible = true
+                    binding.cardSavingsInsight.setOnClickListener {
+                        it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+                        ContributeGoalBottomSheetFragment.newInstance(
+                            goalId = activeWithMonthly.id,
+                            goalName = activeWithMonthly.name
+                        ).show(childFragmentManager, ContributeGoalBottomSheetFragment.TAG)
+                    }
                 } else {
-                    binding.tvOverviewActiveCount.text = getString(R.string.status_completed)
-                    binding.tvOverviewProgressDesc.text = getString(R.string.goals_all_completed_format)
+                    binding.cardSavingsInsight.isVisible = false
                 }
 
-                // Active Goals
-                val hasActive = state.activeGoals.isNotEmpty()
-                binding.layoutActiveSection.isVisible = hasActive
-                binding.tvActiveGoalsCount.text = state.activeGoals.size.toString()
-                if (hasActive) {
-                    activeGoalsAdapter.submitList(state.activeGoals)
-                }
+                // Submit adapter lists
+                activeGoalsAdapter.submitList(state.activeGoals)
+                completedGoalsAdapter.submitList(state.completedGoals)
 
-                // Completed Goals
-                val hasCompleted = state.completedGoals.isNotEmpty()
-                binding.layoutCompletedSection.isVisible = hasCompleted
-                binding.tvCompletedGoalsCount.text = state.completedGoals.size.toString()
-                if (hasCompleted) {
-                    completedGoalsAdapter.submitList(state.completedGoals)
-                }
+                applyFilterToSections()
             }
         }
     }

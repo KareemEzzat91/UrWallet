@@ -38,6 +38,18 @@
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
 
+    <!-- Modern FinTech Pastel & Accent Colors -->
+    <color name="urwallet_accent">#00B4D8</color>
+    <color name="urwallet_accent_light">#E0F7FA</color>
+    <color name="urwallet_pastel_expense">#FEE2E2</color>
+    <color name="urwallet_pastel_expense_text">#EF4444</color>
+    <color name="urwallet_pastel_income">#D1FAE5</color>
+    <color name="urwallet_pastel_income_text">#10B981</color>
+    <color name="urwallet_pastel_goal">#E0F2FE</color>
+    <color name="urwallet_pastel_goal_text">#0284C7</color>
+    <color name="urwallet_pastel_reports">#EDE9FE</color>
+    <color name="urwallet_pastel_reports_text">#8B5CF6</color>
+
     <!-- Standard Aliases for Material compatibility -->
     <color name="primary">@color/urwallet_primary</color>
     <color name="primary_variant">@color/urwallet_primary_dark</color>
