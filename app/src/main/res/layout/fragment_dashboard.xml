@@ -158,194 +158,215 @@
                 app:strokeColor="#3300B4D8"
                 app:cardBackgroundColor="#001B3A">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_card_balance_wave"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_height="wrap_content">
 
-                    <!-- Header Row: Label + Privacy Toggle (Start) & Month Pill (End) -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <ImageView
+                        android:id="@+id/ivHeroCardBg"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="@null"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dashboard_hero_bg"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutHeroCardContent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent">
+                        <!-- Header Row: Label + Privacy Toggle (Start) & Month Pill (End) -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                            <TextView
-                                android:id="@+id/tvNetBalanceLabel"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/dashboard_net_balance_label"
-                                android:textColor="#B3FFFFFF"
-                                android:textSize="13sp" />
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent">
 
-                            <!-- Balance Privacy Eye Toggle -->
-                            <ImageButton
-                                android:id="@+id/btnToggleBalancePrivacy"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="6dp"
-                                android:background="?attr/selectableItemBackgroundBorderless"
-                                android:contentDescription="@string/cd_toggle_balance_privacy"
-                                android:padding="5dp"
-                                android:src="@drawable/ic_eye_open"
-                                app:tint="#CCFFFFFF" />
-                        </LinearLayout>
+                                <TextView
+                                    android:id="@+id/tvNetBalanceLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dashboard_net_balance_label"
+                                    android:textColor="#B3FFFFFF"
+                                    android:textSize="13sp" />
 
-                        <!-- Month Tag Pill -->
+                                <!-- Balance Privacy Eye Toggle -->
+                                <ImageButton
+                                    android:id="@+id/btnToggleBalancePrivacy"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="6dp"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:contentDescription="@string/cd_toggle_balance_privacy"
+                                    android:padding="5dp"
+                                    android:src="@drawable/ic_eye_open"
+                                    app:tint="#CCFFFFFF" />
+                            </LinearLayout>
+
+                            <!-- Month Tag Pill -->
+                            <TextView
+                                android:id="@+id/tvCurrentMonth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_tag_pill"
+                                android:paddingHorizontal="12dp"
+                                android:paddingVertical="4dp"
+                                android:text="@string/dashboard_this_month"
+                                android:textColor="#00E5FF"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                tools:text="📅 هذا الشهر" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <!-- Net Balance Amount -->
                         <TextView
-                            android:id="@+id/tvCurrentMonth"
+                            android:id="@+id/tvNetBalance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_tag_pill"
-                            android:paddingHorizontal="12dp"
-                            android:paddingVertical="4dp"
-                            android:text="@string/dashboard_this_month"
-                            android:textColor="#00E5FF"
-                            android:textSize="12sp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="14dp"
+                            android:textColor="@color/white"
+                            android:textSize="34sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            tools:text="📅 هذا الشهر" />
+                            tools:text="-200 ج.م" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <!-- Net Balance Amount -->
-                    <TextView
-                        android:id="@+id/tvNetBalance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="14dp"
-                        android:textColor="@color/white"
-                        android:textSize="34sp"
-                        android:textStyle="bold"
-                        tools:text="-200 ج.م" />
-
-                    <!-- Monthly Stats (Income & Expense Translucent Sub-Cards) -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal">
-
-                        <!-- Monthly Expense Sub-Card (Right in RTL) -->
+                        <!-- Monthly Stats (Income & Expense Translucent Sub-Cards) -->
                         <LinearLayout
-                            android:id="@+id/layoutExpensePill"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_card_pill_expense_modern"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingHorizontal="12dp"
-                            android:paddingVertical="10dp">
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
 
+                            <!-- Monthly Expense Sub-Card (Right in RTL) -->
                             <LinearLayout
+                                android:id="@+id/layoutExpensePill"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:background="@drawable/bg_card_pill_expense_modern"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="12dp"
+                                android:paddingVertical="10dp">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/dashboard_monthly_expense"
-                                    android:textColor="#B3FFFFFF"
-                                    android:textSize="11sp" />
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/tvMonthlyExpense"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#FF5252"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    tools:text="200 ج.م" />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/dashboard_monthly_expense"
+                                        android:textColor="#B3FFFFFF"
+                                        android:textSize="11sp" />
+
+                                    <TextView
+                                        android:id="@+id/tvMonthlyExpense"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#FF5252"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        tools:text="200 ج.م" />
+                                </LinearLayout>
+
+                                <FrameLayout
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/bg_pastel_circle_expense"
+                                    android:backgroundTint="#33FF5252">
+
+                                    <ImageView
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:layout_gravity="center"
+                                        android:contentDescription="@null"
+                                        android:src="@drawable/ic_trending_down"
+                                        app:tint="#FF5252" />
+                                </FrameLayout>
                             </LinearLayout>
 
-                            <FrameLayout
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="8dp"
-                                android:background="@drawable/bg_pastel_circle_expense"
-                                android:backgroundTint="#33FF5252">
-
-                                <ImageView
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_gravity="center"
-                                    android:contentDescription="@null"
-                                    android:src="@drawable/ic_trending_down"
-                                    app:tint="#FF5252" />
-                            </FrameLayout>
-                        </LinearLayout>
-
-                        <!-- Monthly Income Sub-Card (Left in RTL) -->
-                        <LinearLayout
-                            android:id="@+id/layoutIncomePill"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_card_pill_income_modern"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingHorizontal="12dp"
-                            android:paddingVertical="10dp">
-
+                            <!-- Monthly Income Sub-Card (Left in RTL) -->
                             <LinearLayout
+                                android:id="@+id/layoutIncomePill"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:background="@drawable/bg_card_pill_income_modern"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="12dp"
+                                android:paddingVertical="10dp">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/dashboard_monthly_income"
-                                    android:textColor="#B3FFFFFF"
-                                    android:textSize="11sp" />
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/tvMonthlyIncome"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#00E676"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    tools:text="0 ج.م" />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/dashboard_monthly_income"
+                                        android:textColor="#B3FFFFFF"
+                                        android:textSize="11sp" />
+
+                                    <TextView
+                                        android:id="@+id/tvMonthlyIncome"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#00E676"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        tools:text="0 ج.م" />
+                                </LinearLayout>
+
+                                <FrameLayout
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/bg_pastel_circle_income"
+                                    android:backgroundTint="#3300E676">
+
+                                    <ImageView
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:layout_gravity="center"
+                                        android:contentDescription="@null"
+                                        android:src="@drawable/ic_trending_up"
+                                        app:tint="#00E676" />
+                                </FrameLayout>
                             </LinearLayout>
-
-                            <FrameLayout
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="8dp"
-                                android:background="@drawable/bg_pastel_circle_income"
-                                android:backgroundTint="#3300E676">
-
-                                <ImageView
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_gravity="center"
-                                    android:contentDescription="@null"
-                                    android:src="@drawable/ic_trending_up"
-                                    app:tint="#00E676" />
-                            </FrameLayout>
                         </LinearLayout>
+
                     </LinearLayout>
-
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Quick Actions Bar (Row of 4 Pastel Shortcuts) -->

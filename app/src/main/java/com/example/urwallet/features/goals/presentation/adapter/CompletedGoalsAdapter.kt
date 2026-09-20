@@ -34,11 +34,16 @@ class CompletedGoalsAdapter(
 
         fun bind(goal: Goal) {
             val context = binding.root.context
-            binding.ivGoalIcon.setImageResource(CategoryIconMapper.getIconDrawableRes(goal.icon))
+            // Category Pastel Squircle Icon & Tint
+            binding.flGoalIconContainer.setBackgroundResource(CategoryIconMapper.getGoalPastelBgRes(goal.icon, goal.name))
+            binding.ivGoalIcon.setImageResource(CategoryIconMapper.getGoalDrawableRes(goal.icon, goal.name))
+            binding.ivGoalIcon.imageTintList = android.content.res.ColorStateList.valueOf(
+                context.getColor(CategoryIconMapper.getGoalIconTintRes(goal.icon, goal.name))
+            )
             binding.tvGoalName.text = goal.name
             binding.tvAchievedAmount.text = context.getString(
                 R.string.goals_completed_sub_format,
-                Formatters.formatCurrency(goal.targetAmount)
+                Formatters.formatCurrency(goal.targetAmount, includeDecimals = false)
             )
             binding.cardCompletedGoal.setOnClickListener {
                 it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)

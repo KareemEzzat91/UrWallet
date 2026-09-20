@@ -4,55 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layoutDirection="rtl"
+    android:background="@color/urwallet_background">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
+        android:background="@color/urwallet_background"
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:paddingStart="4dp"
-            android:paddingEnd="16dp"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingHorizontal="@dimen/screen_padding_horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
+            app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <ImageButton
+                <FrameLayout
                     android:id="@+id/btnBack"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/action_back"
-                    android:src="@drawable/ic_arrow_back"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_primary" />
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_squircle_pastel_blue"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
 
-                <TextView
-                    android:id="@+id/tvToolbarTitle"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/action_back"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="@color/urwallet_primary" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="sans-serif-bold"
-                    android:text="تفاصيل التحدي"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnBack"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tvToolbarTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="تفاصيل التحدي"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="متابعة الالتزام اليومي وسجل التقدم"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <ProgressBar
@@ -60,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:indeterminateTint="@color/primary"
+        android:indeterminateTint="@color/urwallet_primary"
         android:visibility="gone" />
 
     <androidx.core.widget.NestedScrollView
@@ -74,7 +96,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="@dimen/screen_padding_horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="60dp">
 
             <!-- Hero Progress Card -->
             <com.google.android.material.card.MaterialCardView
@@ -82,127 +106,128 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/surface"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
-                app:strokeColor="@color/divider"
+                app:cardBackgroundColor="@color/urwallet_background"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/urwallet_card_border"
                 app:strokeWidth="1dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp">
+                    android:orientation="vertical"
+                    android:padding="18dp">
 
-                    <TextView
-                        android:id="@+id/chipType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_pill_primary"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:textColor="@color/primary"
-                        android:textSize="12sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="تحدي منع الإنفاق" />
-
+                    <!-- Top Row: Type Chip + Streak Badge -->
                     <LinearLayout
-                        android:id="@+id/streakBadge"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_pill_streak"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="12dp"
-                        android:paddingBottom="4dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_fire" />
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tvStreakCount"
+                            android:id="@+id/chipType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:fontFamily="sans-serif-bold"
-                            android:textColor="#E65100"
-                            android:textSize="13sp"
-                            tools:text="3 أيام 🔥" />
+                            android:background="@drawable/bg_squircle_pastel_blue"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="#0284C7"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:text="تحدي منع الإنفاق" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:id="@+id/streakBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_pill_streak"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_fire" />
+
+                            <TextView
+                                android:id="@+id/tvStreakCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:textColor="#E65100"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="3 أيام 🔥" />
+                        </LinearLayout>
                     </LinearLayout>
 
+                    <!-- Challenge Title -->
                     <TextView
                         android:id="@+id/tvChallengeTitle"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="sans-serif-bold"
-                        android:textColor="@color/text_primary"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/chipType"
+                        android:layout_marginTop="14dp"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
                         tools:text="أسبوع بلا كافيهات ومطاعم ☕" />
 
                     <!-- Progress Bar -->
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/progressIndicator"
-                        android:layout_width="0dp"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="20dp"
-                        app:indicatorColor="@color/primary"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvChallengeTitle"
-                        app:trackColor="#E0E2EC"
-                        app:trackCornerRadius="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="16dp"
+                        app:indicatorColor="@color/urwallet_primary"
+                        app:trackColor="#E2E8F0"
+                        app:trackCornerRadius="4dp"
                         tools:progress="57" />
 
-                    <TextView
-                        android:id="@+id/tvProgressDesc"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp"
-                        app:layout_constraintEnd_toStartOf="@+id/tvProgressPercent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/progressIndicator"
-                        tools:text="أنجزت 4 من أصل 7 أيام" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tvProgressPercent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-bold"
-                        android:textColor="@color/primary"
-                        android:textSize="15sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/tvProgressDesc"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text="57%" />
+                        <TextView
+                            android:id="@+id/tvProgressDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/urwallet_text_secondary"
+                            android:textSize="12.5sp"
+                            tools:text="أنجزت 4 من أصل 7 أيام" />
+
+                        <TextView
+                            android:id="@+id/tvProgressPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/urwallet_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="57%" />
+                    </LinearLayout>
 
                     <!-- Stats Row -->
                     <LinearLayout
                         android:id="@+id/layoutStatsRow"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="18dp"
                         android:baselineAligned="false"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvProgressDesc">
+                        android:orientation="horizontal">
 
+                        <!-- Stat 1: Completed Days -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -216,18 +241,17 @@
                                 android:id="@+id/tvCompletedDaysValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-bold"
-                                android:textColor="@color/primary"
+                                android:textColor="@color/urwallet_primary"
                                 android:textSize="18sp"
+                                android:textStyle="bold"
                                 tools:text="4" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="sans-serif"
                                 android:text="أيام ناجحة"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
@@ -235,6 +259,7 @@
                             android:layout_width="8dp"
                             android:layout_height="0dp" />
 
+                        <!-- Stat 2: Remaining Days -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -248,18 +273,17 @@
                                 android:id="@+id/tvRemainingDaysValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-bold"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/urwallet_text_primary"
                                 android:textSize="18sp"
+                                android:textStyle="bold"
                                 tools:text="3" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="sans-serif"
                                 android:text="أيام متبقية"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
@@ -267,6 +291,7 @@
                             android:layout_width="8dp"
                             android:layout_height="0dp" />
 
+                        <!-- Stat 3: Longest Streak -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -280,25 +305,22 @@
                                 android:id="@+id/tvLongestStreakValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-bold"
                                 android:textColor="#E65100"
                                 android:textSize="18sp"
+                                android:textStyle="bold"
                                 tools:text="4" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="sans-serif"
                                 android:text="أطول تتابع 🔥"
                                 android:textColor="#E65100"
                                 android:textSize="11sp" />
                         </LinearLayout>
-
                     </LinearLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Rules Card -->
@@ -306,10 +328,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="1dp"
-                app:strokeColor="@color/divider"
+                app:cardBackgroundColor="@color/urwallet_background"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/urwallet_card_border"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -318,39 +340,63 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-bold"
-                        android:text="@string/challenge_detail_rules_title"
-                        android:textColor="@color/text_primary"
-                        android:textSize="15sp" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="3.5dp"
+                            android:layout_height="14dp"
+                            android:background="@drawable/bg_pill_primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/challenge_detail_rules_title"
+                            android:textColor="@color/urwallet_text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tvRulesDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif"
-                        android:lineSpacingMultiplier="1.2"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="2dp"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12.5sp"
                         tools:text="امتنع عن نفقات المطاعم والمقاهي لمدة 7 أيام متتالية واصنع قهوتك ووجباتك بنفسك." />
 
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Daily Timeline Section -->
-            <TextView
-                android:id="@+id/tvTimelineHeader"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:fontFamily="sans-serif-bold"
-                android:text="@string/challenge_detail_timeline_title"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp" />
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="3.5dp"
+                    android:layout_height="14dp"
+                    android:background="@drawable/bg_pill_primary" />
+
+                <TextView
+                    android:id="@+id/tvTimelineHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/challenge_detail_timeline_title"
+                    android:textColor="@color/urwallet_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvDailyTimeline"
@@ -368,13 +414,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="24dp"
-                android:fontFamily="sans-serif-medium"
                 android:text="@string/btn_abandon_challenge"
-                android:textColor="@color/expense_red"
-                app:strokeColor="@color/expense_red" />
+                android:textColor="#DC2626"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:cornerRadius="14dp"
+                app:strokeColor="#FECACA"
+                app:strokeWidth="1.2dp" />
 
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

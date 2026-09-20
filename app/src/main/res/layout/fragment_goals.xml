@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/screen_padding_horizontal"
-        android:paddingTop="24dp"
+        android:paddingTop="16dp"
         android:paddingBottom="120dp">
 
         <!-- Top Header Row -->
@@ -115,60 +115,100 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_card_goals_hero"
                     android:orientation="vertical"
-                    android:padding="18dp">
+                    android:padding="16dp">
 
-                    <!-- Top Row: Icon + Title on right, Motivational Motto on left -->
+                    <!-- Top Section: Left = Mountain Illustration + Motto; Right = Title + Bars Icon + Big Amount -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
+                        android:gravity="top"
                         android:orientation="horizontal">
 
+                        <!-- Right Column (Start in RTL): Title, Icon & Big Amount -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center_vertical"
+                            android:gravity="top|start"
+                            android:orientation="vertical">
+
+                            <!-- Header Row: Title + Bars Icon -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_chart_bars" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="6dp"
+                                    android:text="@string/goals_total_savings_title"
+                                    android:textColor="#CCFFFFFF"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <!-- Big Total Saved Amount -->
+                            <TextView
+                                android:id="@+id/tvTotalGoalsSavings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/white"
+                                android:textSize="32sp"
+                                android:textStyle="bold"
+                                tools:text="0 ج.م" />
+                        </LinearLayout>
+
+                        <!-- Left Column (End in RTL): Mountain Summit Illustration + Motivational Motto -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layoutDirection="ltr"
+                            android:gravity="top"
                             android:orientation="horizontal">
 
+                            <!-- Mountain Vector Graphic on Far Left -->
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="80dp"
+                                android:layout_height="70dp"
                                 android:contentDescription="@null"
-                                android:src="@drawable/ic_chart_pie"
-                                app:tint="@color/urwallet_accent" />
+                                android:src="@drawable/vector_goal_mountain_peak" />
 
-                            <TextView
+                            <!-- Motto Text to the right of the mountain, aligned to top line -->
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:text="@string/goals_total_savings_title"
-                                android:textColor="#B3FFFFFF"
-                                android:textSize="13sp"
-                                android:textStyle="bold" />
+                                android:layout_marginTop="2dp"
+                                android:gravity="start"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="خطوة اليوم .."
+                                    android:textColor="#E6FFFFFF"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="لمستقبل أفضل 🌱"
+                                    android:textColor="#B3FFFFFF"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
                         </LinearLayout>
-
-                        <!-- Motivational Badge on Left -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/goals_hero_motto"
-                            android:textColor="#80FFFFFF"
-                            android:textSize="11sp"
-                            android:lineSpacingExtra="2dp"
-                            android:gravity="start" />
                     </LinearLayout>
-
-                    <!-- Big Total Saved Amount -->
-                    <TextView
-                        android:id="@+id/tvTotalGoalsSavings"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/white"
-                        android:textSize="32sp"
-                        android:textStyle="bold"
-                        tools:text="0 ج.م" />
 
                     <!-- Overall Linear Progress Bar -->
                     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -177,16 +217,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         app:indicatorColor="@color/urwallet_accent"
-                        app:trackColor="#26FFFFFF"
-                        app:trackCornerRadius="3dp"
-                        app:trackThickness="6dp"
+                        app:trackColor="#334E68"
+                        app:trackCornerRadius="4dp"
+                        app:trackThickness="8dp"
                         tools:progress="0" />
 
                     <!-- Progress Info Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="4dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -204,7 +244,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/urwallet_accent"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             tools:text="0%" />
                     </LinearLayout>
@@ -213,81 +253,83 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="12dp"
                         android:orientation="horizontal">
 
-                        <!-- Active Goals Pill -->
+                        <!-- Active Goals Pill (Child 1 = Right in RTL) -->
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="38dp"
+                            android:layout_height="40dp"
                             android:layout_marginEnd="6dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_pill_glass"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="10dp">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:contentDescription="@null"
-                                android:src="@drawable/ic_nav_goals_filled"
-                                app:tint="@color/urwallet_accent" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="6dp"
-                                android:layout_weight="1"
-                                android:text="@string/goals_tab_active"
-                                android:textColor="#CCFFFFFF"
-                                android:textSize="11sp" />
+                            android:paddingHorizontal="12dp">
 
                             <TextView
                                 android:id="@+id/tvOverviewActiveCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="13sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold"
                                 tools:text="1" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="6dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/goals_tab_active"
+                                android:textColor="#E6FFFFFF"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_target_bullseye" />
                         </LinearLayout>
 
-                        <!-- Completed Goals Pill -->
+                        <!-- Completed Goals Pill (Child 2 = Left in RTL) -->
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="38dp"
+                            android:layout_height="40dp"
                             android:layout_marginStart="6dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_pill_glass"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="10dp">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:contentDescription="@null"
-                                android:src="@drawable/ic_check_circle"
-                                app:tint="@color/urwallet_income_light" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="6dp"
-                                android:layout_weight="1"
-                                android:text="@string/goals_tab_completed"
-                                android:textColor="#CCFFFFFF"
-                                android:textSize="11sp" />
+                            android:paddingHorizontal="12dp">
 
                             <TextView
                                 android:id="@+id/tvOverviewCompletedCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="13sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold"
                                 tools:text="0" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="6dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/goals_tab_completed"
+                                android:textColor="#E6FFFFFF"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_check_circle_green" />
                         </LinearLayout>
                     </LinearLayout>
 

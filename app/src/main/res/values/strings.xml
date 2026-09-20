@@ -210,14 +210,15 @@
     <string name="search_results_count">%1$d معاملة</string>
     <string name="search_no_results_title">لا توجد نتائج مطابقة</string>
     <string name="search_no_results_desc">لم نجد أي معاملات تطابق كلمات البحث أو الفلاتر المحددة.</string>
+    <string name="transactions_subtitle">تابع كل حركة في مكان واحد</string>
     <string name="action_reset_filters">إعادة ضبط الفلاتر</string>
     <string name="filter_all">الكل</string>
-    <string name="filter_expenses">مصروفات</string>
+    <string name="filter_expenses">مصاريف</string>
     <string name="filter_income">دخل</string>
     <string name="action_filter">تصفية</string>
     <string name="reports_banner_title">تحكم في مصاريفك بذكاء</string>
     <string name="reports_banner_desc">شاهد تقاريرك التفصيلية وحلل نفقاتك حسب التصنيف</string>
-    <string name="action_view_reports">عرض التقارير</string>
+    <string name="action_view_reports">عرض التحليلات</string>
     <string name="title_filter_bottom_sheet">فلترة المعاملات</string>
     <string name="label_filter_type">نوع المعاملة</string>
     <string name="label_filter_category">الفئة</string>
@@ -253,6 +254,7 @@
     <string name="cd_clear_search">مسح البحث</string>
     <string name="cd_filter_icon">أيقونة الفلترة</string>
     <string name="cd_search_icon">أيقونة البحث</string>
+    <string name="cd_close">إغلاق</string>
 
     <!-- Phase 7 Goals & Contribution Engine -->
     <string name="goals_active_section_title">الأهداف النشطة</string>
@@ -263,6 +265,7 @@
     <string name="action_contribute">إيداع</string>
     <string name="action_contribute_full">إيداع مبلغ</string>
     <string name="goals_saved_label">تم توفير:</string>
+    <string name="goals_current_amount_label">المبلغ الحالي</string>
     <string name="goals_target_label">المستهدف:</string>
     <string name="goals_remaining_label">المتبقي:</string>
     <string name="goals_deadline_format">الموعد: %1$s</string>
@@ -357,6 +360,10 @@
     <string name="error_invalid_budget_amount">يرجى إدخال مبلغ ميزانية صحيح أكبر من صفر</string>
     <string name="error_no_category_selected">يرجى اختيار فئة للميزانية</string>
     <string name="error_income_category_not_allowed">لا يمكن إنشاء ميزانية لفئة دخل</string>
+    <string name="more_subtitle">تخصيص المحفظة، الأدوات الذكية، وإدارة الأمان</string>
+    <string name="more_section_financial">الإدارة والتحليلات المالية</string>
+    <string name="more_section_growth">النمو والتحفيز المالي</string>
+    <string name="more_section_preferences">التفضيلات والأمان</string>
     <string name="more_budgets_title">الميزانيات وسقوف الصرف</string>
     <string name="more_budgets_desc">حدد الميزانية العامة وميزانيات الفئات مع تنبيهات التجاوز</string>
 

@@ -5,46 +5,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/urwallet_background"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <!-- Top App Bar -->
+    <!-- Top App Bar / Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:paddingHorizontal="20dp">
 
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <!-- Back Button Squircle -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_back"
-            android:padding="8dp"
-            android:src="@drawable/ic_arrow_back"
-            app:tint="@color/urwallet_primary" />
+            app:cardBackgroundColor="@color/urwallet_background"
+            app:cardCornerRadius="13dp"
+            app:cardElevation="1dp"
+            app:strokeColor="@color/urwallet_card_border"
+            app:strokeWidth="1dp">
 
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/cd_back"
+                android:focusable="true"
+                android:padding="9dp"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/urwallet_text_primary" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Screen Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/cairo"
             android:text="@string/title_transaction_detail"
-            android:textColor="@color/urwallet_primary"
-            android:textSize="20sp"
+            android:textColor="@color/urwallet_text_primary"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/btnEdit"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <!-- Edit Button Squircle -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/action_edit"
-            android:padding="8dp"
-            android:src="@drawable/ic_edit"
-            app:tint="@color/urwallet_primary" />
+            app:cardBackgroundColor="@color/urwallet_background"
+            app:cardCornerRadius="13dp"
+            app:cardElevation="1dp"
+            app:strokeColor="@color/urwallet_card_border"
+            app:strokeWidth="1dp">
+
+            <ImageView
+                android:id="@+id/btnEdit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/action_edit"
+                android:focusable="true"
+                android:padding="9dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/urwallet_primary" />
+        </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 
     <FrameLayout
@@ -58,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:indeterminateTint="@color/urwallet_primary"
             android:visibility="gone" />
 
         <!-- Detail Content -->
@@ -67,75 +97,102 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingHorizontal="20dp"
-            android:paddingBottom="32dp">
+            android:paddingBottom="36dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:paddingTop="16dp">
+                android:paddingTop="8dp">
 
-                <!-- Hero Section: Icon + Title + Amount + Type Pill -->
-                <FrameLayout
-                    android:id="@+id/flCategoryIconBadge"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/bg_icon_circle">
-
-                    <ImageView
-                        android:id="@+id/ivCategoryIcon"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_food"
-                        app:tint="@color/urwallet_primary" />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/tvTransactionTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@color/urwallet_text_primary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="ستاربكس" />
-
-                <TextView
-                    android:id="@+id/tvTransactionAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:textColor="@color/urwallet_expense"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
-                    tools:text="- 320.00 ج.م" />
-
-                <TextView
-                    android:id="@+id/tvTransactionTypeBadge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_pill_primary"
-                    android:backgroundTint="#FEE2E2"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="4dp"
-                    android:textColor="@color/urwallet_expense"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    tools:text="مصروف" />
-
-                <!-- Details Table Card (Figma Node 2021:449) -->
+                <!-- Hero Section Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
-                    app:cardBackgroundColor="@color/urwallet_surface"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/urwallet_divider"
+                    app:cardBackgroundColor="@color/urwallet_background"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/urwallet_card_border"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="24dp">
+
+                        <!-- Category Icon Badge -->
+                        <FrameLayout
+                            android:id="@+id/flCategoryIconBadge"
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@drawable/bg_icon_circle">
+
+                            <ImageView
+                                android:id="@+id/ivCategoryIcon"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_food"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+
+                        <!-- Title -->
+                        <TextView
+                            android:id="@+id/tvTransactionTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/cairo"
+                            android:gravity="center"
+                            android:textColor="@color/urwallet_text_primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="ستاربكس" />
+
+                        <!-- Amount -->
+                        <TextView
+                            android:id="@+id/tvTransactionAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/cairo"
+                            android:textColor="@color/urwallet_expense"
+                            android:textSize="32sp"
+                            android:textStyle="bold"
+                            tools:text="- 320.00 ج.م" />
+
+                        <!-- Type Badge Pill -->
+                        <TextView
+                            android:id="@+id/tvTransactionTypeBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_pill_primary"
+                            android:backgroundTint="#FEE2E2"
+                            android:fontFamily="@font/cairo"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="5dp"
+                            android:textColor="@color/urwallet_expense"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:text="مصروف" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Details Table Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/urwallet_background"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/urwallet_card_border"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -145,14 +202,32 @@
                         android:padding="20dp">
 
                         <!-- Category Row -->
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:background="@drawable/bg_squircle_primary_light">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_chart_pie"
+                                    app:tint="@color/urwallet_primary" />
+                            </FrameLayout>
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/cairo"
                                 android:text="@string/detail_category_label"
                                 android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="14sp" />
@@ -161,13 +236,14 @@
                                 android:id="@+id/tvCategoryName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/cairo"
                                 android:textColor="@color/urwallet_text_primary"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
-                                tools:text="أكل" />
-                        </RelativeLayout>
+                                tools:text="أكل ومشروبات" />
+                        </LinearLayout>
 
+                        <!-- Divider -->
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -175,14 +251,32 @@
                             android:background="@color/urwallet_divider" />
 
                         <!-- Date & Time Row -->
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:background="@drawable/bg_squircle_pastel_blue">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_calendar"
+                                    app:tint="@color/urwallet_primary" />
+                            </FrameLayout>
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/cairo"
                                 android:text="@string/detail_date_label"
                                 android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="14sp" />
@@ -191,13 +285,14 @@
                                 android:id="@+id/tvDateTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/cairo"
                                 android:textColor="@color/urwallet_text_primary"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
                                 tools:text="21 مايو 2026 • 10:45 م" />
-                        </RelativeLayout>
+                        </LinearLayout>
 
+                        <!-- Divider -->
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -205,14 +300,32 @@
                             android:background="@color/urwallet_divider" />
 
                         <!-- Note Row -->
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:background="@drawable/bg_squircle_pastel_teal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_edit"
+                                    app:tint="@color/urwallet_primary" />
+                            </FrameLayout>
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/cairo"
                                 android:text="@string/detail_note_label"
                                 android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="14sp" />
@@ -221,12 +334,12 @@
                                 android:id="@+id/tvNote"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/cairo"
                                 android:maxWidth="200dp"
                                 android:textColor="@color/urwallet_text_primary"
                                 android:textSize="14sp"
                                 tools:text="قهوة مع الأصدقاء" />
-                        </RelativeLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -238,6 +351,7 @@
                     android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
+                    <!-- Share Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnShare"
                         style="@style/Widget.Material3.Button.OutlinedButton"
@@ -245,15 +359,20 @@
                         android:layout_height="52dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/cairo"
                         android:text="@string/action_share"
                         android:textColor="@color/urwallet_primary"
                         android:textSize="15sp"
-                        app:cornerRadius="14dp"
+                        android:textStyle="bold"
+                        app:cornerRadius="16dp"
                         app:icon="@drawable/ic_share"
                         app:iconGravity="textStart"
+                        app:iconPadding="8dp"
                         app:iconTint="@color/urwallet_primary"
-                        app:strokeColor="@color/urwallet_primary" />
+                        app:strokeColor="@color/urwallet_primary"
+                        app:strokeWidth="1.5dp" />
 
+                    <!-- Delete Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnDelete"
                         style="@style/Widget.Material3.Button"
@@ -262,13 +381,16 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/urwallet_expense"
+                        android:fontFamily="@font/cairo"
                         android:text="@string/action_delete"
-                        android:textColor="@color/urwallet_surface"
+                        android:textColor="@color/white"
                         android:textSize="15sp"
-                        app:cornerRadius="14dp"
+                        android:textStyle="bold"
+                        app:cornerRadius="16dp"
                         app:icon="@drawable/ic_delete"
                         app:iconGravity="textStart"
-                        app:iconTint="@color/urwallet_surface" />
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/white" />
 
                 </LinearLayout>
 
@@ -281,9 +403,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/cairo"
             android:padding="24dp"
             android:textColor="@color/urwallet_expense"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:visibility="gone"
             tools:text="حدث خطأ أثناء تحميل المعاملة" />
 

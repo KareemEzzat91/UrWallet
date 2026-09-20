@@ -4,55 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layoutDirection="rtl"
+    android:background="@color/urwallet_background">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
+        android:background="@color/urwallet_background"
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:paddingStart="4dp"
-            android:paddingEnd="16dp"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingHorizontal="@dimen/screen_padding_horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
+            app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <ImageButton
+                <FrameLayout
                     android:id="@+id/btnBack"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/action_back"
-                    android:src="@drawable/ic_arrow_back"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_primary" />
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_squircle_pastel_blue"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
 
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/action_back"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="@color/urwallet_primary" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="sans-serif-bold"
-                    android:text="@string/challenges_title"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnBack"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/challenges_title"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/tvSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/challenges_subtitle"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <ProgressBar
@@ -60,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:indeterminateTint="@color/primary"
+        android:indeterminateTint="@color/urwallet_primary"
         android:visibility="gone" />
 
     <LinearLayout
@@ -77,18 +100,21 @@
             android:id="@+id/tvErrorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/urwallet_text_secondary"
             android:textSize="14sp"
             tools:text="حدث خطأ أثناء تحميل التحديات" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRetry"
+            style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/action_retry" />
+            android:layout_height="44dp"
+            android:layout_marginTop="14dp"
+            android:text="@string/action_retry"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/urwallet_primary"
+            app:cornerRadius="12dp" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -102,29 +128,125 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="@dimen/screen_padding_horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="60dp">
 
-            <!-- Subtitle banner -->
-            <TextView
-                android:id="@+id/tvSubtitle"
+            <!-- Motivational Hero Banner -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif"
-                android:text="@string/challenges_subtitle"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                android:layout_marginBottom="18dp"
+                app:cardBackgroundColor="@color/urwallet_background"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/urwallet_card_border"
+                app:strokeWidth="1dp">
 
-            <!-- SECTION 1: Active Challenges -->
-            <TextView
-                android:id="@+id/tvActiveSectionHeader"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_squircle_pastel_amber">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_trophy"
+                                app:tint="#D97706" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="حوّل توفيرك إلى إنجازات! 🏆"
+                                android:textColor="@color/urwallet_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="التزم بأيام محددة واكسب الأوسمة"
+                                android:textColor="@color/urwallet_text_secondary"
+                                android:textSize="11.5sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_pill_streak"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp">
+
+                            <ImageView
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_fire" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="تحفيز مالي"
+                                android:textColor="#E65100"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ========================================================= -->
+            <!-- SECTION 1: Active Challenges                              -->
+            <!-- ========================================================= -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:fontFamily="sans-serif-bold"
-                android:text="@string/challenges_section_active"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp" />
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="3.5dp"
+                    android:layout_height="14dp"
+                    android:background="@drawable/bg_pill_primary" />
+
+                <TextView
+                    android:id="@+id/tvActiveSectionHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/challenges_section_active"
+                    android:textColor="@color/urwallet_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <!-- Empty prompt when no active challenges -->
             <com.google.android.material.card.MaterialCardView
@@ -132,10 +254,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/divider"
+                app:cardBackgroundColor="@color/urwallet_background"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/urwallet_card_border"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -143,33 +265,40 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="22dp">
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_challenge"
-                        app:tint="@color/primary" />
+                    <FrameLayout
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_squircle_pastel_amber">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_challenge"
+                            app:tint="#D97706" />
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif-bold"
+                        android:layout_marginTop="12dp"
                         android:text="@string/challenge_no_active_title"
-                        android:textColor="@color/text_primary"
-                        android:textSize="15sp" />
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="15.5sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="sans-serif"
+                        android:layout_marginTop="6dp"
                         android:gravity="center"
+                        android:lineSpacingExtra="2dp"
                         android:text="@string/challenge_no_active_desc"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12.5sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -183,17 +312,32 @@
                 tools:itemCount="1"
                 tools:listitem="@layout/item_active_challenge" />
 
-            <!-- SECTION 2: Presets -->
-            <TextView
-                android:id="@+id/tvPresetsSectionHeader"
+            <!-- ========================================================= -->
+            <!-- SECTION 2: Presets                                        -->
+            <!-- ========================================================= -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="12dp"
-                android:fontFamily="sans-serif-bold"
-                android:text="@string/challenges_section_presets"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp" />
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="3.5dp"
+                    android:layout_height="14dp"
+                    android:background="@drawable/bg_pill_primary" />
+
+                <TextView
+                    android:id="@+id/tvPresetsSectionHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/challenges_section_presets"
+                    android:textColor="@color/urwallet_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvChallengePresets"
@@ -204,17 +348,32 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/item_challenge_preset" />
 
-            <!-- SECTION 3: Completed Challenges -->
-            <TextView
-                android:id="@+id/tvCompletedSectionHeader"
+            <!-- ========================================================= -->
+            <!-- SECTION 3: Completed Challenges                           -->
+            <!-- ========================================================= -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="12dp"
-                android:fontFamily="sans-serif-bold"
-                android:text="@string/challenges_section_completed"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp" />
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="3.5dp"
+                    android:layout_height="14dp"
+                    android:background="@drawable/bg_pill_primary" />
+
+                <TextView
+                    android:id="@+id/tvCompletedSectionHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/challenges_section_completed"
+                    android:textColor="@color/urwallet_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCompletedChallenges"
@@ -229,11 +388,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:text="أنجز تحدياتك الأولى لتظهر أوسمتك هنا! 🏆"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/urwallet_text_tertiary"
                 android:textSize="13sp"
                 android:visibility="gone" />
 

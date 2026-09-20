@@ -111,6 +111,19 @@ class TransactionsFragment : Fragment() {
         }
 
         binding.btnAdvancedFilter.setOnClickListener {
+            it.performHapticClick()
+            FilterBottomSheetFragment.newInstance()
+                .show(childFragmentManager, FilterBottomSheetFragment.TAG)
+        }
+
+        binding.btnHeaderFilter.setOnClickListener {
+            it.performHapticClick()
+            FilterBottomSheetFragment.newInstance()
+                .show(childFragmentManager, FilterBottomSheetFragment.TAG)
+        }
+
+        binding.btnDateFilter.setOnClickListener {
+            it.performHapticClick()
             FilterBottomSheetFragment.newInstance()
                 .show(childFragmentManager, FilterBottomSheetFragment.TAG)
         }
@@ -118,10 +131,21 @@ class TransactionsFragment : Fragment() {
 
     private fun setupReportsBanner() {
         binding.btnViewReports.setOnClickListener {
+            it.performHapticClick()
             findNavController().navigate(
                 R.id.action_transactionsFragment_to_categoryAnalyticsFragment,
                 bundleOf("categoryId" to -1L)
             )
+        }
+
+        binding.btnCloseReportsBanner.setOnClickListener {
+            it.performHapticClick()
+            binding.cardReportsBanner.animate()
+                .alpha(0f)
+                .setDuration(200)
+                .withEndAction {
+                    binding.cardReportsBanner.visibility = View.GONE
+                }
         }
     }
 

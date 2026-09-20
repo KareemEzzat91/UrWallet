@@ -115,8 +115,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupEdgeToEdge() {
+        androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
         ViewCompat.setOnApplyWindowInsetsListener(binding.mainCoordinator) { _, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            binding.navHostFragment.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                0
+            )
             binding.bottomNav.setPadding(0, 0, 0, systemBars.bottom)
             insets
         }

@@ -1,20 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:paddingHorizontal="4dp"
     android:paddingTop="16dp"
     android:paddingBottom="8dp">
 
+    <!-- Date Title (Start in RTL) -->
     <TextView
         android:id="@+id/tvDateHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/urwallet_text_primary"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:text="18 سبتمبر 2026" />
+
+    <!-- Today / Yesterday Pill Badge (End in RTL) -->
+    <LinearLayout
+        android:id="@+id/layoutTodayBadge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/urwallet_text_secondary"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        tools:text="اليوم" />
+        android:background="@drawable/bg_pill_glass"
+        android:backgroundTint="#EEF2FF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="4dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tvTodayBadgeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اليوم"
+            android:textColor="@color/urwallet_primary"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_calendar"
+            app:tint="@color/urwallet_primary" />
+    </LinearLayout>
 
 </LinearLayout>

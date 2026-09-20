@@ -6,10 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="2dp"
-    android:layout_marginVertical="4dp"
-    app:cardBackgroundColor="@color/urwallet_surface"
-    app:cardCornerRadius="@dimen/card_corner_radius_medium"
-    app:cardElevation="0dp"
+    android:layout_marginVertical="5dp"
+    android:layoutDirection="rtl"
+    app:cardBackgroundColor="@color/urwallet_background"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="2dp"
     app:strokeColor="@color/urwallet_card_border"
     app:strokeWidth="1dp">
 
@@ -18,11 +19,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="12dp">
 
+        <!-- Leading Contribution Squircle Badge -->
         <FrameLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:background="@drawable/bg_pill_income">
 
             <ImageView
@@ -34,6 +37,7 @@
                 app:tint="@color/urwallet_income" />
         </FrameLayout>
 
+        <!-- Middle: Date & Note -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -46,6 +50,7 @@
                 android:id="@+id/tvContributionDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo"
                 android:textColor="@color/urwallet_text_primary"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -56,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:fontFamily="@font/cairo"
                 android:textColor="@color/urwallet_text_secondary"
                 android:textSize="12sp"
                 android:visibility="gone"
@@ -63,13 +69,16 @@
                 tools:visibility="visible" />
         </LinearLayout>
 
+        <!-- Trailing: Amount -->
         <TextView
             android:id="@+id/tvContributionAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/cairo"
             android:textColor="@color/urwallet_income"
             android:textSize="15sp"
             android:textStyle="bold"
             tools:text="+500 ج.م" />
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

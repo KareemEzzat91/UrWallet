@@ -101,6 +101,9 @@ class ActiveGoalsAdapter(
             binding.btnGoalDetailChevron.setOnClickListener {
                 binding.cardGoal.performClick()
             }
+            binding.layoutRemainingBox.setOnClickListener {
+                binding.cardGoal.performClick()
+            }
             binding.btnQuickContribute.setOnClickListener {
                 it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
                 onContributeClick(goal)

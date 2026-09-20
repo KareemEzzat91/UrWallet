@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardTransaction"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="4dp"
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginVertical="5dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/urwallet_surface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="1dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/urwallet_background"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
     app:strokeColor="@color/urwallet_card_border"
     app:strokeWidth="1dp">
 
@@ -21,11 +24,11 @@
         android:orientation="horizontal"
         android:padding="14dp">
 
-        <!-- Category Icon in Circle -->
+        <!-- 1. Right Side (Start in RTL): Category Icon Circle (48dp) -->
         <FrameLayout
             android:id="@+id/flIconContainer"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@drawable/bg_icon_circle">
 
             <ImageView
@@ -38,11 +41,12 @@
                 app:tint="@color/white" />
         </FrameLayout>
 
-        <!-- Transaction Details -->
+        <!-- 2. Middle Section: Title & Time with Clock Icon -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -53,44 +57,109 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/urwallet_text_primary"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="غداء عمل" />
+                tools:text="eat" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTransactionTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"
+                    tools:text="07:52 م" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="4dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_clock"
+                    app:tint="#94A3B8" />
+            </LinearLayout>
+
+            <!-- Subtitle fallback for compatibility -->
             <TextView
                 android:id="@+id/tvTransactionSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/urwallet_text_secondary"
-                android:textSize="12sp"
-                tools:text="أكل ومشروبات • 02:30 م" />
+                android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Amount -->
-        <TextView
-            android:id="@+id/tvTransactionAmount"
+        <!-- 3. Left Section (End in RTL): Amount & Category Pill Badge -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/urwallet_expense"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="- 150.00 ج.م" />
+            android:gravity="end"
+            android:orientation="vertical">
 
-        <!-- Delete Action -->
-        <ImageButton
+            <TextView
+                android:id="@+id/tvTransactionAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/urwallet_expense"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="- 200 ج.م" />
+
+            <!-- Category Pastel Pill Badge -->
+            <LinearLayout
+                android:id="@+id/flCategoryBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/bg_badge_delete"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp">
+
+                <ImageView
+                    android:id="@+id/ivCategoryBadgeIcon"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_food"
+                    app:tint="@color/urwallet_expense" />
+
+                <TextView
+                    android:id="@+id/tvCategoryBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/urwallet_expense"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    tools:text="أكل ومشروبات" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 4. Delete Action Box: Soft Reddish Squircle (36dp x 36dp) -->
+        <FrameLayout
             android:id="@+id/btnDelete"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/action_delete"
-            android:padding="6dp"
-            android:src="@drawable/ic_delete"
-            app:tint="@color/urwallet_text_tertiary" />
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/bg_badge_delete"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/action_delete"
+                android:src="@drawable/ic_delete"
+                app:tint="@color/urwallet_expense" />
+        </FrameLayout>
 
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>

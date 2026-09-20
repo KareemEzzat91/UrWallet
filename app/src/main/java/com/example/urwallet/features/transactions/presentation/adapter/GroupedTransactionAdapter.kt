@@ -60,7 +60,20 @@ class GroupedTransactionAdapter(
         private val binding: ItemTransactionHeaderBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(header: TransactionListItem.Header) {
-            binding.tvDateHeader.text = header.dateLabel
+            val label = header.dateLabel
+            if (label == "اليوم") {
+                binding.tvDateHeader.text = DateUtils.formatDisplayDate(DateUtils.getCurrentEpochMs())
+                binding.layoutTodayBadge.visibility = android.view.View.VISIBLE
+                binding.tvTodayBadgeText.text = "اليوم"
+            } else if (label == "أمس") {
+                val yesterday = DateUtils.getCurrentEpochMs() - (24 * 60 * 60 * 1000)
+                binding.tvDateHeader.text = DateUtils.formatDisplayDate(yesterday)
+                binding.layoutTodayBadge.visibility = android.view.View.VISIBLE
+                binding.tvTodayBadgeText.text = "أمس"
+            } else {
+                binding.tvDateHeader.text = label
+                binding.layoutTodayBadge.visibility = android.view.View.GONE
+            }
         }
     }
 
@@ -77,26 +90,31 @@ class GroupedTransactionAdapter(
 
             val categoryName = category?.name ?: context.getString(R.string.cat_other)
             val timeFormatted = DateUtils.formatTimeArabic(transaction.date)
-            binding.tvTransactionSubtitle.text = "$categoryName • $timeFormatted"
+            binding.tvTransactionTime.text = timeFormatted
+            binding.tvCategoryBadge.text = categoryName
 
             val iconRes = CategoryIconMapper.getIconDrawableRes(category?.icon ?: "ic_other")
             binding.ivCategoryIcon.setImageResource(iconRes)
+            binding.ivCategoryBadgeIcon.setImageResource(iconRes)
 
             val categoryColor = CategoryIconMapper.parseColorSafely(
                 category?.color ?: "#78909C"
             )
             binding.flIconContainer.backgroundTintList = ColorStateList.valueOf(categoryColor)
 
+            val isIncome = transaction.type == TransactionType.INCOME
+            val badgeBgColor = if (isIncome) android.graphics.Color.parseColor("#DCFCE7") else android.graphics.Color.parseColor("#FEE2E2")
+            val amountColor = if (isIncome) ContextCompat.getColor(context, R.color.urwallet_income) else ContextCompat.getColor(context, R.color.urwallet_expense)
+
+            binding.flCategoryBadge.backgroundTintList = ColorStateList.valueOf(badgeBgColor)
+            binding.tvCategoryBadge.setTextColor(amountColor)
+            binding.ivCategoryBadgeIcon.imageTintList = ColorStateList.valueOf(amountColor)
+
             // Formatted signed amount & color
             binding.tvTransactionAmount.text = Formatters.formatSignedAmount(
                 amount = transaction.amount,
                 type = transaction.type
             )
-
-            val amountColor = when (transaction.type) {
-                TransactionType.INCOME -> ContextCompat.getColor(context, R.color.urwallet_income)
-                TransactionType.EXPENSE -> ContextCompat.getColor(context, R.color.urwallet_expense)
-            }
             binding.tvTransactionAmount.setTextColor(amountColor)
 
             binding.btnDelete.setOnClickListener {

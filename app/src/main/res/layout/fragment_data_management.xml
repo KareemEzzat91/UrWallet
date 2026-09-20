@@ -4,48 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
     android:background="@color/urwallet_background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/urwallet_surface"
+        android:background="@color/urwallet_background"
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:paddingEnd="16dp">
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingHorizontal="@dimen/screen_padding_horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp">
 
-            <FrameLayout
-                android:id="@+id/btnBack"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="start|center_vertical"
-                android:background="@drawable/bg_chip_preset"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/action_back"
-                    android:src="@drawable/ic_arrow_back"
-                    app:tint="@color/urwallet_text_primary" />
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:text="@string/data_management_title"
-                android:textColor="@color/urwallet_text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Back Button -->
+                <FrameLayout
+                    android:id="@+id/btnBack"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_squircle_pastel_blue"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/action_back"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="@color/urwallet_primary" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/data_management_title"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="تحكم كامل في بياناتك وتصديرها بأمان"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -60,26 +88,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/screen_padding_horizontal"
-            android:paddingTop="16dp"
-            android:paddingBottom="48dp">
+            android:paddingTop="8dp"
+            android:paddingBottom="60dp">
 
-            <!-- Subtitle info banner -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="@string/data_management_subtitle"
-                android:textColor="@color/urwallet_text_secondary"
-                android:textSize="14sp" />
-
-            <!-- Card 1: Full JSON Backup & Restore -->
+            <!-- Security & Privacy Guarantee Banner -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardBackup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/urwallet_surface"
-                app:cardCornerRadius="18dp"
+                app:cardBackgroundColor="@color/urwallet_background"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="2dp"
                 app:strokeColor="@color/urwallet_card_border"
                 app:strokeWidth="1dp">
@@ -88,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -99,21 +117,107 @@
                         <FrameLayout
                             android:layout_width="44dp"
                             android:layout_height="44dp"
-                            android:background="@drawable/bg_squircle_primary_light">
+                            android:background="@drawable/bg_squircle_pastel_teal">
 
                             <ImageView
                                 android:layout_width="22dp"
                                 android:layout_height="22dp"
                                 android:layout_gravity="center"
                                 android:contentDescription="@null"
-                                android:src="@drawable/ic_bills"
-                                app:tint="@color/urwallet_primary" />
+                                android:src="@drawable/ic_shield"
+                                app:tint="#0D9488" />
                         </FrameLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="أمان وخصوصية تامة 100%"
+                                android:textColor="@color/urwallet_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="بياناتك مشفرة ومحفوظة على جهازك فقط بدون سحابة"
+                                android:textColor="@color/urwallet_text_secondary"
+                                android:textSize="11.5sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_pill_pace_green"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:text="محلي وآمن"
+                            android:textColor="#00732C"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/data_management_subtitle"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 1: Full JSON Backup & Restore -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardBackup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/urwallet_background"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/urwallet_card_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_squircle_pastel_blue">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_shield"
+                                app:tint="#0284C7" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -128,49 +232,64 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="3dp"
                                 android:lineSpacingExtra="2dp"
                                 android:text="@string/backup_card_desc"
                                 android:textColor="@color/urwallet_text_secondary"
-                                android:textSize="13sp" />
+                                android:textSize="12.5sp" />
                         </LinearLayout>
                     </LinearLayout>
 
+                    <!-- Export JSON Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnExportJsonBackup"
+                        style="@style/Widget.Material3.Button"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"
+                        android:layout_height="50dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/btn_export_json_backup"
                         android:textColor="@color/white"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
                         app:backgroundTint="@color/urwallet_primary"
-                        app:cornerRadius="12dp"
-                        app:icon="@drawable/ic_arrow_back"
+                        app:cornerRadius="14dp"
+                        app:elevation="0dp"
+                        app:icon="@drawable/ic_share"
                         app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconSize="18dp"
                         app:iconTint="@color/white" />
 
+                    <!-- Import JSON Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnImportJsonBackup"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"
+                        android:layout_height="50dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/btn_import_json_backup"
                         android:textColor="@color/urwallet_primary"
-                        app:cornerRadius="12dp"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="14dp"
+                        app:icon="@drawable/ic_arrow_downward"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconSize="18dp"
+                        app:iconTint="@color/urwallet_primary"
                         app:strokeColor="@color/urwallet_primary"
-                        app:strokeWidth="1.5dp" />
+                        app:strokeWidth="1.2dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card 2: Export Transactions CSV -->
+            <!-- Card 2: Export Transactions CSV / Excel -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCsv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/urwallet_surface"
-                app:cardCornerRadius="18dp"
+                app:cardBackgroundColor="@color/urwallet_background"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="2dp"
                 app:strokeColor="@color/urwallet_card_border"
                 app:strokeWidth="1dp">
@@ -179,7 +298,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="18dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -188,23 +307,23 @@
                         android:orientation="horizontal">
 
                         <FrameLayout
-                            android:layout_width="44dp"
-                            android:layout_height="44dp"
-                            android:background="@drawable/bg_squircle_primary_light">
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_squircle_pastel_green">
 
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="22dp"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 android:layout_gravity="center"
                                 android:contentDescription="@null"
-                                android:src="@drawable/ic_education"
-                                app:tint="@color/urwallet_primary" />
+                                android:src="@drawable/ic_chart_bars"
+                                app:tint="#059669" />
                         </FrameLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="14dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -219,11 +338,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="3dp"
                                 android:lineSpacingExtra="2dp"
                                 android:text="@string/csv_card_desc"
                                 android:textColor="@color/urwallet_text_secondary"
-                                android:textSize="13sp" />
+                                android:textSize="12.5sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -231,11 +350,20 @@
                         android:id="@+id/btnExportCsv"
                         style="@style/Widget.Material3.Button.TonalButton"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"
+                        android:layout_height="50dp"
                         android:layout_marginTop="16dp"
+                        android:backgroundTint="#D1FAE5"
                         android:text="@string/btn_export_csv"
-                        android:textColor="@color/urwallet_primary"
-                        app:cornerRadius="12dp" />
+                        android:textColor="#065F46"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="14dp"
+                        app:elevation="0dp"
+                        app:icon="@drawable/ic_share"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconSize="18dp"
+                        app:iconTint="#065F46" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -244,17 +372,17 @@
                 android:id="@+id/cardDangerZone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/urwallet_surface"
-                app:cardCornerRadius="18dp"
+                app:cardBackgroundColor="@color/urwallet_background"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="2dp"
                 app:strokeColor="#FFCDD2"
-                app:strokeWidth="1.5dp">
+                app:strokeWidth="1.2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="18dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -263,22 +391,23 @@
                         android:orientation="horizontal">
 
                         <FrameLayout
-                            android:layout_width="44dp"
-                            android:layout_height="44dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:background="@drawable/bg_squircle_expense">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:text="⚠️"
-                                android:textSize="20sp" />
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_delete"
+                                app:tint="#DC2626" />
                         </FrameLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="14dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -286,30 +415,39 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/danger_zone_title"
-                                android:textColor="#D32F2F"
+                                android:textColor="#DC2626"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="3dp"
                                 android:lineSpacingExtra="2dp"
                                 android:text="@string/danger_zone_desc"
                                 android:textColor="@color/urwallet_text_secondary"
-                                android:textSize="13sp" />
+                                android:textSize="12.5sp" />
                         </LinearLayout>
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnClearAllData"
+                        style="@style/Widget.Material3.Button"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"
+                        android:layout_height="50dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/btn_clear_all_data"
-                        android:textColor="#FFFFFF"
-                        app:backgroundTint="#D32F2F"
-                        app:cornerRadius="12dp" />
+                        android:textColor="@color/white"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#DC2626"
+                        app:cornerRadius="14dp"
+                        app:elevation="0dp"
+                        app:icon="@drawable/ic_delete"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconSize="18dp"
+                        app:iconTint="@color/white" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -331,16 +469,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:cardBackgroundColor="@color/urwallet_surface"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="6dp">
+            app:cardBackgroundColor="@color/urwallet_background"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:strokeColor="@color/urwallet_card_border"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="28dp">
 
                 <ProgressBar
                     android:layout_width="48dp"
@@ -350,7 +490,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="14dp"
                     android:text="جاري معالجة البيانات..."
                     android:textColor="@color/urwallet_text_primary"
                     android:textSize="14sp"
