@@ -15,7 +15,9 @@ sealed interface TransactionsUiState {
         val totalIncome: Double = 0.0,
         val totalExpense: Double = 0.0,
         val hasActiveFilters: Boolean = false,
-        val activeFilterCount: Int = 0
+        val activeFilterCount: Int = 0,
+        val isSelectionMode: Boolean = false,
+        val selectedCount: Int = 0
     ) : TransactionsUiState
     data class Error(val message: String) : TransactionsUiState
 }
@@ -24,6 +26,8 @@ sealed interface TransactionListItem {
     data class Header(val dateLabel: String) : TransactionListItem
     data class Item(
         val transaction: Transaction,
-        val category: Category? = null
+        val category: Category? = null,
+        val isSelected: Boolean = false,
+        val isSelectionMode: Boolean = false
     ) : TransactionListItem
 }

@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.urwallet.core.common.TransactionType
+import com.example.urwallet.features.transactions.data.entity.CategorySpendingEntity
 import com.example.urwallet.features.transactions.data.entity.TransactionEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -103,4 +104,18 @@ interface TransactionDao {
 
     @Query("UPDATE transactions SET personId = NULL WHERE personId = :personId")
     suspend fun clearPersonFromTransactions(personId: Long): Int
+
+    @Query("""
+        SELECT categoryId, COALESCE(SUM(amount), 0.0) AS totalSpent 
+        FROM transactions 
+        WHERE type = 'EXPENSE' AND date >= :startDate AND date <= :endDate 
+        GROUP BY categoryId
+    """)
+    fun getCategorySpendingBetween(startDate: Long, endDate: Long): Flow<List<CategorySpendingEntity>>
+
+    @Query("DELETE FROM transactions WHERE id IN (:ids)")
+    suspend fun deleteTransactionsByIds(ids: List<Long>): Int
+
+    @Query("UPDATE transactions SET categoryId = :categoryId, updatedAt = :updatedAt WHERE id IN (:ids)")
+    suspend fun updateCategoryByIds(ids: List<Long>, categoryId: Long, updatedAt: Long = System.currentTimeMillis()): Int
 }

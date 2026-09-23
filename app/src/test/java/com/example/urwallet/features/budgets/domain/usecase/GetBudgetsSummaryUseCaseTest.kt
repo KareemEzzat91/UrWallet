@@ -59,6 +59,13 @@ class GetBudgetsSummaryUseCaseTest {
             flowOf(transactions.filter { it.type == type }.sumOf { it.amount })
         override fun getSumByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): Flow<Double> =
             flowOf(0.0)
+        override fun getCategorySpendingBetween(startDate: Long, endDate: Long): Flow<Map<Long, Double>> =
+            flowOf(
+                transactions
+                    .filter { it.type == TransactionType.EXPENSE }
+                    .groupBy { it.categoryId }
+                    .mapValues { entry -> entry.value.sumOf { it.amount } }
+            )
         override fun getTodayTransactionCount(startOfDay: Long, endOfDay: Long): Flow<Int> = flowOf(transactions.size)
         override suspend fun insertTransaction(transaction: Transaction): Long = 1L
         override suspend fun updateTransaction(transaction: Transaction) {}
@@ -148,5 +155,115 @@ class GetBudgetsSummaryUseCaseTest {
         assertEquals(100, cbSummary.visualProgress)
         assertEquals(BudgetStatus.EXCEEDED, cbSummary.status)
         assertTrue(cbSummary.isExceeded)
+    }
+
+    @Test
+    fun `when budget has zero spending, progress is zero and remaining equals limit`() = runTest {
+        val globalBudget = Budget(id = 1L, categoryId = null, amount = 5000.0, month = 9, year = 2026)
+        fakeBudgetRepository.globalBudget = globalBudget
+        fakeTransactionRepository.transactions = emptyList()
+
+        val result = useCase(month = 9, year = 2026).first()
+
+        assertNotNull(result.globalBudget)
+        assertEquals(0.0, result.globalBudget!!.spentAmount, 0.001)
+        assertEquals(5000.0, result.globalBudget!!.remainingAmount, 0.001)
+        assertEquals(0.0, result.globalBudget!!.progressPercentage, 0.001)
+        assertEquals(0, result.globalBudget!!.visualProgress)
+        assertEquals(BudgetStatus.HEALTHY, result.globalBudget!!.status)
+    }
+
+    @Test
+    fun `when budget is partially consumed, progress and remaining are accurate`() = runTest {
+        val globalBudget = Budget(id = 1L, categoryId = null, amount = 5000.0, month = 9, year = 2026)
+        val transactions = listOf(
+            Transaction(id = 1L, amount = 3200.0, type = TransactionType.EXPENSE, categoryId = 1L, title = "مشتريات", date = 1000L)
+        )
+        fakeBudgetRepository.globalBudget = globalBudget
+        fakeTransactionRepository.transactions = transactions
+
+        val result = useCase(month = 9, year = 2026).first()
+
+        assertNotNull(result.globalBudget)
+        assertEquals(3200.0, result.globalBudget!!.spentAmount, 0.001)
+        assertEquals(1800.0, result.globalBudget!!.remainingAmount, 0.001)
+        assertEquals(64.0, result.globalBudget!!.progressPercentage, 0.001)
+        assertEquals(64, result.globalBudget!!.visualProgress)
+        assertEquals(BudgetStatus.HEALTHY, result.globalBudget!!.status)
+    }
+
+    @Test
+    fun `when budget is exactly reached, progress is 100 percent and remaining is zero`() = runTest {
+        val globalBudget = Budget(id = 1L, categoryId = null, amount = 5000.0, month = 9, year = 2026, alertThreshold = 0.8)
+        val transactions = listOf(
+            Transaction(id = 1L, amount = 5000.0, type = TransactionType.EXPENSE, categoryId = 1L, title = "مصاريف كاملة", date = 1000L)
+        )
+        fakeBudgetRepository.globalBudget = globalBudget
+        fakeTransactionRepository.transactions = transactions
+
+        val result = useCase(month = 9, year = 2026).first()
+
+        assertNotNull(result.globalBudget)
+        assertEquals(5000.0, result.globalBudget!!.spentAmount, 0.001)
+        assertEquals(0.0, result.globalBudget!!.remainingAmount, 0.001)
+        assertEquals(100.0, result.globalBudget!!.progressPercentage, 0.001)
+        assertEquals(100, result.globalBudget!!.visualProgress)
+        assertEquals(BudgetStatus.NEAR_LIMIT, result.globalBudget!!.status)
+    }
+
+    @Test
+    fun `category spending matches only its assigned category and ignores other categories`() = runTest {
+        val foodBudget = Budget(id = 10L, categoryId = 1L, amount = 3000.0, month = 9, year = 2026)
+        val transportBudget = Budget(id = 11L, categoryId = 2L, amount = 1500.0, month = 9, year = 2026)
+
+        fakeBudgetRepository.categoryBudgets = listOf(foodBudget, transportBudget)
+        fakeCategoryRepository.categories = listOf(
+            Category(id = 1L, name = "طعام", type = CategoryType.EXPENSE, icon = "ic_food", color = "#FF5722"),
+            Category(id = 2L, name = "مواصلات", type = CategoryType.EXPENSE, icon = "ic_car", color = "#2196F3")
+        )
+        fakeTransactionRepository.transactions = listOf(
+            Transaction(id = 1L, amount = 1200.0, type = TransactionType.EXPENSE, categoryId = 1L, title = "غداء", date = 1000L),
+            Transaction(id = 2L, amount = 400.0, type = TransactionType.EXPENSE, categoryId = 2L, title = "أوبر", date = 2000L),
+            Transaction(id = 3L, amount = 800.0, type = TransactionType.EXPENSE, categoryId = 99L, title = "ملابس", date = 3000L) // Unbudgeted category
+        )
+
+        val result = useCase(month = 9, year = 2026).first()
+
+        val foodSummary = result.categoryBudgets.find { it.categoryId == 1L }
+        val transportSummary = result.categoryBudgets.find { it.categoryId == 2L }
+
+        assertNotNull(foodSummary)
+        assertEquals(1200.0, foodSummary!!.spentAmount, 0.001)
+        assertEquals(1800.0, foodSummary.remainingAmount, 0.001)
+
+        assertNotNull(transportSummary)
+        assertEquals(400.0, transportSummary!!.spentAmount, 0.001)
+        assertEquals(1100.0, transportSummary.remainingAmount, 0.001)
+    }
+
+    @Test
+    fun `budget summary exposes accurate counts for active, healthy, near limit, and exceeded budgets`() = runTest {
+        val global = Budget(id = 1L, categoryId = null, amount = 10000.0, month = 9, year = 2026) // will spend 2000 -> HEALTHY
+        val cb1 = Budget(id = 2L, categoryId = 1L, amount = 1000.0, month = 9, year = 2026, alertThreshold = 0.8) // will spend 850 -> NEAR_LIMIT
+        val cb2 = Budget(id = 3L, categoryId = 2L, amount = 500.0, month = 9, year = 2026) // will spend 700 -> EXCEEDED
+
+        fakeBudgetRepository.globalBudget = global
+        fakeBudgetRepository.categoryBudgets = listOf(cb1, cb2)
+        fakeCategoryRepository.categories = listOf(
+            Category(id = 1L, name = "طعام", type = CategoryType.EXPENSE, icon = "ic_food", color = "#FF5722"),
+            Category(id = 2L, name = "مواصلات", type = CategoryType.EXPENSE, icon = "ic_car", color = "#2196F3")
+        )
+        fakeTransactionRepository.transactions = listOf(
+            Transaction(id = 1L, amount = 850.0, type = TransactionType.EXPENSE, categoryId = 1L, title = "طعام", date = 1000L),
+            Transaction(id = 2L, amount = 700.0, type = TransactionType.EXPENSE, categoryId = 2L, title = "مواصلات", date = 2000L),
+            Transaction(id = 3L, amount = 450.0, type = TransactionType.EXPENSE, categoryId = 99L, title = "أخرى", date = 3000L)
+        )
+
+        val result = useCase(month = 9, year = 2026).first()
+
+        assertEquals(3, result.totalBudgetsCount)
+        assertEquals(1, result.healthyBudgetsCount)
+        assertEquals(1, result.nearLimitBudgetsCount)
+        assertEquals(1, result.exceededBudgetsCount)
     }
 }

@@ -27,21 +27,22 @@ class GetBudgetsSummaryUseCase @Inject constructor(
 
         val globalBudgetFlow = budgetRepository.getGlobalBudget(month, year)
         val categoryBudgetsFlow = budgetRepository.getCategoryBudgets(month, year)
-        val transactionsFlow = transactionRepository.getTransactionsBetween(startOfMonth, endOfMonth)
+        val totalExpenseFlow = transactionRepository.getSumByTypeAndPeriod(
+            type = TransactionType.EXPENSE,
+            startDate = startOfMonth,
+            endDate = endOfMonth
+        )
+        val categorySpendingFlow = transactionRepository.getCategorySpendingBetween(startOfMonth, endOfMonth)
         val categoriesFlow = categoryRepository.getAllCategories()
 
         return combine(
             globalBudgetFlow,
             categoryBudgetsFlow,
-            transactionsFlow,
+            totalExpenseFlow,
+            categorySpendingFlow,
             categoriesFlow
-        ) { globalBudget, categoryBudgets, transactions, categories ->
-            // Filter strictly to EXPENSE transactions (Income never increases budget spending)
-            val expenseTransactions = transactions.filter { it.type == TransactionType.EXPENSE }
+        ) { globalBudget, categoryBudgets, totalExpenseSpending, categorySpendingMap, categories ->
             val categoriesMap = categories.associateBy { it.id }
-
-            // Actual total monthly expenses across all categories
-            val totalExpenseSpending = expenseTransactions.sumOf { it.amount }
 
             // Build Global Budget summary if defined
             val globalSummary = globalBudget?.let { gb ->
@@ -68,8 +69,7 @@ class GetBudgetsSummaryUseCase @Inject constructor(
 
             // Build Category Budget summaries
             val categorySummaries = categoryBudgets.map { cb ->
-                val catExpenses = expenseTransactions.filter { it.categoryId == cb.categoryId }
-                val spent = catExpenses.sumOf { it.amount }
+                val spent = cb.categoryId?.let { categorySpendingMap[it] } ?: 0.0
                 val calc = BudgetCalculator.evaluate(
                     spent = spent,
                     budgetAmount = cb.amount,

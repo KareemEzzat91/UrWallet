@@ -17,9 +17,13 @@ import com.example.urwallet.features.transactions.domain.model.Transaction
 import com.example.urwallet.core.designsystem.CategoryIconMapper
 import com.example.urwallet.features.transactions.presentation.TransactionListItem
 
+import androidx.core.view.isVisible
+
 class GroupedTransactionAdapter(
     private val onTransactionClick: ((Transaction) -> Unit)? = null,
-    private val onDeleteClick: (Transaction) -> Unit
+    private val onDeleteClick: (Transaction) -> Unit,
+    private val onToggleSelection: ((Transaction) -> Unit)? = null,
+    private val onTransactionLongClick: ((Transaction) -> Boolean)? = null
 ) : ListAdapter<TransactionListItem, RecyclerView.ViewHolder>(TransactionDiffCallback) {
 
     companion object {
@@ -117,12 +121,39 @@ class GroupedTransactionAdapter(
             )
             binding.tvTransactionAmount.setTextColor(amountColor)
 
+            // Multi-Selection State UI
+            binding.cbSelect.isVisible = item.isSelectionMode
+            binding.cbSelect.isChecked = item.isSelected
+            binding.btnDelete.isVisible = !item.isSelectionMode
+
+            if (item.isSelected) {
+                binding.cardTransaction.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.urwallet_primary)))
+                binding.cardTransaction.strokeWidth = 3
+                binding.cardTransaction.setCardBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.urwallet_primary_light)))
+            } else {
+                binding.cardTransaction.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.urwallet_card_border)))
+                binding.cardTransaction.strokeWidth = 1
+                binding.cardTransaction.setCardBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.urwallet_background)))
+            }
+
             binding.btnDelete.setOnClickListener {
                 onDeleteClick(transaction)
             }
 
             binding.root.setOnClickListener {
-                onTransactionClick?.invoke(transaction)
+                if (item.isSelectionMode) {
+                    onToggleSelection?.invoke(transaction)
+                } else {
+                    onTransactionClick?.invoke(transaction)
+                }
+            }
+
+            binding.cbSelect.setOnClickListener {
+                onToggleSelection?.invoke(transaction)
+            }
+
+            binding.root.setOnLongClickListener {
+                onTransactionLongClick?.invoke(transaction) ?: false
             }
         }
     }

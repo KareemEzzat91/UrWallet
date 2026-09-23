@@ -31,6 +31,9 @@ interface TransactionRepository {
     suspend fun updateTransaction(transaction: Transaction)
     suspend fun deleteTransaction(transaction: Transaction)
     suspend fun deleteTransactionById(id: Long)
+    suspend fun deleteTransactionsByIds(ids: List<Long>): Int = 0
+    suspend fun updateCategoryByIds(ids: List<Long>, categoryId: Long): Int = 0
+    fun getCategorySpendingBetween(startDate: Long, endDate: Long): Flow<Map<Long, Double>> = kotlinx.coroutines.flow.flowOf(emptyMap())
     suspend fun countTransactionsByNoteTag(tagPattern: String): Int = 0
 
     // Category methods

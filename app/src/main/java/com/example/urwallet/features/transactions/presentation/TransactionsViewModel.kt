@@ -10,6 +10,8 @@ import com.example.urwallet.features.transactions.domain.model.Transaction
 import com.example.urwallet.features.transactions.domain.model.TransactionFilterCriteria
 import com.example.urwallet.features.notifications.domain.usecase.CheckBudgetAlertUseCase
 import com.example.urwallet.features.transactions.domain.usecase.AddTransactionUseCase
+import com.example.urwallet.features.transactions.domain.usecase.BulkChangeCategoryUseCase
+import com.example.urwallet.features.transactions.domain.usecase.BulkDeleteTransactionsUseCase
 import com.example.urwallet.features.transactions.domain.usecase.DeleteTransactionUseCase
 import com.example.urwallet.features.transactions.domain.usecase.GetCategoriesUseCase
 import com.example.urwallet.features.transactions.domain.usecase.GetFilteredTransactionsUseCase
@@ -42,6 +44,8 @@ class TransactionsViewModel @Inject constructor(
     private val addTransactionUseCase: AddTransactionUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
+    private val bulkDeleteTransactionsUseCase: BulkDeleteTransactionsUseCase,
+    private val bulkChangeCategoryUseCase: BulkChangeCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val checkBudgetAlertUseCase: CheckBudgetAlertUseCase
 ) : ViewModel() {
@@ -64,6 +68,16 @@ class TransactionsViewModel @Inject constructor(
         .debounce(300L)
         .distinctUntilChanged()
 
+    // --- Multi-Selection State ---
+    private val _selectedTransactionIds = MutableStateFlow<Set<Long>>(emptySet())
+    val selectedTransactionIds: StateFlow<Set<Long>> = _selectedTransactionIds.asStateFlow()
+
+    private val _isSelectionMode = MutableStateFlow(false)
+    val isSelectionMode: StateFlow<Boolean> = _isSelectionMode.asStateFlow()
+
+    private val _isBulkOperating = MutableStateFlow(false)
+    val isBulkOperating: StateFlow<Boolean> = _isBulkOperating.asStateFlow()
+
     // --- Transactions List State ---
     val transactionsUiState: StateFlow<TransactionsUiState> = combine(
         debouncedSearchQuery,
@@ -73,8 +87,10 @@ class TransactionsViewModel @Inject constructor(
     }.flatMapLatest { effectiveCriteria ->
         combine(
             getFilteredTransactionsUseCase(effectiveCriteria),
-            getCategoriesUseCase()
-        ) { filteredTransactions, categories ->
+            getCategoriesUseCase(),
+            _selectedTransactionIds,
+            _isSelectionMode
+        ) { filteredTransactions, categories, selectedIds, isSelectionMode ->
             val categoryMap = categories.associateBy { it.id }
 
             if (filteredTransactions.isEmpty()) {
@@ -94,13 +110,20 @@ class TransactionsViewModel @Inject constructor(
                     .filter { it.type == TransactionType.EXPENSE }
                     .sumOf { it.amount }
 
-                val groupedItems = buildGroupedList(filteredTransactions, categoryMap)
+                val groupedItems = buildGroupedList(
+                    transactions = filteredTransactions,
+                    categoryMap = categoryMap,
+                    selectedIds = selectedIds,
+                    isSelectionMode = isSelectionMode
+                )
                 TransactionsUiState.Success(
                     items = groupedItems,
                     totalIncome = income,
                     totalExpense = expense,
                     hasActiveFilters = effectiveCriteria.hasActiveFilters(),
-                    activeFilterCount = effectiveCriteria.activeFilterCount()
+                    activeFilterCount = effectiveCriteria.activeFilterCount(),
+                    isSelectionMode = isSelectionMode,
+                    selectedCount = selectedIds.size
                 )
             }
         }
@@ -298,9 +321,84 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
+    // --- Multi-Selection Functions ---
+    fun enterSelectionMode(initialSelectedId: Long? = null) {
+        _isSelectionMode.value = true
+        _selectedTransactionIds.value = if (initialSelectedId != null) setOf(initialSelectedId) else emptySet()
+    }
+
+    fun exitSelectionMode() {
+        _isSelectionMode.value = false
+        _selectedTransactionIds.value = emptySet()
+    }
+
+    fun toggleTransactionSelection(id: Long) {
+        if (!_isSelectionMode.value) {
+            enterSelectionMode(id)
+            return
+        }
+        _selectedTransactionIds.update { current ->
+            if (current.contains(id)) {
+                val next = current - id
+                if (next.isEmpty()) {
+                    _isSelectionMode.value = false
+                }
+                next
+            } else {
+                current + id
+            }
+        }
+    }
+
+    fun bulkDeleteSelected(onSuccess: (deletedCount: Int) -> Unit, onError: (String) -> Unit) {
+        if (_isBulkOperating.value) return
+        val idsToDelete = _selectedTransactionIds.value
+        if (idsToDelete.isEmpty()) {
+            onError("لم يتم تحديد أي معاملات للحذف")
+            return
+        }
+
+        viewModelScope.launch {
+            _isBulkOperating.value = true
+            val result = bulkDeleteTransactionsUseCase(idsToDelete)
+            _isBulkOperating.value = false
+            if (result.isSuccess) {
+                val count = result.getOrNull() ?: 0
+                exitSelectionMode()
+                onSuccess(count)
+            } else {
+                onError(result.exceptionOrNull()?.message ?: "فشل حذف المعاملات المحددة")
+            }
+        }
+    }
+
+    fun bulkChangeCategorySelected(newCategoryId: Long, onSuccess: (updatedCount: Int) -> Unit, onError: (String) -> Unit) {
+        if (_isBulkOperating.value) return
+        val idsToUpdate = _selectedTransactionIds.value
+        if (idsToUpdate.isEmpty()) {
+            onError("لم يتم تحديد أي معاملات")
+            return
+        }
+
+        viewModelScope.launch {
+            _isBulkOperating.value = true
+            val result = bulkChangeCategoryUseCase(idsToUpdate, newCategoryId)
+            _isBulkOperating.value = false
+            if (result.isSuccess) {
+                val count = result.getOrNull() ?: 0
+                exitSelectionMode()
+                onSuccess(count)
+            } else {
+                onError(result.exceptionOrNull()?.message ?: "فشل تغيير تصنيف المعاملات")
+            }
+        }
+    }
+
     private fun buildGroupedList(
         transactions: List<Transaction>,
-        categoryMap: Map<Long, Category>
+        categoryMap: Map<Long, Category>,
+        selectedIds: Set<Long> = emptySet(),
+        isSelectionMode: Boolean = false
     ): List<TransactionListItem> {
         val items = mutableListOf<TransactionListItem>()
         val groupedByDate = transactions.groupBy { DateUtils.formatDateArabic(it.date) }
@@ -309,7 +407,14 @@ class TransactionsViewModel @Inject constructor(
             items.add(TransactionListItem.Header(dateLabel))
             for (transaction in dayTransactions) {
                 val category = categoryMap[transaction.categoryId]
-                items.add(TransactionListItem.Item(transaction, category))
+                items.add(
+                    TransactionListItem.Item(
+                        transaction = transaction,
+                        category = category,
+                        isSelected = selectedIds.contains(transaction.id),
+                        isSelectionMode = isSelectionMode
+                    )
+                )
             }
         }
         return items

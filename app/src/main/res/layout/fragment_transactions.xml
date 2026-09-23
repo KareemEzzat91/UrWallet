@@ -11,6 +11,7 @@
 
     <!-- Top Header: Title & Subtitle (Start) + Filter Squircle Button (End) -->
     <LinearLayout
+        android:id="@+id/layoutNormalHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -59,6 +60,78 @@
                 android:src="@drawable/ic_filter"
                 app:tint="@color/urwallet_primary" />
         </FrameLayout>
+    </LinearLayout>
+
+    <!-- Selection Action Bar (Visible in Multi-Selection Mode) -->
+    <LinearLayout
+        android:id="@+id/layoutSelectionHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="4dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/btnCloseSelection"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_cancel"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/urwallet_text_primary" />
+
+        <TextView
+            android:id="@+id/tvSelectionCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:textColor="@color/urwallet_text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="3 محدد" />
+
+        <!-- Change Category Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBulkChangeCategory"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:paddingHorizontal="12dp"
+            android:text="تغيير الفئة"
+            android:textColor="@color/urwallet_primary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/urwallet_primary_light"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_other"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconSize="16dp"
+            app:iconTint="@color/urwallet_primary" />
+
+        <!-- Bulk Delete Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBulkDelete"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingHorizontal="12dp"
+            android:text="@string/action_delete"
+            android:textColor="@color/urwallet_expense"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="#FEE2E2"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_delete"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconSize="16dp"
+            app:iconTint="@color/urwallet_expense" />
     </LinearLayout>
 
     <!-- Modern Rounded Search Bar -->

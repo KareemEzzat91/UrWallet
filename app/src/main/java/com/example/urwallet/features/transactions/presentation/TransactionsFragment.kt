@@ -49,12 +49,30 @@ class TransactionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupBackPressHandler()
         setupRecyclerView()
+        setupSelectionMode()
         setupSearch()
         setupFilters()
         setupReportsBanner()
         setupEmptyState()
         observeTransactions()
+    }
+
+    private fun setupBackPressHandler() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : androidx.activity.OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (viewModel.isSelectionMode.value) {
+                        viewModel.exitSelectionMode()
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+        )
     }
 
     private fun setupEmptyState() {
@@ -75,9 +93,42 @@ class TransactionsFragment : Fragment() {
             },
             onDeleteClick = { transaction ->
                 showDeleteConfirmationDialog(transaction.id)
+            },
+            onToggleSelection = { transaction ->
+                viewModel.toggleTransactionSelection(transaction.id)
+            },
+            onTransactionLongClick = { transaction ->
+                binding.root.performHapticClick()
+                viewModel.enterSelectionMode(transaction.id)
+                true
             }
         )
         binding.rvTransactions.adapter = transactionAdapter
+    }
+
+    private fun setupSelectionMode() {
+        binding.btnCloseSelection.setOnClickListener {
+            it.performHapticClick()
+            viewModel.exitSelectionMode()
+        }
+
+        binding.btnBulkDelete.setOnClickListener {
+            it.performHapticClick()
+            val count = viewModel.selectedTransactionIds.value.size
+            if (count > 0) {
+                showBulkDeleteConfirmationDialog(count)
+            }
+        }
+
+        binding.btnBulkChangeCategory.setOnClickListener {
+            it.performHapticClick()
+            val categories = viewModel.allCategories.value
+            if (categories.isNotEmpty()) {
+                showBulkChangeCategoryDialog(categories)
+            } else {
+                Toast.makeText(requireContext(), "لا توجد فئات متاحة", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupSearch() {
@@ -161,6 +212,50 @@ class TransactionsFragment : Fragment() {
             .show()
     }
 
+    private fun showBulkDeleteConfirmationDialog(selectedCount: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("حذف المعاملات المحددة")
+            .setMessage("هل أنت متأكد من حذف $selectedCount معاملات؟ لا يمكن التراجع عن هذا الإجراء.")
+            .setNegativeButton(R.string.action_cancel, null)
+            .setPositiveButton(R.string.action_delete) { _, _ ->
+                viewModel.bulkDeleteSelected(
+                    onSuccess = { count ->
+                        showSuccessSnackbar("تم حذف $count معاملات بنجاح")
+                    },
+                    onError = { error ->
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
+            .show()
+    }
+
+    private fun showBulkChangeCategoryDialog(categories: List<com.example.urwallet.features.transactions.domain.model.Category>) {
+        if (categories.isEmpty()) return
+        val categoryNames = categories.map { it.name }.toTypedArray()
+        var selectedIndex = 0
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("اختر الفئة الجديدة")
+            .setSingleChoiceItems(categoryNames, selectedIndex) { _, which ->
+                selectedIndex = which
+            }
+            .setNegativeButton(R.string.action_cancel, null)
+            .setPositiveButton("تطبيق") { _, _ ->
+                val chosenCategory = categories.getOrNull(selectedIndex) ?: return@setPositiveButton
+                viewModel.bulkChangeCategorySelected(
+                    newCategoryId = chosenCategory.id,
+                    onSuccess = { count ->
+                        showSuccessSnackbar("تم تحديث فئة $count معاملات بنجاح إلى ${chosenCategory.name}")
+                    },
+                    onError = { error ->
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
+            .show()
+    }
+
     private fun observeTransactions() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -196,6 +291,8 @@ class TransactionsFragment : Fragment() {
     private fun renderState(state: TransactionsUiState) {
         when (state) {
             is TransactionsUiState.Loading -> {
+                binding.layoutNormalHeader.isVisible = true
+                binding.layoutSelectionHeader.isVisible = false
                 binding.layoutSkeletonTransactions.isVisible = true
                 binding.layoutSkeletonTransactions.startSkeletonShimmer()
                 binding.progressBar.isVisible = false
@@ -205,6 +302,8 @@ class TransactionsFragment : Fragment() {
                 binding.tvErrorMessage.isVisible = false
             }
             is TransactionsUiState.Empty -> {
+                binding.layoutNormalHeader.isVisible = true
+                binding.layoutSelectionHeader.isVisible = false
                 binding.layoutSkeletonTransactions.stopSkeletonShimmer()
                 binding.layoutSkeletonTransactions.isVisible = false
                 binding.progressBar.isVisible = false
@@ -214,6 +313,8 @@ class TransactionsFragment : Fragment() {
                 binding.tvErrorMessage.isVisible = false
             }
             is TransactionsUiState.NoSearchResults -> {
+                binding.layoutNormalHeader.isVisible = true
+                binding.layoutSelectionHeader.isVisible = false
                 binding.layoutSkeletonTransactions.stopSkeletonShimmer()
                 binding.layoutSkeletonTransactions.isVisible = false
                 binding.progressBar.isVisible = false
@@ -223,6 +324,13 @@ class TransactionsFragment : Fragment() {
                 binding.tvErrorMessage.isVisible = false
             }
             is TransactionsUiState.Success -> {
+                binding.layoutNormalHeader.isVisible = !state.isSelectionMode
+                binding.layoutSelectionHeader.isVisible = state.isSelectionMode
+                if (state.isSelectionMode) {
+                    binding.tvSelectionCount.text = "${state.selectedCount} محدد"
+                    binding.btnBulkDelete.isEnabled = state.selectedCount > 0
+                    binding.btnBulkChangeCategory.isEnabled = state.selectedCount > 0
+                }
                 binding.layoutSkeletonTransactions.stopSkeletonShimmer()
                 binding.layoutSkeletonTransactions.isVisible = false
                 binding.progressBar.isVisible = false
@@ -233,6 +341,8 @@ class TransactionsFragment : Fragment() {
                 transactionAdapter.submitList(state.items)
             }
             is TransactionsUiState.Error -> {
+                binding.layoutNormalHeader.isVisible = true
+                binding.layoutSelectionHeader.isVisible = false
                 binding.layoutSkeletonTransactions.stopSkeletonShimmer()
                 binding.layoutSkeletonTransactions.isVisible = false
                 binding.progressBar.isVisible = false

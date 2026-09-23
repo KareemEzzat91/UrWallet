@@ -113,6 +113,22 @@ class TransactionRepositoryImpl @Inject constructor(
         transactionDao.deleteTransactionById(id)
     }
 
+    override suspend fun deleteTransactionsByIds(ids: List<Long>): Int {
+        if (ids.isEmpty()) return 0
+        return transactionDao.deleteTransactionsByIds(ids)
+    }
+
+    override suspend fun updateCategoryByIds(ids: List<Long>, categoryId: Long): Int {
+        if (ids.isEmpty()) return 0
+        return transactionDao.updateCategoryByIds(ids, categoryId)
+    }
+
+    override fun getCategorySpendingBetween(startDate: Long, endDate: Long): Flow<Map<Long, Double>> {
+        return transactionDao.getCategorySpendingBetween(startDate, endDate).map { list ->
+            list.associate { it.categoryId to it.totalSpent }
+        }
+    }
+
     override suspend fun countTransactionsByNoteTag(tagPattern: String): Int {
         return transactionDao.countTransactionsByNoteTag(tagPattern)
     }
