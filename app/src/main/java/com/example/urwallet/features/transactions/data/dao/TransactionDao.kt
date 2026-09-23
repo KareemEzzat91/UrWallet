@@ -63,4 +63,13 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transactions ORDER BY date DESC")
     suspend fun getAllTransactionsSync(): List<TransactionEntity>
+
+    @Query("SELECT * FROM transactions WHERE personId = :personId ORDER BY date DESC")
+    fun getTransactionsByPerson(personId: Long): Flow<List<TransactionEntity>>
+
+    @Query("SELECT * FROM transactions WHERE personId = :personId ORDER BY date DESC")
+    suspend fun getTransactionsByPersonSync(personId: Long): List<TransactionEntity>
+
+    @Query("UPDATE transactions SET personId = NULL WHERE personId = :personId")
+    suspend fun clearPersonFromTransactions(personId: Long): Int
 }

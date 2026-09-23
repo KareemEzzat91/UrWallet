@@ -72,4 +72,14 @@ object DatabaseModule {
     fun provideCounterpartyMappingDao(database: UrWalletDatabase): com.example.urwallet.features.events.data.dao.CounterpartyMappingDao {
         return database.counterpartyMappingDao()
     }
+
+    @Provides
+    fun providePersonDao(database: UrWalletDatabase): com.example.urwallet.features.people.data.dao.PersonDao {
+        return database.personDao()
+    }
+
+    @Provides
+    fun provideFinancialObligationDao(database: UrWalletDatabase): com.example.urwallet.features.people.data.dao.FinancialObligationDao {
+        return database.financialObligationDao()
+    }
 }

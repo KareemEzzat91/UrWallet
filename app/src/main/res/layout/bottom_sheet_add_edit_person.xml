@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_surface_rounded"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="24dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/ic_drag_handle" />
+
+    <!-- Sheet Title -->
+    <TextView
+        android:id="@+id/tvSheetTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cairo"
+        android:text="@string/add_person_title"
+        android:textColor="@color/urwallet_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Name Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPersonName"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/person_name_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cairo"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textColor="@color/urwallet_text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Phone Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPersonPhone"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="@string/person_phone_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPersonPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cairo"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:textColor="@color/urwallet_text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Relationship Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPersonRelationship"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="@string/person_relationship_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPersonRelationship"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cairo"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/urwallet_text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Notes Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPersonNotes"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="@string/person_notes_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPersonNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cairo"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:textColor="@color/urwallet_text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Action Buttons -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSavePerson"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/cairo"
+        android:text="@string/action_save"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:cornerRadius="14dp" />
+</LinearLayout>

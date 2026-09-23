@@ -10,6 +10,7 @@ interface TransactionRepository {
     fun getAllTransactions(): Flow<List<Transaction>>
     fun getTransactionById(id: Long): Flow<Transaction?>
     fun getRecentTransactions(limit: Int): Flow<List<Transaction>>
+    fun getTransactionsByPerson(personId: Long): Flow<List<Transaction>> = kotlinx.coroutines.flow.flowOf(emptyList())
     fun getTransactionsBetween(startDate: Long, endDate: Long): Flow<List<Transaction>>
     fun getTransactionsByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): Flow<List<Transaction>>
     fun getSumByTypeAndPeriod(type: TransactionType, startDate: Long, endDate: Long): Flow<Double>

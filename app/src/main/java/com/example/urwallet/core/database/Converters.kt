@@ -51,4 +51,18 @@ class Converters {
     @TypeConverter
     fun toChallengeType(value: String?): ChallengeType? =
         value?.let { enumValueOf<ChallengeType>(it) }
+
+    @TypeConverter
+    fun fromObligationDirection(value: com.example.urwallet.features.people.domain.model.ObligationDirection?): String? = value?.name
+
+    @TypeConverter
+    fun toObligationDirection(value: String?): com.example.urwallet.features.people.domain.model.ObligationDirection? =
+        value?.let { enumValueOf<com.example.urwallet.features.people.domain.model.ObligationDirection>(it) }
+
+    @TypeConverter
+    fun fromObligationStatus(value: com.example.urwallet.features.people.domain.model.ObligationStatus?): String? = value?.name
+
+    @TypeConverter
+    fun toObligationStatus(value: String?): com.example.urwallet.features.people.domain.model.ObligationStatus? =
+        value?.let { enumValueOf<com.example.urwallet.features.people.domain.model.ObligationStatus>(it) }
 }

@@ -18,7 +18,8 @@ import com.example.urwallet.core.common.TransactionType
     ],
     indices = [
         Index("categoryId"),
-        Index("date")
+        Index("date"),
+        Index("personId")
     ]
 )
 data class TransactionEntity(
@@ -31,6 +32,7 @@ data class TransactionEntity(
     val note: String? = null,
     val date: Long,
     val receiptPath: String? = null,
+    val personId: Long? = null,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

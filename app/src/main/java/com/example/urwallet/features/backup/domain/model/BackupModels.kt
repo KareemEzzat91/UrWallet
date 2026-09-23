@@ -15,6 +15,8 @@ data class BackupSummary(
     val recurringCount: Int,
     val transactionsCount: Int,
     val challengesCount: Int,
+    val peopleCount: Int = 0,
+    val obligationsCount: Int = 0,
     val exportedAt: Long = System.currentTimeMillis()
 )
 

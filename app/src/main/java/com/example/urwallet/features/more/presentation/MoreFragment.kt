@@ -51,6 +51,10 @@ class MoreFragment : Fragment() {
             findNavController().navigate(R.id.action_moreFragment_to_financialInboxFragment)
         }
 
+        binding.cardPeopleNav.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_peopleFragment)
+        }
+
         binding.cardBudgetsNav.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_budgetsFragment)
         }

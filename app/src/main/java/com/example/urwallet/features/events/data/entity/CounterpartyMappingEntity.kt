@@ -11,6 +11,7 @@ data class CounterpartyMappingEntity(
     val phoneNumber: String,
     val name: String,
     val type: String,
+    val personId: Long? = null,
     val updatedAt: Long = System.currentTimeMillis()
 ) {
     fun toDomain(): CounterpartyMapping {
@@ -18,6 +19,7 @@ data class CounterpartyMappingEntity(
             phoneNumber = phoneNumber,
             name = name,
             type = runCatching { CounterpartyType.valueOf(type) }.getOrDefault(CounterpartyType.PERSON),
+            personId = personId,
             updatedAt = updatedAt
         )
     }
@@ -28,6 +30,7 @@ data class CounterpartyMappingEntity(
                 phoneNumber = mapping.phoneNumber,
                 name = mapping.name,
                 type = mapping.type.name,
+                personId = mapping.personId,
                 updatedAt = mapping.updatedAt
             )
         }

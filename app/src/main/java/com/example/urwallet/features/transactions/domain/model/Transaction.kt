@@ -11,6 +11,12 @@ data class Transaction(
     val note: String? = null,
     val date: Long,
     val receiptPath: String? = null,
+    /**
+     * Counterparty semantics: always represents the other party involved in the transaction.
+     * When type == EXPENSE: personId is the recipient (money sent TO this person).
+     * When type == INCOME: personId is the payer (money received FROM this person).
+     */
+    val personId: Long? = null,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

@@ -116,6 +116,9 @@
         <action
             android:id="@+id/action_moreFragment_to_financialInboxFragment"
             app:destination="@id/financialInboxFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_peopleFragment"
+            app:destination="@id/peopleFragment" />
     </fragment>
 
     <fragment
@@ -198,5 +201,28 @@
         android:name="com.example.urwallet.features.events.presentation.FinancialInboxFragment"
         android:label="@string/title_financial_inbox"
         tools:layout="@layout/fragment_financial_inbox" />
+
+    <fragment
+        android:id="@+id/peopleFragment"
+        android:name="com.example.urwallet.features.people.presentation.PeopleFragment"
+        android:label="@string/people_title"
+        tools:layout="@layout/fragment_people">
+        <action
+            android:id="@+id/action_peopleFragment_to_personProfileFragment"
+            app:destination="@id/personProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/personProfileFragment"
+        android:name="com.example.urwallet.features.people.presentation.PersonProfileFragment"
+        android:label="@string/person_profile_title"
+        tools:layout="@layout/fragment_person_profile">
+        <argument
+            android:name="personId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_personProfileFragment_to_transactionDetailFragment"
+            app:destination="@id/transactionDetailFragment" />
+    </fragment>
 
 </navigation>

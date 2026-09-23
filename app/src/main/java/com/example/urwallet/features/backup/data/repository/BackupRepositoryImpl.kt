@@ -9,8 +9,11 @@ import com.example.urwallet.features.backup.data.dto.BackupPayloadDto
 import com.example.urwallet.features.backup.data.dto.BudgetBackupDto
 import com.example.urwallet.features.backup.data.dto.CategoryBackupDto
 import com.example.urwallet.features.backup.data.dto.ChallengeBackupDto
+import com.example.urwallet.features.backup.data.dto.FinancialObligationBackupDto
 import com.example.urwallet.features.backup.data.dto.GoalBackupDto
 import com.example.urwallet.features.backup.data.dto.GoalContributionBackupDto
+import com.example.urwallet.features.backup.data.dto.ObligationSettlementBackupDto
+import com.example.urwallet.features.backup.data.dto.PersonBackupDto
 import com.example.urwallet.features.backup.data.dto.RecurringTransactionBackupDto
 import com.example.urwallet.features.backup.data.dto.TransactionBackupDto
 import com.example.urwallet.features.backup.data.parser.BackupJsonParser
@@ -30,6 +33,11 @@ import com.example.urwallet.features.goals.data.entity.GoalContributionEntity
 import com.example.urwallet.features.goals.data.entity.GoalEntity
 import com.example.urwallet.features.more.data.dao.RecurringTransactionDao
 import com.example.urwallet.features.more.data.entity.RecurringTransactionEntity
+import com.example.urwallet.features.people.data.dao.FinancialObligationDao
+import com.example.urwallet.features.people.data.dao.PersonDao
+import com.example.urwallet.features.people.data.entity.FinancialObligationEntity
+import com.example.urwallet.features.people.data.entity.ObligationSettlementEntity
+import com.example.urwallet.features.people.data.entity.PersonEntity
 import com.example.urwallet.features.transactions.data.dao.CategoryDao
 import com.example.urwallet.features.transactions.data.dao.TransactionDao
 import com.example.urwallet.features.transactions.data.entity.CategoryEntity
@@ -54,6 +62,8 @@ class BackupRepositoryImpl @Inject constructor(
     private val budgetDao: BudgetDao,
     private val recurringTransactionDao: RecurringTransactionDao,
     private val challengeDao: ChallengeDao,
+    private val personDao: PersonDao,
+    private val obligationDao: FinancialObligationDao,
     private val backupJsonParser: BackupJsonParser,
     private val csvExporter: CsvExporter
 ) : BackupRepository {
@@ -139,6 +149,7 @@ class BackupRepositoryImpl @Inject constructor(
                     note = it.note,
                     date = it.date,
                     receiptPath = it.receiptPath,
+                    personId = it.personId,
                     createdAt = it.createdAt,
                     updatedAt = it.updatedAt
                 )
@@ -160,6 +171,43 @@ class BackupRepositoryImpl @Inject constructor(
                     isActive = it.isActive
                 )
             }
+            val people = personDao.getAllPeopleSync().map {
+                PersonBackupDto(
+                    id = it.id,
+                    name = it.name,
+                    phoneNumber = it.phoneNumber,
+                    notes = it.notes,
+                    createdAt = it.createdAt,
+                    updatedAt = it.updatedAt
+                )
+            }
+            val obligations = obligationDao.getAllObligationsSync().map {
+                FinancialObligationBackupDto(
+                    id = it.id,
+                    personId = it.personId,
+                    amount = it.amount,
+                    direction = it.direction,
+                    status = it.status,
+                    settledAmount = it.settledAmount,
+                    remainingAmount = it.remainingAmount,
+                    reason = it.reason,
+                    dueDate = it.dueDate,
+                    relatedTransactionId = it.relatedTransactionId,
+                    createdAt = it.createdAt,
+                    updatedAt = it.updatedAt
+                )
+            }
+            val settlements = obligationDao.getAllSettlementsSync().map {
+                ObligationSettlementBackupDto(
+                    id = it.id,
+                    obligationId = it.obligationId,
+                    amount = it.amount,
+                    date = it.date,
+                    note = it.note,
+                    relatedTransactionId = it.relatedTransactionId,
+                    createdAt = it.createdAt
+                )
+            }
 
             val payload = BackupPayloadDto(
                 version = BackupPayloadDto.CURRENT_BACKUP_VERSION,
@@ -171,7 +219,10 @@ class BackupRepositoryImpl @Inject constructor(
                     budgets = budgets,
                     recurringTransactions = recurring,
                     transactions = transactions,
-                    challenges = challenges
+                    challenges = challenges,
+                    people = people,
+                    obligations = obligations,
+                    obligationSettlements = settlements
                 )
             )
 
@@ -213,6 +264,8 @@ class BackupRepositoryImpl @Inject constructor(
                     recurringCount = payload.data.recurringTransactions.size,
                     transactionsCount = payload.data.transactions.size,
                     challengesCount = payload.data.challenges.size,
+                    peopleCount = payload.data.people.size,
+                    obligationsCount = payload.data.obligations.size,
                     exportedAt = payload.exportedAt
                 )
                 BackupValidationResult.Valid(summary, payload)
@@ -241,6 +294,8 @@ class BackupRepositoryImpl @Inject constructor(
                 recurringCount = payload.data.recurringTransactions.size,
                 transactionsCount = payload.data.transactions.size,
                 challengesCount = payload.data.challenges.size,
+                peopleCount = payload.data.people.size,
+                obligationsCount = payload.data.obligations.size,
                 exportedAt = payload.exportedAt
             )
             Result.success(summary)
@@ -252,8 +307,11 @@ class BackupRepositoryImpl @Inject constructor(
     private suspend fun restoreReplaceAll(payload: BackupPayloadDto) {
         urWalletDatabase.withTransaction {
             // 1. Delete in reverse dependency order (children first)
+            obligationDao.deleteAllSettlements()
+            obligationDao.deleteAllObligations()
             goalContributionDao.deleteAllContributions()
             transactionDao.deleteAllTransactions()
+            personDao.deleteAllPeople()
             recurringTransactionDao.deleteAllRecurringTransactions()
             budgetDao.deleteAllBudgets()
             goalDao.deleteAllGoals()
@@ -273,6 +331,18 @@ class BackupRepositoryImpl @Inject constructor(
                 )
             }
             categoryDao.insertCategories(categoryEntities)
+
+            val personEntities = payload.data.people.map {
+                PersonEntity(
+                    id = it.id,
+                    name = it.name,
+                    phoneNumber = it.phoneNumber,
+                    notes = it.notes,
+                    createdAt = it.createdAt,
+                    updatedAt = it.updatedAt
+                )
+            }
+            personDao.insertPeople(personEntities)
 
             val goalEntities = payload.data.goals.map {
                 GoalEntity(
@@ -329,6 +399,7 @@ class BackupRepositoryImpl @Inject constructor(
                     note = it.note,
                     date = it.date,
                     receiptPath = it.receiptPath,
+                    personId = it.personId,
                     createdAt = it.createdAt,
                     updatedAt = it.updatedAt
                 )
@@ -364,6 +435,37 @@ class BackupRepositoryImpl @Inject constructor(
                 )
             }
             challengeDao.insertChallenges(challengeEntities)
+
+            val obligationEntities = payload.data.obligations.map {
+                FinancialObligationEntity(
+                    id = it.id,
+                    personId = it.personId,
+                    amount = it.amount,
+                    direction = it.direction,
+                    reason = it.reason,
+                    dueDate = it.dueDate,
+                    status = it.status,
+                    settledAmount = it.settledAmount,
+                    remainingAmount = it.remainingAmount,
+                    relatedTransactionId = it.relatedTransactionId,
+                    createdAt = it.createdAt,
+                    updatedAt = it.updatedAt
+                )
+            }
+            obligationDao.insertObligations(obligationEntities)
+
+            val settlementEntities = payload.data.obligationSettlements.map {
+                ObligationSettlementEntity(
+                    id = it.id,
+                    obligationId = it.obligationId,
+                    amount = it.amount,
+                    date = it.date,
+                    note = it.note,
+                    relatedTransactionId = it.relatedTransactionId,
+                    createdAt = it.createdAt
+                )
+            }
+            obligationDao.insertSettlements(settlementEntities)
         }
     }
 
@@ -401,7 +503,32 @@ class BackupRepositoryImpl @Inject constructor(
                 ?: existingCategories.firstOrNull()?.id
                 ?: 1L
 
-            // 2. Resolve & Map Goals (Generate new goals and remap IDs)
+            // 2. Resolve & Map People
+            val existingPeople = personDao.getAllPeopleSync()
+            val personIdMap = mutableMapOf<Long, Long>()
+            for (backupPerson in payload.data.people) {
+                val matched = existingPeople.find {
+                    (!it.phoneNumber.isNullOrBlank() && !backupPerson.phoneNumber.isNullOrBlank() && it.phoneNumber == backupPerson.phoneNumber) ||
+                            (it.name.trim().equals(backupPerson.name.trim(), ignoreCase = true))
+                }
+                if (matched != null) {
+                    personIdMap[backupPerson.id] = matched.id
+                } else {
+                    val newId = personDao.insertPerson(
+                        PersonEntity(
+                            id = 0,
+                            name = backupPerson.name,
+                            phoneNumber = backupPerson.phoneNumber,
+                            notes = backupPerson.notes,
+                            createdAt = backupPerson.createdAt,
+                            updatedAt = backupPerson.updatedAt
+                        )
+                    )
+                    personIdMap[backupPerson.id] = newId
+                }
+            }
+
+            // 3. Resolve & Map Goals (Generate new goals and remap IDs)
             val goalIdMap = mutableMapOf<Long, Long>()
             for (backupGoal in payload.data.goals) {
                 val newGoalId = goalDao.insertGoal(
@@ -420,7 +547,7 @@ class BackupRepositoryImpl @Inject constructor(
                 goalIdMap[backupGoal.id] = newGoalId
             }
 
-            // 3. Insert Goal Contributions with remapped goalId
+            // 4. Insert Goal Contributions with remapped goalId
             for (backupContrib in payload.data.goalContributions) {
                 val targetGoalId = goalIdMap[backupContrib.goalId] ?: continue
                 goalContributionDao.insertContribution(
@@ -434,7 +561,7 @@ class BackupRepositoryImpl @Inject constructor(
                 )
             }
 
-            // 4. Insert Budgets (avoid unique constraint collisions on categoryId, month, year)
+            // 5. Insert Budgets (avoid unique constraint collisions on categoryId, month, year)
             for (backupBudget in payload.data.budgets) {
                 val targetCatId = if (backupBudget.categoryId != null) {
                     categoryIdMap[backupBudget.categoryId] ?: fallbackCategoryId
@@ -461,7 +588,7 @@ class BackupRepositoryImpl @Inject constructor(
                 }
             }
 
-            // 5. Insert Recurring Transactions with remapped categoryId
+            // 6. Insert Recurring Transactions with remapped categoryId
             for (backupRec in payload.data.recurringTransactions) {
                 val targetCatId = categoryIdMap[backupRec.categoryId] ?: fallbackCategoryId
                 recurringTransactionDao.insertRecurringTransaction(
@@ -481,10 +608,12 @@ class BackupRepositoryImpl @Inject constructor(
                 )
             }
 
-            // 6. Insert Transactions with remapped categoryId
+            // 7. Insert Transactions with remapped categoryId and personId
+            val txIdMap = mutableMapOf<Long, Long>()
             for (backupTx in payload.data.transactions) {
                 val targetCatId = categoryIdMap[backupTx.categoryId] ?: fallbackCategoryId
-                transactionDao.insertTransaction(
+                val targetPersonId = if (backupTx.personId != null) personIdMap[backupTx.personId] else null
+                val newTxId = transactionDao.insertTransaction(
                     TransactionEntity(
                         id = 0,
                         amount = backupTx.amount,
@@ -494,13 +623,15 @@ class BackupRepositoryImpl @Inject constructor(
                         note = backupTx.note,
                         date = backupTx.date,
                         receiptPath = backupTx.receiptPath,
+                        personId = targetPersonId,
                         createdAt = backupTx.createdAt,
                         updatedAt = backupTx.updatedAt
                     )
                 )
+                txIdMap[backupTx.id] = newTxId
             }
 
-            // 7. Insert Challenges
+            // 8. Insert Challenges
             for (backupCh in payload.data.challenges) {
                 val targetCatId = if (backupCh.categoryId != null) {
                     categoryIdMap[backupCh.categoryId]
@@ -524,6 +655,46 @@ class BackupRepositoryImpl @Inject constructor(
                     )
                 )
             }
+
+            // 9. Insert Obligations & Settlements with remapped personId and obligationId
+            val obligationIdMap = mutableMapOf<Long, Long>()
+            for (backupOb in payload.data.obligations) {
+                val targetPersonId = personIdMap[backupOb.personId] ?: continue
+                val targetTxId = if (backupOb.relatedTransactionId != null) txIdMap[backupOb.relatedTransactionId] else null
+                val newObId = obligationDao.insertObligation(
+                    FinancialObligationEntity(
+                        id = 0,
+                        personId = targetPersonId,
+                        amount = backupOb.amount,
+                        direction = backupOb.direction,
+                        reason = backupOb.reason,
+                        dueDate = backupOb.dueDate,
+                        status = backupOb.status,
+                        settledAmount = backupOb.settledAmount,
+                        remainingAmount = backupOb.remainingAmount,
+                        relatedTransactionId = targetTxId,
+                        createdAt = backupOb.createdAt,
+                        updatedAt = backupOb.updatedAt
+                    )
+                )
+                obligationIdMap[backupOb.id] = newObId
+            }
+
+            for (backupSettlement in payload.data.obligationSettlements) {
+                val targetObId = obligationIdMap[backupSettlement.obligationId] ?: continue
+                val targetTxId = if (backupSettlement.relatedTransactionId != null) txIdMap[backupSettlement.relatedTransactionId] else null
+                obligationDao.insertSettlement(
+                    ObligationSettlementEntity(
+                        id = 0,
+                        obligationId = targetObId,
+                        amount = backupSettlement.amount,
+                        date = backupSettlement.date,
+                        note = backupSettlement.note,
+                        relatedTransactionId = targetTxId,
+                        createdAt = backupSettlement.createdAt
+                    )
+                )
+            }
         }
     }
 
@@ -531,8 +702,11 @@ class BackupRepositoryImpl @Inject constructor(
         try {
             urWalletDatabase.withTransaction {
                 // Delete user financial data in children-first order
+                obligationDao.deleteAllSettlements()
+                obligationDao.deleteAllObligations()
                 goalContributionDao.deleteAllContributions()
                 transactionDao.deleteAllTransactions()
+                personDao.deleteAllPeople()
                 recurringTransactionDao.deleteAllRecurringTransactions()
                 budgetDao.deleteAllBudgets()
                 goalDao.deleteAllGoals()
@@ -548,3 +722,4 @@ class BackupRepositoryImpl @Inject constructor(
         }
     }
 }
+

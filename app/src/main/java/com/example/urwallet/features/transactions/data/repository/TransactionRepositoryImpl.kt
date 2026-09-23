@@ -30,6 +30,10 @@ class TransactionRepositoryImpl @Inject constructor(
         return transactionDao.getRecentTransactions(limit).map { list -> list.map { it.toDomain() } }
     }
 
+    override fun getTransactionsByPerson(personId: Long): Flow<List<Transaction>> {
+        return transactionDao.getTransactionsByPerson(personId).map { list -> list.map { it.toDomain() } }
+    }
+
     override fun getTransactionsBetween(startDate: Long, endDate: Long): Flow<List<Transaction>> {
         return transactionDao.getTransactionsBetween(startDate, endDate).map { list -> list.map { it.toDomain() } }
     }
@@ -121,6 +125,7 @@ class TransactionRepositoryImpl @Inject constructor(
         note = note,
         date = date,
         receiptPath = receiptPath,
+        personId = personId,
         createdAt = createdAt,
         updatedAt = updatedAt
     )
@@ -134,6 +139,7 @@ class TransactionRepositoryImpl @Inject constructor(
         note = note,
         date = date,
         receiptPath = receiptPath,
+        personId = personId,
         createdAt = createdAt,
         updatedAt = updatedAt
     )

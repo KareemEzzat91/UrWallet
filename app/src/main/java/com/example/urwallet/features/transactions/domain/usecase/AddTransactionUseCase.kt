@@ -15,7 +15,8 @@ class AddTransactionUseCase @Inject constructor(
         title: String,
         note: String? = null,
         date: Long = System.currentTimeMillis(),
-        receiptPath: String? = null
+        receiptPath: String? = null,
+        personId: Long? = null
     ): Result<Long> {
         if (amount <= 0.0) {
             return Result.failure(IllegalArgumentException("المبلغ يجب أن يكون أكبر من صفر"))
@@ -36,6 +37,7 @@ class AddTransactionUseCase @Inject constructor(
                 note = note?.trim()?.ifBlank { null },
                 date = date,
                 receiptPath = receiptPath,
+                personId = personId,
                 createdAt = System.currentTimeMillis(),
                 updatedAt = System.currentTimeMillis()
             )

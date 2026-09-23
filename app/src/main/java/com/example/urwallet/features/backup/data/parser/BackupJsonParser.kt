@@ -10,10 +10,15 @@ import com.example.urwallet.features.backup.data.dto.BackupPayloadDto
 import com.example.urwallet.features.backup.data.dto.BudgetBackupDto
 import com.example.urwallet.features.backup.data.dto.CategoryBackupDto
 import com.example.urwallet.features.backup.data.dto.ChallengeBackupDto
+import com.example.urwallet.features.backup.data.dto.FinancialObligationBackupDto
 import com.example.urwallet.features.backup.data.dto.GoalBackupDto
 import com.example.urwallet.features.backup.data.dto.GoalContributionBackupDto
+import com.example.urwallet.features.backup.data.dto.ObligationSettlementBackupDto
+import com.example.urwallet.features.backup.data.dto.PersonBackupDto
 import com.example.urwallet.features.backup.data.dto.RecurringTransactionBackupDto
 import com.example.urwallet.features.backup.data.dto.TransactionBackupDto
+import com.example.urwallet.features.people.domain.model.ObligationDirection
+import com.example.urwallet.features.people.domain.model.ObligationStatus
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -127,6 +132,7 @@ class BackupJsonParser {
             if (t.note != null) obj.put("note", t.note) else obj.put("note", JSONObject.NULL)
             obj.put("date", t.date)
             if (t.receiptPath != null) obj.put("receiptPath", t.receiptPath) else obj.put("receiptPath", JSONObject.NULL)
+            if (t.personId != null) obj.put("personId", t.personId) else obj.put("personId", JSONObject.NULL)
             obj.put("createdAt", t.createdAt)
             obj.put("updatedAt", t.updatedAt)
             txArray.put(obj)
@@ -153,6 +159,55 @@ class BackupJsonParser {
             chArray.put(obj)
         }
         dataObj.put("challenges", chArray)
+
+        // People
+        val peopleArray = JSONArray()
+        payload.data.people.forEach { p ->
+            val obj = JSONObject()
+            obj.put("id", p.id)
+            obj.put("name", p.name)
+            if (p.phoneNumber != null) obj.put("phoneNumber", p.phoneNumber) else obj.put("phoneNumber", JSONObject.NULL)
+            if (p.notes != null) obj.put("notes", p.notes) else obj.put("notes", JSONObject.NULL)
+            obj.put("createdAt", p.createdAt)
+            obj.put("updatedAt", p.updatedAt)
+            peopleArray.put(obj)
+        }
+        dataObj.put("people", peopleArray)
+
+        // Obligations
+        val obArray = JSONArray()
+        payload.data.obligations.forEach { o ->
+            val obj = JSONObject()
+            obj.put("id", o.id)
+            obj.put("personId", o.personId)
+            obj.put("amount", o.amount)
+            obj.put("settledAmount", o.settledAmount)
+            obj.put("remainingAmount", o.remainingAmount)
+            obj.put("direction", o.direction.name)
+            obj.put("status", o.status.name)
+            if (o.reason != null) obj.put("reason", o.reason) else obj.put("reason", JSONObject.NULL)
+            if (o.dueDate != null) obj.put("dueDate", o.dueDate) else obj.put("dueDate", JSONObject.NULL)
+            if (o.relatedTransactionId != null) obj.put("relatedTransactionId", o.relatedTransactionId) else obj.put("relatedTransactionId", JSONObject.NULL)
+            obj.put("createdAt", o.createdAt)
+            obj.put("updatedAt", o.updatedAt)
+            obArray.put(obj)
+        }
+        dataObj.put("obligations", obArray)
+
+        // Obligation Settlements
+        val setArray = JSONArray()
+        payload.data.obligationSettlements.forEach { s ->
+            val obj = JSONObject()
+            obj.put("id", s.id)
+            obj.put("obligationId", s.obligationId)
+            obj.put("amount", s.amount)
+            obj.put("date", s.date)
+            if (s.note != null) obj.put("note", s.note) else obj.put("note", JSONObject.NULL)
+            if (s.relatedTransactionId != null) obj.put("relatedTransactionId", s.relatedTransactionId) else obj.put("relatedTransactionId", JSONObject.NULL)
+            obj.put("createdAt", s.createdAt)
+            setArray.put(obj)
+        }
+        dataObj.put("obligationSettlements", setArray)
 
         root.put("data", dataObj)
         return root.toString(2)
@@ -322,6 +377,7 @@ class BackupJsonParser {
                     note = if (obj.isNull("note")) null else obj.optString("note"),
                     date = obj.getLong("date"),
                     receiptPath = if (obj.isNull("receiptPath")) null else obj.optString("receiptPath"),
+                    personId = if (obj.isNull("personId")) null else obj.optLong("personId"),
                     createdAt = obj.optLong("createdAt", System.currentTimeMillis()),
                     updatedAt = obj.optLong("updatedAt", System.currentTimeMillis())
                 )
@@ -358,9 +414,84 @@ class BackupJsonParser {
             )
         }
 
+        // Parse People
+        val people = mutableListOf<PersonBackupDto>()
+        val peopleArray = dataObj.optJSONArray("people") ?: JSONArray()
+        for (i in 0 until peopleArray.length()) {
+            val obj = peopleArray.getJSONObject(i)
+            val createdAt = obj.optLong("createdAt", System.currentTimeMillis())
+            people.add(
+                PersonBackupDto(
+                    id = obj.optLong("id", 0),
+                    name = obj.getString("name"),
+                    phoneNumber = if (obj.isNull("phoneNumber")) null else obj.optString("phoneNumber"),
+                    notes = if (obj.isNull("notes")) null else obj.optString("notes"),
+                    createdAt = createdAt,
+                    updatedAt = obj.optLong("updatedAt", createdAt)
+                )
+            )
+        }
+
+        // Parse Obligations
+        val obligations = mutableListOf<FinancialObligationBackupDto>()
+        val obArray = dataObj.optJSONArray("obligations") ?: JSONArray()
+        for (i in 0 until obArray.length()) {
+            val obj = obArray.getJSONObject(i)
+            val dirStr = obj.optString("direction")
+            val direction = try {
+                ObligationDirection.valueOf(dirStr)
+            } catch (e: IllegalArgumentException) {
+                throw BackupParseException.InvalidData("اتجاه التزام مالي غير صالح: $dirStr")
+            }
+            val statusStr = obj.optString("status")
+            val status = try {
+                ObligationStatus.valueOf(statusStr)
+            } catch (e: IllegalArgumentException) {
+                throw BackupParseException.InvalidData("حالة التزام مالي غير صالحة: $statusStr")
+            }
+            val createdAt = obj.optLong("createdAt", System.currentTimeMillis())
+            obligations.add(
+                FinancialObligationBackupDto(
+                    id = obj.optLong("id", 0),
+                    personId = obj.getLong("personId"),
+                    amount = obj.getDouble("amount"),
+                    direction = direction,
+                    status = status,
+                    settledAmount = obj.optDouble("settledAmount", 0.0),
+                    remainingAmount = obj.getDouble("remainingAmount"),
+                    reason = if (obj.isNull("reason")) null else obj.optString("reason"),
+                    dueDate = if (obj.isNull("dueDate")) null else obj.optLong("dueDate"),
+                    relatedTransactionId = if (obj.isNull("relatedTransactionId")) null else obj.optLong("relatedTransactionId"),
+                    createdAt = createdAt,
+                    updatedAt = obj.optLong("updatedAt", createdAt)
+                )
+            )
+        }
+
+        // Parse Obligation Settlements
+        val settlements = mutableListOf<ObligationSettlementBackupDto>()
+        val setArray = dataObj.optJSONArray("obligationSettlements") ?: JSONArray()
+        for (i in 0 until setArray.length()) {
+            val obj = setArray.getJSONObject(i)
+            val date = obj.optLong("date", System.currentTimeMillis())
+            settlements.add(
+                ObligationSettlementBackupDto(
+                    id = obj.optLong("id", 0),
+                    obligationId = obj.getLong("obligationId"),
+                    amount = obj.getDouble("amount"),
+                    date = date,
+                    note = if (obj.isNull("note")) null else obj.optString("note"),
+                    relatedTransactionId = if (obj.isNull("relatedTransactionId")) null else obj.optLong("relatedTransactionId"),
+                    createdAt = obj.optLong("createdAt", date)
+                )
+            )
+        }
+
         // Validate internal relationships within the backup itself
         val categoryIds = categories.map { it.id }.toSet()
         val goalIds = goals.map { it.id }.toSet()
+        val personIds = people.map { it.id }.toSet()
+        val obligationIds = obligations.map { it.id }.toSet()
 
         for (tx in transactions) {
             if (!categoryIds.contains(tx.categoryId)) {
@@ -394,6 +525,22 @@ class BackupJsonParser {
             }
         }
 
+        for (ob in obligations) {
+            if (!personIds.contains(ob.personId)) {
+                throw BackupParseException.InternalReferenceError(
+                    "الالتزام المالي '${ob.reason ?: "بدون سبب"}' يشير إلى شخص غير موجود في ملف النسخة الاحتياطية (المعرف: ${ob.personId})."
+                )
+            }
+        }
+
+        for (s in settlements) {
+            if (!obligationIds.contains(s.obligationId)) {
+                throw BackupParseException.InternalReferenceError(
+                    "تسوية الالتزام تشير إلى التزام مالي غير موجود في ملف النسخة الاحتياطية (المعرف: ${s.obligationId})."
+                )
+            }
+        }
+
         return BackupPayloadDto(
             version = version,
             exportedAt = exportedAt,
@@ -406,8 +553,12 @@ class BackupJsonParser {
                 budgets = budgets,
                 recurringTransactions = recurring,
                 transactions = transactions,
-                challenges = challenges
+                challenges = challenges,
+                people = people,
+                obligations = obligations,
+                obligationSettlements = settlements
             )
         )
     }
 }
+

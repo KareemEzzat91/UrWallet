@@ -18,6 +18,7 @@ class ConfirmFinancialEventUseCase @Inject constructor(
         note: String? = null,
         date: Long? = null,
         counterparty: Counterparty? = null,
+        personId: Long? = null,
         saveCounterpartyMapping: Boolean = true
     ): Result<Long> {
         val event = financialEventRepository.getEventById(eventId)
@@ -35,7 +36,8 @@ class ConfirmFinancialEventUseCase @Inject constructor(
             categoryId = categoryId,
             title = finalTitle,
             note = note?.trim()?.ifBlank { null },
-            date = eventDate
+            date = eventDate,
+            personId = personId
         )
 
         return addResult.mapCatching { transactionId ->
@@ -46,7 +48,8 @@ class ConfirmFinancialEventUseCase @Inject constructor(
                     CounterpartyMapping(
                         phoneNumber = phone,
                         name = counterparty.name.trim(),
-                        type = counterparty.type
+                        type = counterparty.type,
+                        personId = personId
                     )
                 )
             }
