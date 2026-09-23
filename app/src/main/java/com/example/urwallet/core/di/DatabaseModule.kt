@@ -82,4 +82,9 @@ object DatabaseModule {
     fun provideFinancialObligationDao(database: UrWalletDatabase): com.example.urwallet.features.people.data.dao.FinancialObligationDao {
         return database.financialObligationDao()
     }
+
+    @Provides
+    fun provideCategoryMappingDao(database: UrWalletDatabase): com.example.urwallet.features.events.data.dao.CategoryMappingDao {
+        return database.categoryMappingDao()
+    }
 }

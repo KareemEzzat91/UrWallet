@@ -58,6 +58,7 @@ class AppPreferences(private val context: Context) {
 
         // Financial Event Detection Preferences
         private val KEY_SMS_DETECTION_ENABLED = booleanPreferencesKey("is_sms_detection_enabled")
+        private val KEY_SMS_LAST_SCAN_TIMESTAMP = longPreferencesKey("sms_last_scan_timestamp")
     }
 
     val isSmsDetectionEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
@@ -67,6 +68,16 @@ class AppPreferences(private val context: Context) {
     suspend fun setSmsDetectionEnabled(enabled: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[KEY_SMS_DETECTION_ENABLED] = enabled
+        }
+    }
+
+    val lastSmsScanTimestamp: Flow<Long> = context.dataStore.data.map { preferences ->
+        preferences[KEY_SMS_LAST_SCAN_TIMESTAMP] ?: 0L
+    }
+
+    suspend fun setLastSmsScanTimestamp(timestamp: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_SMS_LAST_SCAN_TIMESTAMP] = timestamp
         }
     }
 

@@ -49,6 +49,7 @@ class UrWalletApplication : Application() {
         ProcessLifecycleOwner.get().lifecycle.addObserver(appLockLifecycleObserver)
         notificationHelper.createNotificationChannels()
         scheduleRecurringTransactionsWorker()
+        scheduleFinancialEventScanWorker()
         initializeDailyReminder()
         initializeCurrency()
     }
@@ -110,8 +111,27 @@ class UrWalletApplication : Application() {
         )
     }
 
+    private fun scheduleFinancialEventScanWorker() {
+        val constraints = Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .build()
+
+        val periodicWork = PeriodicWorkRequestBuilder<com.example.urwallet.features.events.data.worker.FinancialEventScanWorker>(
+            6, TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            WORK_FINANCIAL_SCAN_PERIODIC,
+            ExistingPeriodicWorkPolicy.KEEP,
+            periodicWork
+        )
+    }
+
     companion object {
         const val WORK_RECURRING_DAILY = "urwallet_recurring_daily_worker"
         const val WORK_RECURRING_STARTUP_CHECK = "urwallet_recurring_startup_check"
+        const val WORK_FINANCIAL_SCAN_PERIODIC = "urwallet_financial_scan_periodic_worker"
     }
 }

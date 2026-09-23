@@ -64,6 +64,7 @@ class BackupRepositoryImpl @Inject constructor(
     private val challengeDao: ChallengeDao,
     private val personDao: PersonDao,
     private val obligationDao: FinancialObligationDao,
+    private val categoryMappingDao: com.example.urwallet.features.events.data.dao.CategoryMappingDao,
     private val backupJsonParser: BackupJsonParser,
     private val csvExporter: CsvExporter
 ) : BackupRepository {
@@ -222,7 +223,15 @@ class BackupRepositoryImpl @Inject constructor(
                     challenges = challenges,
                     people = people,
                     obligations = obligations,
-                    obligationSettlements = settlements
+                    obligationSettlements = settlements,
+                    categoryMappings = categoryMappingDao.getAllMappingsSync().map {
+                        com.example.urwallet.features.backup.data.dto.CategoryMappingBackupDto(
+                            pattern = it.pattern,
+                            categoryId = it.categoryId,
+                            usageCount = it.usageCount,
+                            updatedAt = it.updatedAt
+                        )
+                    }
                 )
             )
 
@@ -309,6 +318,7 @@ class BackupRepositoryImpl @Inject constructor(
             // 1. Delete in reverse dependency order (children first)
             obligationDao.deleteAllSettlements()
             obligationDao.deleteAllObligations()
+            categoryMappingDao.deleteAllMappings()
             goalContributionDao.deleteAllContributions()
             transactionDao.deleteAllTransactions()
             personDao.deleteAllPeople()
@@ -466,6 +476,17 @@ class BackupRepositoryImpl @Inject constructor(
                 )
             }
             obligationDao.insertSettlements(settlementEntities)
+
+            // Category Mappings (Phase 19)
+            val mappingEntities = payload.data.categoryMappings.map {
+                com.example.urwallet.features.events.data.entity.CategoryMappingEntity(
+                    pattern = it.pattern,
+                    categoryId = it.categoryId,
+                    usageCount = it.usageCount,
+                    updatedAt = it.updatedAt
+                )
+            }
+            categoryMappingDao.insertMappings(mappingEntities)
         }
     }
 
@@ -695,6 +716,18 @@ class BackupRepositoryImpl @Inject constructor(
                     )
                 )
             }
+
+            // 10. Merge Category Mappings (Phase 19)
+            val mappingEntities = payload.data.categoryMappings.map { m ->
+                val targetCatId = categoryIdMap[m.categoryId] ?: m.categoryId
+                com.example.urwallet.features.events.data.entity.CategoryMappingEntity(
+                    pattern = m.pattern,
+                    categoryId = targetCatId,
+                    usageCount = m.usageCount,
+                    updatedAt = m.updatedAt
+                )
+            }
+            categoryMappingDao.insertMappings(mappingEntities)
         }
     }
 
@@ -704,6 +737,7 @@ class BackupRepositoryImpl @Inject constructor(
                 // Delete user financial data in children-first order
                 obligationDao.deleteAllSettlements()
                 obligationDao.deleteAllObligations()
+                categoryMappingDao.deleteAllMappings()
                 goalContributionDao.deleteAllContributions()
                 transactionDao.deleteAllTransactions()
                 personDao.deleteAllPeople()

@@ -345,4 +345,42 @@ open class NotificationHelper {
 
         NotificationManagerCompat.from(ctx).notify(notificationId, notification)
     }
+
+    /**
+     * Dispatches a batched summary notification when multiple financial events are detected in the background.
+     */
+    @SuppressLint("MissingPermission")
+    open fun sendFinancialEventsSummaryNotification(count: Int, message: String) {
+        val ctx = context ?: return
+        if (!hasNotificationPermission()) return
+
+        val intent = Intent(ctx, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(EXTRA_NAV_TARGET, NAV_TARGET_FINANCIAL_INBOX)
+        }
+
+        val notificationId = ID_FINANCIAL_INBOX_BASE
+
+        val pendingIntent = PendingIntent.getActivity(
+            ctx,
+            notificationId,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val title = ctx.getString(R.string.title_financial_inbox)
+
+        val notification = NotificationCompat.Builder(ctx, CHANNEL_FINANCIAL_INBOX)
+            .setSmallIcon(R.drawable.ic_nav_transactions)
+            .setColor(ContextCompat.getColor(ctx, R.color.urwallet_primary))
+            .setContentTitle(title)
+            .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+
+        NotificationManagerCompat.from(ctx).notify(notificationId, notification)
+    }
 }

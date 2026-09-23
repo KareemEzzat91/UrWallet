@@ -731,4 +731,34 @@
     <string name="error_settlement_amount_invalid">الرجاء إدخال مبلغ سداد صحيح أكبر من الصفر</string>
     <string name="badge_debt_owed_to_me">مستحق لك</string>
     <string name="badge_debt_i_owe">عليك</string>
+
+    <!-- Phase 19: Financial Inbox 2.0 & Automation -->
+    <string name="inbox_tab_all">الكل</string>
+    <string name="inbox_tab_possible_duplicates">مكررة محتملة</string>
+    <string name="search_inbox_hint">بحث في المعاملات، الأطراف، الأرقام...</string>
+    <string name="sort_newest">الأحدث أولاً</string>
+    <string name="sort_oldest">الأقدم أولاً</string>
+    <string name="sort_highest_amount">الأعلى قيمة</string>
+    <string name="sort_lowest_amount">الأقل قيمة</string>
+    <string name="sort_title">ترتيب المعاملات</string>
+    <string name="duplicate_resolution_title">معاملة مكررة محتملة</string>
+    <string name="duplicate_same_transaction">نفس المعاملة</string>
+    <string name="duplicate_different_transaction">معاملة مختلفة</string>
+    <string name="duplicate_same_transaction_hint">ربط بالمعاملة السابقة دون تكرار</string>
+    <string name="duplicate_different_transaction_hint">معاملة منفصلة جديدة</string>
+    <string name="duplicate_existing_label">المعاملة السابقة:</string>
+    <string name="duplicate_detected_label">المعاملة المكتشفة:</string>
+    <string name="bulk_selected_count">تم تحديد %d معاملة</string>
+    <string name="bulk_dismiss">تجاهل المحدد</string>
+    <string name="bulk_mark_review">وضع للمراجعة</string>
+    <string name="bulk_select_all">تحديد الكل</string>
+    <string name="bulk_clear_selection">إلغاء التحديد</string>
+    <string name="badge_suggested_category">فئة مقترحة: %s</string>
+    <string name="suggested_category_hint">✨ مقترحة تلقائياً</string>
+    <string name="obligation_settlement_section_title">ربط بتسوية التزام مالي (اختياري)</string>
+    <string name="obligation_as_normal_transaction">معاملة عادية (بدون تسوية)</string>
+    <string name="obligation_settle_option">تسوية لدين: %1$s (%2$s)</string>
+    <string name="badge_suggested_settlement">تسوية محتملة لدين: %s</string>
+    <string name="inbox_empty_duplicates_title">لا توجد معاملات مكررة</string>
+    <string name="inbox_empty_duplicates_desc">المعاملات التي يُشتبه في تكرارها مع معاملات مسجلة ستظهر هنا لتحديد ما إذا كانت نفس المعاملة أو مختلفة.</string>
 </resources>

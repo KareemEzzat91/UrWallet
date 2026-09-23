@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardInboxItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="4dp"
@@ -20,12 +21,23 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Top Row: Icon + Source Badge + Date + Amount -->
+        <!-- Top Row: Checkbox (Bulk) + Icon + Sender & Date + Amount -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
+            <!-- Multi-Select Checkbox -->
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbSelectEvent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="6dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <!-- Direction Squircle Icon (42dp) -->
             <FrameLayout
@@ -105,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cairo"
                 android:textColor="@color/urwallet_expense"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 tools:text="- 320.00 ج.م" />
         </LinearLayout>
@@ -144,37 +156,188 @@
                 tools:text="كريم عزت (01012345678)" />
         </LinearLayout>
 
-        <!-- Possible Duplicate Warning Banner -->
+        <!-- Suggested Badges Row (Category Suggestion & Settlement Suggestion) -->
         <LinearLayout
-            android:id="@+id/layoutDuplicateWarning"
+            android:id="@+id/layoutSuggestedBadges"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_squircle_pastel_amber"
-            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="8dp"
             android:visibility="gone"
             tools:visibility="visible">
 
+            <!-- Suggested Category Badge -->
             <TextView
-                android:id="@+id/tvDuplicateWarning"
-                android:layout_width="match_parent"
+                android:id="@+id/tvSuggestedCategoryBadge"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill_primary"
+                android:backgroundTint="#F0FDF4"
                 android:fontFamily="@font/cairo"
-                android:text="@string/badge_possible_duplicate"
-                android:textColor="#B45309"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="#16A34A"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="✨ فئة مقترحة: طعام"
+                tools:visibility="visible" />
+
+            <!-- Suggested Settlement Badge -->
+            <TextView
+                android:id="@+id/tvSuggestedSettlementBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_pill_primary"
+                android:backgroundTint="#EFF6FF"
+                android:fontFamily="@font/cairo"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="@color/urwallet_primary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="🤝 تسوية محتملة لدين"
+                tools:visibility="visible" />
         </LinearLayout>
 
-        <!-- Action Buttons Row (For Pending status) -->
+        <!-- Dedicated Duplicate Resolution Interface -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layoutDuplicateResolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="#FFFBEB"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#FDE68A"
+            app:strokeWidth="1dp"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <!-- Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/cairo"
+                        android:text="@string/duplicate_resolution_title"
+                        android:textColor="#B45309"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDuplicateConfidence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
+                        android:text="تطابق محتمل"
+                        android:textColor="#B45309"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- Comparison Details -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDuplicateDetectedInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
+                        android:textColor="#92400E"
+                        android:textSize="12sp"
+                        tools:text="المعاملة المكتشفة: InstaPay • 500 ج.م • 14:30" />
+
+                    <TextView
+                        android:id="@+id/tvDuplicateExistingInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/cairo"
+                        android:textColor="#92400E"
+                        android:textSize="12sp"
+                        tools:text="المعاملة السابقة: مصاريف غداء • 500 ج.م • 14:28" />
+                </LinearLayout>
+
+                <!-- 3 Action Buttons for Duplicate Resolution -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- [نفس المعاملة] -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSameTransaction"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/cairo"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/duplicate_same_transaction"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#B45309"
+                        app:cornerRadius="10dp" />
+
+                    <!-- [معاملة مختلفة] -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDifferentTransaction"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/cairo"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/duplicate_different_transaction"
+                        android:textColor="#B45309"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="10dp"
+                        app:strokeColor="#B45309" />
+
+                    <!-- [تجاهل] -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDismissDuplicate"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:fontFamily="@font/cairo"
+                        android:paddingHorizontal="6dp"
+                        android:text="@string/action_dismiss_event"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Action Buttons Row (For Pending status non-duplicates) -->
         <LinearLayout
             android:id="@+id/layoutActionButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 

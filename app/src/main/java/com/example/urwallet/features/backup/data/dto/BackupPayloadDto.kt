@@ -30,7 +30,15 @@ data class BackupDataDto(
     val challenges: List<ChallengeBackupDto> = emptyList(),
     val people: List<PersonBackupDto> = emptyList(),
     val obligations: List<FinancialObligationBackupDto> = emptyList(),
-    val obligationSettlements: List<ObligationSettlementBackupDto> = emptyList()
+    val obligationSettlements: List<ObligationSettlementBackupDto> = emptyList(),
+    val categoryMappings: List<CategoryMappingBackupDto> = emptyList()
+)
+
+data class CategoryMappingBackupDto(
+    val pattern: String,
+    val categoryId: Long,
+    val usageCount: Int = 1,
+    val updatedAt: Long = System.currentTimeMillis()
 )
 
 data class CategoryBackupDto(

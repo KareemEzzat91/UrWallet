@@ -134,7 +134,52 @@ class FinancialEventReviewBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         populateCategoryChips(item.type)
+
+        // Load Smart Category and Obligation Settlement Suggestions
+        viewLifecycleOwner.lifecycleScope.launch {
+            val suggestion = viewModel.getCategorySuggestionForEvent(item)
+            if (suggestion != null) {
+                binding.tvCategorySuggestionBadge.isVisible = true
+                binding.tvCategorySuggestionBadge.text = getString(R.string.badge_suggested_category, suggestion.categoryName)
+                if (selectedCategoryId == -1L) {
+                    selectedCategoryId = suggestion.categoryId
+                    populateCategoryChips(item.type)
+                }
+            }
+
+            val obligationSuggestions = viewModel.getObligationSuggestionsForEvent(item)
+            if (obligationSuggestions.isNotEmpty()) {
+                binding.cardObligationSettlementSection.isVisible = true
+                binding.rgObligationSettlement.removeAllViews()
+
+                val rbNormal = android.widget.RadioButton(requireContext()).apply {
+                    id = View.generateViewId()
+                    text = getString(R.string.obligation_as_normal_transaction)
+                    isChecked = true
+                    tag = null
+                    setOnCheckedChangeListener { _, isChecked ->
+                        if (isChecked) selectedObligationId = null
+                    }
+                }
+                binding.rgObligationSettlement.addView(rbNormal)
+
+                for (obSuggestion in obligationSuggestions) {
+                    val ob = obSuggestion.obligation
+                    val rbOb = android.widget.RadioButton(requireContext()).apply {
+                        id = View.generateViewId()
+                        text = getString(R.string.obligation_settle_option, ob.reason ?: "دين", "${obSuggestion.suggestedAmount} ج.م")
+                        tag = ob.id
+                        setOnCheckedChangeListener { _, isChecked ->
+                            if (isChecked) selectedObligationId = ob.id
+                        }
+                    }
+                    binding.rgObligationSettlement.addView(rbOb)
+                }
+            }
+        }
     }
+
+    private var selectedObligationId: Long? = null
 
     private fun populateCategoryChips(type: TransactionType) {
         val matchingCategories = currentCategories.filter {
@@ -211,7 +256,8 @@ class FinancialEventReviewBottomSheetFragment : BottomSheetDialogFragment() {
                 note = note,
                 date = currentEvent.date,
                 counterparty = updatedCounterparty,
-                saveCounterpartyMapping = saveMapping
+                saveCounterpartyMapping = saveMapping,
+                settleObligationId = selectedObligationId
             )
 
             dismiss()

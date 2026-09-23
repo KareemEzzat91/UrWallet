@@ -209,6 +209,18 @@ class BackupJsonParser {
         }
         dataObj.put("obligationSettlements", setArray)
 
+        // Category Mappings (Phase 19)
+        val mapArray = JSONArray()
+        payload.data.categoryMappings.forEach { m ->
+            val obj = JSONObject()
+            obj.put("pattern", m.pattern)
+            obj.put("categoryId", m.categoryId)
+            obj.put("usageCount", m.usageCount)
+            obj.put("updatedAt", m.updatedAt)
+            mapArray.put(obj)
+        }
+        dataObj.put("categoryMappings", mapArray)
+
         root.put("data", dataObj)
         return root.toString(2)
     }
@@ -487,6 +499,21 @@ class BackupJsonParser {
             )
         }
 
+        // Parse Category Mappings (Phase 19 - optional backward compatible)
+        val categoryMappings = mutableListOf<com.example.urwallet.features.backup.data.dto.CategoryMappingBackupDto>()
+        val mapArray = dataObj.optJSONArray("categoryMappings") ?: JSONArray()
+        for (i in 0 until mapArray.length()) {
+            val obj = mapArray.getJSONObject(i)
+            categoryMappings.add(
+                com.example.urwallet.features.backup.data.dto.CategoryMappingBackupDto(
+                    pattern = obj.getString("pattern"),
+                    categoryId = obj.getLong("categoryId"),
+                    usageCount = obj.optInt("usageCount", 1),
+                    updatedAt = obj.optLong("updatedAt", System.currentTimeMillis())
+                )
+            )
+        }
+
         // Validate internal relationships within the backup itself
         val categoryIds = categories.map { it.id }.toSet()
         val goalIds = goals.map { it.id }.toSet()
@@ -556,7 +583,8 @@ class BackupJsonParser {
                 challenges = challenges,
                 people = people,
                 obligations = obligations,
-                obligationSettlements = settlements
+                obligationSettlements = settlements,
+                categoryMappings = categoryMappings
             )
         )
     }

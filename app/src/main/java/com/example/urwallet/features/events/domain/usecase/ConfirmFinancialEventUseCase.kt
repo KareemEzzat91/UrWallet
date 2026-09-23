@@ -1,14 +1,11 @@
 package com.example.urwallet.features.events.domain.usecase
 
 import com.example.urwallet.features.events.domain.model.Counterparty
-import com.example.urwallet.features.events.domain.model.CounterpartyMapping
 import com.example.urwallet.features.events.domain.repository.FinancialEventRepository
-import com.example.urwallet.features.transactions.domain.usecase.AddTransactionUseCase
 import javax.inject.Inject
 
 class ConfirmFinancialEventUseCase @Inject constructor(
-    private val financialEventRepository: FinancialEventRepository,
-    private val addTransactionUseCase: AddTransactionUseCase
+    private val financialEventRepository: FinancialEventRepository
 ) {
 
     suspend operator fun invoke(
@@ -19,45 +16,41 @@ class ConfirmFinancialEventUseCase @Inject constructor(
         date: Long? = null,
         counterparty: Counterparty? = null,
         personId: Long? = null,
-        saveCounterpartyMapping: Boolean = true
+        saveCounterpartyMapping: Boolean = true,
+        saveCategoryMapping: Boolean = true,
+        settleObligationId: Long? = null
     ): Result<Long> {
         val event = financialEventRepository.getEventById(eventId)
             ?: return Result.failure(IllegalArgumentException("لم يتم العثور على المعاملة في الوارد المالي"))
+
+        if (categoryId <= 0L) {
+            return Result.failure(IllegalArgumentException("يرجى اختيار تصنيف للمعاملة"))
+        }
 
         val eventDate = date ?: event.date
         val finalTitle = title.trim().ifBlank {
             counterparty?.name ?: event.sender
         }
 
-        // 1. Create real transaction via the existing AddTransactionUseCase
-        val addResult = addTransactionUseCase(
-            amount = event.amount,
-            type = event.type,
+        val learnedCategoryPattern = if (saveCategoryMapping) {
+            counterparty?.name?.trim()?.ifBlank { null } ?: event.sender.trim()
+        } else null
+
+        // Executes transaction creation, optional obligation settlement, mapping updates,
+        // and inbox confirmation atomically inside ONE Room transaction
+        return financialEventRepository.confirmEventAtomic(
+            eventId = eventId,
             categoryId = categoryId,
             title = finalTitle,
-            note = note?.trim()?.ifBlank { null },
+            amount = event.amount,
+            type = event.type,
             date = eventDate,
-            personId = personId
+            note = note?.trim()?.ifBlank { null },
+            personId = personId,
+            counterparty = counterparty,
+            saveCounterpartyMapping = saveCounterpartyMapping,
+            learnedCategoryPattern = learnedCategoryPattern,
+            settleObligationId = settleObligationId
         )
-
-        return addResult.mapCatching { transactionId ->
-            // 2. Optionally remember the phone-to-counterparty mapping for future detections
-            val phone = counterparty?.phoneNumber
-            if (saveCounterpartyMapping && !phone.isNullOrBlank() && !counterparty.name.isBlank()) {
-                financialEventRepository.saveMapping(
-                    CounterpartyMapping(
-                        phoneNumber = phone,
-                        name = counterparty.name.trim(),
-                        type = counterparty.type,
-                        personId = personId
-                    )
-                )
-            }
-
-            // 3. Mark inbox event as CONFIRMED and scrub rawMessage for privacy
-            financialEventRepository.markConfirmed(eventId, transactionId)
-
-            transactionId
-        }
     }
 }

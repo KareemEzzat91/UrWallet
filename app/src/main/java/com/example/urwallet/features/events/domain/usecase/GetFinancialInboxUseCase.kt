@@ -24,4 +24,8 @@ class GetFinancialInboxUseCase @Inject constructor(
     fun getPendingCount(): Flow<Int> {
         return financialEventRepository.getPendingCount()
     }
+
+    fun getFilteredEvents(filter: com.example.urwallet.features.events.domain.model.InboxFilter): Flow<List<FinancialEvent>> {
+        return financialEventRepository.getFilteredEvents(filter)
+    }
 }

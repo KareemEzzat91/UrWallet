@@ -90,6 +90,93 @@
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 
+    <!-- Contextual Bulk Actions Bar -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layoutBulkActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/urwallet_primary"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="4dp"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="10dp">
+
+            <ImageView
+                android:id="@+id/btnCloseBulk"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@string/bulk_clear_selection"
+                android:focusable="true"
+                android:padding="4dp"
+                android:src="@drawable/ic_close"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tvBulkCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/cairo"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="تم تحديد 2 معاملة" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBulkSelectAll"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:fontFamily="@font/cairo"
+                android:paddingHorizontal="8dp"
+                android:text="@string/bulk_select_all"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBulkMarkReview"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/cairo"
+                android:paddingHorizontal="10dp"
+                android:text="@string/bulk_mark_review"
+                android:textColor="@color/urwallet_primary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBulkDismiss"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/cairo"
+                android:paddingHorizontal="10dp"
+                android:text="@string/bulk_dismiss"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:cornerRadius="8dp"
+                app:strokeColor="@color/white" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -106,7 +193,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 app:cardBackgroundColor="@color/urwallet_background"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="2dp"
@@ -210,44 +297,129 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Filter Chips: Pending, Confirmed, Dismissed -->
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cgFilterTabs"
+            <!-- Search Field & Sort Row -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:selectionRequired="true"
-                app:singleLine="true"
-                app:singleSelection="true">
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipPending"
-                    style="@style/Widget.Material3.Chip.Filter"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilSearchInbox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxStrokeColor="@color/urwallet_primary"
+                    app:endIconMode="clear_text"
+                    app:hintEnabled="false"
+                    app:startIconDrawable="@drawable/ic_search"
+                    app:startIconTint="@color/urwallet_text_secondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSearchInbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/cairo"
+                        android:hint="@string/search_inbox_hint"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:paddingVertical="8dp"
+                        android:textSize="13sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Sort Button Squircle -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="8dp"
+                    app:cardBackgroundColor="@color/urwallet_background"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/urwallet_card_border"
+                    app:strokeWidth="1dp">
+
+                    <ImageView
+                        android:id="@+id/btnSortInbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:contentDescription="@string/sort_title"
+                        android:focusable="true"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_filter"
+                        app:tint="@color/urwallet_primary" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Filter Chips: 5 Tabs (All, Pending, Possible Duplicates, Confirmed, Dismissed) -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cgFilterTabs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:fontFamily="@font/cairo"
-                    android:text="معلقة (0)"
-                    android:textSize="13sp" />
+                    app:selectionRequired="true"
+                    app:singleLine="true"
+                    app:singleSelection="true">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipConfirmed"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cairo"
-                    android:text="@string/inbox_tab_confirmed"
-                    android:textSize="13sp" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipPending"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:fontFamily="@font/cairo"
+                        android:text="معلقة (0)"
+                        android:textSize="12sp" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipDismissed"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cairo"
-                    android:text="@string/inbox_tab_dismissed"
-                    android:textSize="13sp" />
-            </com.google.android.material.chip.ChipGroup>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDuplicates"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
+                        android:text="@string/inbox_tab_possible_duplicates"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAll"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
+                        android:text="@string/inbox_tab_all"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipConfirmed"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
+                        android:text="@string/inbox_tab_confirmed"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDismissed"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
+                        android:text="@string/inbox_tab_dismissed"
+                        android:textSize="12sp" />
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
 
             <!-- Events RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
@@ -265,7 +437,7 @@
                 android:id="@+id/layoutEmptyState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="36dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingHorizontal="24dp"

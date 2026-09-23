@@ -3,21 +3,31 @@ package com.example.urwallet.features.events.domain.usecase
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.provider.Telephony
 import androidx.core.content.ContextCompat
+import com.example.urwallet.core.datastore.AppPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ScanRecentSmsUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val processIncomingSmsUseCase: ProcessIncomingSmsUseCase
+    private val processIncomingSmsUseCase: ProcessIncomingSmsUseCase,
+    private val appPreferences: AppPreferences
 ) {
 
-    suspend operator fun invoke(daysBack: Int = 14): Int = withContext(Dispatchers.IO) {
+    suspend operator fun invoke(
+        daysBack: Int = 14,
+        forceFullScan: Boolean = false
+    ): Int = withContext(Dispatchers.IO) {
+        val isEnabled = appPreferences.isSmsDetectionEnabled.first()
+        if (!isEnabled) {
+            return@withContext 0
+        }
+
         val hasPermission = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.READ_SMS
@@ -27,8 +37,12 @@ class ScanRecentSmsUseCase @Inject constructor(
             return@withContext 0
         }
 
-        val cutoffTime = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(daysBack.toLong())
+        val lastCheckpoint = if (forceFullScan) 0L else appPreferences.lastSmsScanTimestamp.first()
+        val defaultCutoff = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(daysBack.toLong())
+        val cutoffTime = if (lastCheckpoint > 0L) lastCheckpoint else defaultCutoff
+
         var newEventsCount = 0
+        var maxProcessedTimestamp = lastCheckpoint
 
         val projection = arrayOf(
             Telephony.Sms._ID,
@@ -36,11 +50,13 @@ class ScanRecentSmsUseCase @Inject constructor(
             Telephony.Sms.BODY,
             Telephony.Sms.DATE
         )
+        // Checkpoint safety: use >= so messages with the exact same millisecond timestamp are never skipped.
+        // Phase 17 sourceIdentifier idempotency prevents any duplicates.
         val selection = "${Telephony.Sms.DATE} >= ?"
         val selectionArgs = arrayOf(cutoffTime.toString())
-        val sortOrder = "${Telephony.Sms.DATE} DESC"
+        val sortOrder = "${Telephony.Sms.DATE} ASC"
 
-        runCatching {
+        val scanResult = runCatching {
             context.contentResolver.query(
                 Telephony.Sms.Inbox.CONTENT_URI,
                 projection,
@@ -70,8 +86,17 @@ class ScanRecentSmsUseCase @Inject constructor(
                             newEventsCount++
                         }
                     }
+
+                    if (timestamp > maxProcessedTimestamp) {
+                        maxProcessedTimestamp = timestamp
+                    }
                 }
             }
+        }
+
+        // Only advance the checkpoint if scan finished cleanly and new messages were processed
+        if (scanResult.isSuccess && maxProcessedTimestamp > lastCheckpoint) {
+            appPreferences.setLastSmsScanTimestamp(maxProcessedTimestamp)
         }
 
         return@withContext newEventsCount

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -19,6 +20,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.urwallet.R
 import com.example.urwallet.databinding.FragmentFinancialInboxBinding
 import com.example.urwallet.features.events.domain.model.FinancialEvent
+import com.example.urwallet.features.events.domain.model.InboxSortOrder
+import com.example.urwallet.features.events.domain.model.InboxTab
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,12 +35,6 @@ class FinancialInboxFragment : Fragment() {
 
     private val viewModel: FinancialInboxViewModel by activityViewModels()
     private lateinit var adapter: FinancialInboxAdapter
-
-    private var currentFilterTab = FilterTab.PENDING
-
-    private enum class FilterTab {
-        PENDING, CONFIRMED, DISMISSED
-    }
 
     private val requestSmsPermissionsLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -70,8 +67,10 @@ class FinancialInboxFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupToolbar()
+        setupSearchAndSort()
         setupRecyclerView()
         setupFilterTabs()
+        setupBulkActionBar()
         setupDetectionToggle()
         observeViewModel()
     }
@@ -95,6 +94,44 @@ class FinancialInboxFragment : Fragment() {
         }
     }
 
+    private fun setupSearchAndSort() {
+        binding.etSearchInbox.doAfterTextChanged { text ->
+            viewModel.setSearchQuery(text?.toString())
+        }
+
+        binding.btnSortInbox.setOnClickListener {
+            showSortOptionsDialog()
+        }
+    }
+
+    private fun showSortOptionsDialog() {
+        val options = arrayOf(
+            getString(R.string.sort_newest),
+            getString(R.string.sort_oldest),
+            getString(R.string.sort_highest_amount),
+            getString(R.string.sort_lowest_amount)
+        )
+
+        val sortOrders = arrayOf(
+            InboxSortOrder.NEWEST_FIRST,
+            InboxSortOrder.OLDEST_FIRST,
+            InboxSortOrder.HIGHEST_AMOUNT,
+            InboxSortOrder.LOWEST_AMOUNT
+        )
+
+        val currentOrder = viewModel.filter.value.sortOrder
+        val checkedItem = sortOrders.indexOf(currentOrder).coerceAtLeast(0)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.sort_title)
+            .setSingleChoiceItems(options, checkedItem) { dialog, which ->
+                viewModel.setSortOrder(sortOrders[which])
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.action_cancel, null)
+            .show()
+    }
+
     private fun setupRecyclerView() {
         adapter = FinancialInboxAdapter(
             onConfirmClick = { event ->
@@ -105,6 +142,18 @@ class FinancialInboxFragment : Fragment() {
             },
             onDismissClick = { event ->
                 showDismissConfirmationDialog(event)
+            },
+            onSelectToggle = { event ->
+                viewModel.toggleEventSelection(event.id)
+            },
+            onSameTransactionClick = { event ->
+                viewModel.resolveDuplicateSameTransaction(event)
+            },
+            onDifferentTransactionClick = { event ->
+                viewModel.resolveDuplicateDifferentTransaction(event)
+            },
+            onDismissDuplicateClick = { event ->
+                viewModel.dismissEvent(event.id)
             }
         )
         binding.rvEvents.adapter = adapter
@@ -113,20 +162,43 @@ class FinancialInboxFragment : Fragment() {
     private fun setupFilterTabs() {
         binding.cgFilterTabs.setOnCheckedStateChangeListener { _, checkedIds ->
             when {
-                checkedIds.contains(R.id.chipPending) -> {
-                    currentFilterTab = FilterTab.PENDING
-                    updateDisplayedList()
-                }
-                checkedIds.contains(R.id.chipConfirmed) -> {
-                    currentFilterTab = FilterTab.CONFIRMED
-                    updateDisplayedList()
-                }
-                checkedIds.contains(R.id.chipDismissed) -> {
-                    currentFilterTab = FilterTab.DISMISSED
-                    updateDisplayedList()
-                }
+                checkedIds.contains(R.id.chipPending) -> viewModel.setFilterTab(InboxTab.PENDING)
+                checkedIds.contains(R.id.chipDuplicates) -> viewModel.setFilterTab(InboxTab.POSSIBLE_DUPLICATE)
+                checkedIds.contains(R.id.chipAll) -> viewModel.setFilterTab(InboxTab.ALL)
+                checkedIds.contains(R.id.chipConfirmed) -> viewModel.setFilterTab(InboxTab.CONFIRMED)
+                checkedIds.contains(R.id.chipDismissed) -> viewModel.setFilterTab(InboxTab.DISMISSED)
             }
         }
+    }
+
+    private fun setupBulkActionBar() {
+        binding.btnCloseBulk.setOnClickListener {
+            viewModel.clearSelection()
+        }
+
+        binding.btnBulkSelectAll.setOnClickListener {
+            viewModel.selectAll()
+        }
+
+        binding.btnBulkDismiss.setOnClickListener {
+            showBulkDismissConfirmationDialog()
+        }
+
+        binding.btnBulkMarkReview.setOnClickListener {
+            viewModel.markSelectedForReview()
+        }
+    }
+
+    private fun showBulkDismissConfirmationDialog() {
+        val count = viewModel.selectedEventIds.value.size
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.dialog_dismiss_confirm_title)
+            .setMessage("هل أنت متأكد من تجاهل $count معاملة محددة؟ سيتم مسح نصوص الرسائل لخصوصيتك.")
+            .setNegativeButton(R.string.action_cancel, null)
+            .setPositiveButton(R.string.action_dismiss_event) { _, _ ->
+                viewModel.dismissSelected()
+            }
+            .show()
     }
 
     private fun setupDetectionToggle() {
@@ -179,20 +251,47 @@ class FinancialInboxFragment : Fragment() {
                 }
 
                 launch {
-                    viewModel.pendingEvents.collect {
-                        if (currentFilterTab == FilterTab.PENDING) updateDisplayedList()
+                    viewModel.filteredEvents.collect { events ->
+                        adapter.submitList(events)
+                        val isEmpty = events.isEmpty()
+                        binding.rvEvents.isVisible = !isEmpty
+                        binding.layoutEmptyState.isVisible = isEmpty
+
+                        if (isEmpty) {
+                            when (viewModel.filter.value.tab) {
+                                InboxTab.PENDING -> {
+                                    binding.tvEmptyTitle.text = getString(R.string.inbox_empty_pending_title)
+                                    binding.tvEmptyDesc.text = getString(R.string.inbox_empty_pending_desc)
+                                }
+                                InboxTab.POSSIBLE_DUPLICATE -> {
+                                    binding.tvEmptyTitle.text = getString(R.string.inbox_empty_duplicates_title)
+                                    binding.tvEmptyDesc.text = getString(R.string.inbox_empty_duplicates_desc)
+                                }
+                                InboxTab.CONFIRMED -> {
+                                    binding.tvEmptyTitle.text = getString(R.string.inbox_empty_confirmed_title)
+                                    binding.tvEmptyDesc.text = getString(R.string.inbox_empty_confirmed_desc)
+                                }
+                                InboxTab.DISMISSED -> {
+                                    binding.tvEmptyTitle.text = getString(R.string.inbox_empty_dismissed_title)
+                                    binding.tvEmptyDesc.text = getString(R.string.inbox_empty_dismissed_desc)
+                                }
+                                InboxTab.ALL -> {
+                                    binding.tvEmptyTitle.text = "لا توجد معاملات"
+                                    binding.tvEmptyDesc.text = "لم يتم العثور على أي معاملات تطابق معايير البحث أو التصفية الحالية."
+                                }
+                            }
+                        }
                     }
                 }
 
                 launch {
-                    viewModel.confirmedEvents.collect {
-                        if (currentFilterTab == FilterTab.CONFIRMED) updateDisplayedList()
-                    }
-                }
-
-                launch {
-                    viewModel.dismissedEvents.collect {
-                        if (currentFilterTab == FilterTab.DISMISSED) updateDisplayedList()
+                    viewModel.selectedEventIds.collect { selectedIds ->
+                        val isSelection = selectedIds.isNotEmpty()
+                        binding.layoutBulkActions.isVisible = isSelection
+                        if (isSelection) {
+                            binding.tvBulkCount.text = getString(R.string.bulk_selected_count, selectedIds.size)
+                        }
+                        adapter.updateSelectionState(isSelection, selectedIds)
                     }
                 }
 
@@ -212,37 +311,6 @@ class FinancialInboxFragment : Fragment() {
                             }
                         }
                     }
-                }
-            }
-        }
-    }
-
-    private fun updateDisplayedList() {
-        val list = when (currentFilterTab) {
-            FilterTab.PENDING -> viewModel.pendingEvents.value
-            FilterTab.CONFIRMED -> viewModel.confirmedEvents.value
-            FilterTab.DISMISSED -> viewModel.dismissedEvents.value
-        }
-
-        adapter.submitList(list)
-
-        val isEmpty = list.isEmpty()
-        binding.rvEvents.isVisible = !isEmpty
-        binding.layoutEmptyState.isVisible = isEmpty
-
-        if (isEmpty) {
-            when (currentFilterTab) {
-                FilterTab.PENDING -> {
-                    binding.tvEmptyTitle.text = getString(R.string.inbox_empty_pending_title)
-                    binding.tvEmptyDesc.text = getString(R.string.inbox_empty_pending_desc)
-                }
-                FilterTab.CONFIRMED -> {
-                    binding.tvEmptyTitle.text = getString(R.string.inbox_empty_confirmed_title)
-                    binding.tvEmptyDesc.text = getString(R.string.inbox_empty_confirmed_desc)
-                }
-                FilterTab.DISMISSED -> {
-                    binding.tvEmptyTitle.text = getString(R.string.inbox_empty_dismissed_title)
-                    binding.tvEmptyDesc.text = getString(R.string.inbox_empty_dismissed_desc)
                 }
             }
         }

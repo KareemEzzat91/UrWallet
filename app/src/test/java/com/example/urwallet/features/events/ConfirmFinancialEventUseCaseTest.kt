@@ -36,7 +36,7 @@ class ConfirmFinancialEventUseCaseTest {
         fakeEventRepo = FakeFinancialEventRepository()
         fakeTxRepo = TestTxRepo()
         addTxUseCase = AddTransactionUseCase(fakeTxRepo)
-        confirmUseCase = ConfirmFinancialEventUseCase(fakeEventRepo, addTxUseCase)
+        confirmUseCase = ConfirmFinancialEventUseCase(fakeEventRepo)
     }
 
     @Test
@@ -65,20 +65,16 @@ class ConfirmFinancialEventUseCaseTest {
         )
 
         assertTrue(result.isSuccess)
+        val createdTxId = result.getOrNull()
+        assertNotNull(createdTxId)
 
-        // 1. Transaction was created in Room
-        assertEquals(1, fakeTxRepo.inserted.size)
-        val createdTx = fakeTxRepo.inserted.first()
-        assertEquals(450.0, createdTx.amount, 0.001)
-        assertEquals("سوبرماركت كارفور", createdTx.title)
-
-        // 2. Event in inbox is updated to CONFIRMED
+        // Event in inbox is updated to CONFIRMED
         val updatedEvent = fakeEventRepo.getEventById(10L)
         assertNotNull(updatedEvent)
         assertEquals(InboxStatus.CONFIRMED, updatedEvent!!.status)
-        assertEquals(createdTx.id, updatedEvent.matchedTransactionId)
+        assertEquals(createdTxId, updatedEvent.matchedTransactionId)
 
-        // 3. Privacy refinement: rawMessage MUST be scrubbed (null)
+        // Privacy refinement: rawMessage MUST be scrubbed (null)
         assertNull("Raw SMS must be scrubbed after confirmation", updatedEvent.rawMessage)
     }
 

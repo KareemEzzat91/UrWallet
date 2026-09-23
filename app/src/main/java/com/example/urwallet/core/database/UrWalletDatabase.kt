@@ -27,6 +27,8 @@ import com.example.urwallet.features.people.data.dao.PersonDao
 import com.example.urwallet.features.people.data.entity.FinancialObligationEntity
 import com.example.urwallet.features.people.data.entity.ObligationSettlementEntity
 import com.example.urwallet.features.people.data.entity.PersonEntity
+import com.example.urwallet.features.events.data.dao.CategoryMappingDao
+import com.example.urwallet.features.events.data.entity.CategoryMappingEntity
 import com.example.urwallet.features.transactions.data.entity.CategoryEntity
 import com.example.urwallet.features.transactions.data.entity.TransactionEntity
 
@@ -43,9 +45,10 @@ import com.example.urwallet.features.transactions.data.entity.TransactionEntity
         CounterpartyMappingEntity::class,
         PersonEntity::class,
         FinancialObligationEntity::class,
-        ObligationSettlementEntity::class
+        ObligationSettlementEntity::class,
+        CategoryMappingEntity::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -60,6 +63,7 @@ abstract class UrWalletDatabase : RoomDatabase() {
     abstract fun challengeDao(): ChallengeDao
     abstract fun financialInboxDao(): FinancialInboxDao
     abstract fun counterpartyMappingDao(): CounterpartyMappingDao
+    abstract fun categoryMappingDao(): CategoryMappingDao
     abstract fun personDao(): PersonDao
     abstract fun financialObligationDao(): FinancialObligationDao
 
@@ -179,9 +183,25 @@ abstract class UrWalletDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_5_6 = object : androidx.room.migration.Migration(5, 6) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `category_mappings` (
+                        `pattern` TEXT PRIMARY KEY NOT NULL,
+                        `categoryId` INTEGER NOT NULL,
+                        `usageCount` INTEGER NOT NULL DEFAULT 1,
+                        `updatedAt` INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+            }
+        }
+
         val ALL_MIGRATIONS: Array<androidx.room.migration.Migration> = arrayOf(
             MIGRATION_3_4,
-            MIGRATION_4_5
+            MIGRATION_4_5,
+            MIGRATION_5_6
         )
 
         fun getInstance(context: Context): UrWalletDatabase {
