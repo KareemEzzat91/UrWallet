@@ -62,4 +62,14 @@ object DatabaseModule {
     fun provideRecurringTransactionDao(database: UrWalletDatabase): RecurringTransactionDao {
         return database.recurringTransactionDao()
     }
+
+    @Provides
+    fun provideFinancialInboxDao(database: UrWalletDatabase): com.example.urwallet.features.events.data.dao.FinancialInboxDao {
+        return database.financialInboxDao()
+    }
+
+    @Provides
+    fun provideCounterpartyMappingDao(database: UrWalletDatabase): com.example.urwallet.features.events.data.dao.CounterpartyMappingDao {
+        return database.counterpartyMappingDao()
+    }
 }

@@ -316,7 +316,7 @@
     <string name="goal_pace_balanced_label">وتيرة متوازنة</string>
     <string name="goal_pace_aggressive_label">وتيرة مكثفة</string>
     <string name="goals_header_subtitle">خطط وادخر لتحقيق طموحاتك المالية</string>
-    <string name="goals_action_new_goal">+ هدف جديد</string>
+    <string name="goals_action_new_goal">هدف جديد</string>
     <string name="goals_tab_active">الأهداف النشطة</string>
     <string name="goals_tab_completed">الأهداف المكتملة</string>
     <string name="goals_tab_all">جميع الأهداف</string>
@@ -630,4 +630,46 @@
     <string name="currency_settings_desc">تحديد العملة المستخدمة في عرض القيم المالية</string>
     <string name="dialog_select_currency_title">اختر عملة العرض</string>
     <string name="currency_updated_success">تم تغيير عملة العرض بنجاح</string>
+
+    <!-- Phase 17: Smart Financial Event Detection & Inbox -->
+    <string name="notification_channel_financial_inbox_name">الوارد المالي الذكي</string>
+    <string name="notification_channel_financial_inbox_desc">تنبيهات فورية عند اكتشاف معاملات مالية من الرسائل لمراجعتها</string>
+    <string name="notification_financial_event_title">معاملة مكتشفة جديدة 💳</string>
+    <string name="notification_financial_event_desc">تم اكتشاف %1$s بمبلغ %2$s من %3$s. اضغط للمراجعة والتأكيد.</string>
+    <string name="title_financial_inbox">الوارد المالي الذكي</string>
+    <string name="financial_inbox_subtitle">المعاملات المكتشفة من الرسائل بانتظار مراجعتك</string>
+    <string name="inbox_tab_pending">معلقة (%d)</string>
+    <string name="inbox_tab_confirmed">مؤكدة</string>
+    <string name="inbox_tab_dismissed">متجاهلة</string>
+    <string name="inbox_empty_pending_title">لا توجد معاملات معلقة</string>
+    <string name="inbox_empty_pending_desc">ستظهر هنا أي معاملات مالية تكتشفها المحفظة من الرسائل النصية لتأكيدها بلمسة واحدة.</string>
+    <string name="inbox_empty_confirmed_title">لا توجد معاملات مؤكدة بعد</string>
+    <string name="inbox_empty_confirmed_desc">المعاملات التي تؤكدها ستظهر هنا وتُسجل مباشرة في سجل معاملاتك.</string>
+    <string name="inbox_empty_dismissed_title">لا توجد معاملات متجاهلة</string>
+    <string name="inbox_empty_dismissed_desc">المعاملات التي تختار تجاهلها لن تظهر في حساباتك المالية.</string>
+    <string name="action_scan_recent_sms">فحص الرسائل الأخيرة</string>
+    <string name="action_confirm_event">تأكيد وإضافة</string>
+    <string name="action_edit_review">تعديل ومراجعة</string>
+    <string name="action_dismiss_event">تجاهل</string>
+    <string name="dialog_dismiss_confirm_title">تجاهل المعاملة؟</string>
+    <string name="dialog_dismiss_confirm_message">هل أنت متأكد من تجاهل هذه المعاملة؟ لن يتم إضافتها لسجلاتك المالية وسيتم مسح نص الرسالة لخصوصيتك.</string>
+    <string name="badge_possible_duplicate">⚠️ احتمال تكرار لمعاملة سابقة</string>
+    <string name="financial_event_review_title">مراجعة المعاملة وتأكيدها</string>
+    <string name="label_detected_amount">المبلغ المكتشف</string>
+    <string name="label_counterparty_person">الطرف الآخر (شخص أو متجر)</string>
+    <string name="label_choose_from_contacts">اختيار من جهات الاتصال</string>
+    <string name="label_remember_counterparty">تذكر هذا الاسم دائماً لهذا الرقم</string>
+    <string name="financial_detection_settings_title">كشف المعاملات الذكي</string>
+    <string name="pref_sms_detection_title">كشف المعاملات من الرسائل</string>
+    <string name="pref_sms_detection_desc">التعرف على الإيداع والخصم فور ورود الرسالة البنكية محلياً على جهازك</string>
+    <string name="permission_sms_rationale">كشف المعاملات يتطلب إذن قراءة الرسائل النصية ليعمل محلياً وأوفلاين بدون أي اتصال بالإنترنت.</string>
+    <string name="permission_grant_button">منح الإذن</string>
+    <string name="event_confirmed_success">تمت إضافة المعاملة بنجاح إلى محفظتك</string>
+    <string name="event_dismissed_success">تم تجاهل المعاملة ومسح بياناتها النصية</string>
+    <string name="scan_sms_success">تم فحص الرسائل واكتشاف %d معاملة جديدة</string>
+    <string name="scan_sms_no_new">لم يتم العثور على رسائل مالية جديدة</string>
+    <string name="label_review_transaction_title">اسم المعاملة</string>
+    <string name="hint_transaction_note">ملاحظات إضافية (اختياري)</string>
+    <string name="more_financial_inbox_title">الوارد المالي الذكي</string>
+    <string name="more_financial_inbox_subtitle">كشف وتأكيد المعاملات من الرسائل</string>
 </resources>

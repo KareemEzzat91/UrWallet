@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +15,7 @@ import com.example.urwallet.core.common.Constants
 import com.example.urwallet.core.common.Formatters
 import com.example.urwallet.core.datastore.AppPreferences
 import com.example.urwallet.databinding.FragmentMoreBinding
+import com.example.urwallet.features.events.domain.repository.FinancialEventRepository
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +32,9 @@ class MoreFragment : Fragment() {
     @Inject
     lateinit var appPreferences: AppPreferences
 
+    @Inject
+    lateinit var financialEventRepository: FinancialEventRepository
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,6 +46,10 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.cardFinancialInboxNav.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_financialInboxFragment)
+        }
 
         binding.cardBudgetsNav.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_budgetsFragment)
@@ -83,6 +92,22 @@ class MoreFragment : Fragment() {
         }
 
         observeCurrency()
+        observeFinancialInboxBadge()
+    }
+
+    private fun observeFinancialInboxBadge() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                financialEventRepository.getPendingCount().collect { count ->
+                    if (count > 0) {
+                        binding.tvInboxPendingBadge.isVisible = true
+                        binding.tvInboxPendingBadge.text = count.toString()
+                    } else {
+                        binding.tvInboxPendingBadge.isVisible = false
+                    }
+                }
+            }
+        }
     }
 
     private fun observeCurrency() {

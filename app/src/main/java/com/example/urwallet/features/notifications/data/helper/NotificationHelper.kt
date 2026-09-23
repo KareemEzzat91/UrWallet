@@ -44,16 +44,20 @@ open class NotificationHelper {
         const val NAV_TARGET_BUDGETS = "budgets"
         const val NAV_TARGET_GOALS = "goals"
         const val NAV_TARGET_SETTINGS = "notification_settings"
+        const val NAV_TARGET_FINANCIAL_INBOX = "financial_inbox"
+
+        const val CHANNEL_FINANCIAL_INBOX = "urwallet_channel_financial_inbox"
 
         const val ID_DAILY_REMINDER = 1001
         const val ID_BUDGET_ALERT_GLOBAL = 2000
         const val ID_BUDGET_ALERT_BASE = 2100
         const val ID_GOAL_MILESTONE_BASE = 3000
+        const val ID_FINANCIAL_INBOX_BASE = 4000
         const val ID_TEST_NOTIFICATION = 9999
     }
 
     /**
-     * Initializes all 4 system notification channels with appropriate importance,
+     * Initializes all 5 system notification channels with appropriate importance,
      * Arabic labels, and descriptions. Safe to call repeatedly.
      */
     open fun createNotificationChannels() {
@@ -92,6 +96,14 @@ open class NotificationHelper {
                     NotificationManager.IMPORTANCE_DEFAULT
                 ).apply {
                     description = ctx.getString(R.string.notification_channel_challenges_desc)
+                },
+                NotificationChannel(
+                    CHANNEL_FINANCIAL_INBOX,
+                    ctx.getString(R.string.notification_channel_financial_inbox_name),
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = ctx.getString(R.string.notification_channel_financial_inbox_desc)
+                    enableVibration(true)
                 }
             )
 
@@ -295,5 +307,42 @@ open class NotificationHelper {
             .build()
 
         NotificationManagerCompat.from(ctx).notify(ID_TEST_NOTIFICATION, notification)
+    }
+
+    /**
+     * Dispatches notification for newly detected high-confidence financial events.
+     */
+    @SuppressLint("MissingPermission")
+    open fun sendFinancialEventNotification(eventId: Long, title: String, message: String) {
+        val ctx = context ?: return
+        if (!hasNotificationPermission()) return
+
+        val intent = Intent(ctx, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(EXTRA_NAV_TARGET, NAV_TARGET_FINANCIAL_INBOX)
+            putExtra("eventId", eventId)
+        }
+
+        val notificationId = (ID_FINANCIAL_INBOX_BASE + (eventId % 1000)).toInt()
+
+        val pendingIntent = PendingIntent.getActivity(
+            ctx,
+            notificationId,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(ctx, CHANNEL_FINANCIAL_INBOX)
+            .setSmallIcon(R.drawable.ic_nav_transactions)
+            .setColor(ContextCompat.getColor(ctx, R.color.urwallet_primary))
+            .setContentTitle(title)
+            .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+
+        NotificationManagerCompat.from(ctx).notify(notificationId, notification)
     }
 }

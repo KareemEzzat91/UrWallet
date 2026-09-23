@@ -113,6 +113,9 @@
         <action
             android:id="@+id/action_moreFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_financialInboxFragment"
+            app:destination="@id/financialInboxFragment" />
     </fragment>
 
     <fragment
@@ -189,5 +192,11 @@
         android:name="com.example.urwallet.features.security.presentation.settings.SecuritySettingsFragment"
         android:label="@string/security_settings_title"
         tools:layout="@layout/fragment_security_settings" />
+
+    <fragment
+        android:id="@+id/financialInboxFragment"
+        android:name="com.example.urwallet.features.events.presentation.FinancialInboxFragment"
+        android:label="@string/title_financial_inbox"
+        tools:layout="@layout/fragment_financial_inbox" />
 
 </navigation>

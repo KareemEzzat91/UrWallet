@@ -55,6 +55,19 @@ class AppPreferences(private val context: Context) {
         private val KEY_BUDGET_ALERTS_ENABLED = booleanPreferencesKey("is_budget_alerts_enabled")
         private val KEY_GOAL_ALERTS_ENABLED = booleanPreferencesKey("is_goal_alerts_enabled")
         private val KEY_DELIVERED_ALERT_KEYS = stringSetPreferencesKey("delivered_alert_keys")
+
+        // Financial Event Detection Preferences
+        private val KEY_SMS_DETECTION_ENABLED = booleanPreferencesKey("is_sms_detection_enabled")
+    }
+
+    val isSmsDetectionEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[KEY_SMS_DETECTION_ENABLED] ?: false
+    }
+
+    suspend fun setSmsDetectionEnabled(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_SMS_DETECTION_ENABLED] = enabled
+        }
     }
 
     val isOnboardingCompleted: Flow<Boolean> = context.dataStore.data.map { preferences ->
