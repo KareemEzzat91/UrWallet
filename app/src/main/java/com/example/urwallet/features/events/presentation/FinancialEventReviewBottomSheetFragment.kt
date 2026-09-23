@@ -50,16 +50,6 @@ class FinancialEventReviewBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private val requestContactsPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            contactPickerLauncher.launch(null)
-        } else {
-            Toast.makeText(requireContext(), "إذن جهات الاتصال اختياري لتسهيل الاختيار فقط", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -217,16 +207,7 @@ class FinancialEventReviewBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setupActions() {
         binding.btnPickContact.setOnClickListener {
-            val hasPermission = ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_CONTACTS
-            ) == PackageManager.PERMISSION_GRANTED
-
-            if (hasPermission) {
-                contactPickerLauncher.launch(null)
-            } else {
-                requestContactsPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
-            }
+            contactPickerLauncher.launch(null)
         }
 
         binding.btnConfirmReview.setOnClickListener {
@@ -235,6 +216,8 @@ class FinancialEventReviewBottomSheetFragment : BottomSheetDialogFragment() {
                 Toast.makeText(requireContext(), R.string.label_select_category, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            binding.btnConfirmReview.isEnabled = false
 
             val title = binding.etTitle.text?.toString()?.trim().orEmpty()
             val note = binding.etNote.text?.toString()?.trim()

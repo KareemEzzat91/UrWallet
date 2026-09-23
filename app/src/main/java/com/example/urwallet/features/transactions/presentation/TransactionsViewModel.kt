@@ -16,6 +16,7 @@ import com.example.urwallet.features.transactions.domain.usecase.GetFilteredTran
 import com.example.urwallet.features.transactions.domain.usecase.GetTransactionsUseCase
 import com.example.urwallet.features.transactions.domain.usecase.UpdateTransactionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,13 +27,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
+@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class TransactionsViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
@@ -64,27 +66,26 @@ class TransactionsViewModel @Inject constructor(
 
     // --- Transactions List State ---
     val transactionsUiState: StateFlow<TransactionsUiState> = combine(
-        getTransactionsUseCase(),
-        getCategoriesUseCase(),
         debouncedSearchQuery,
         _filterCriteria
-    ) { allTransactions, categories, query, criteria ->
-        if (allTransactions.isEmpty()) {
-            TransactionsUiState.Empty
-        } else {
+    ) { query, criteria ->
+        criteria.copy(query = query)
+    }.flatMapLatest { effectiveCriteria ->
+        combine(
+            getFilteredTransactionsUseCase(effectiveCriteria),
+            getCategoriesUseCase()
+        ) { filteredTransactions, categories ->
             val categoryMap = categories.associateBy { it.id }
-            val effectiveCriteria = criteria.copy(query = query)
-            val filteredTransactions = getFilteredTransactionsUseCase(
-                transactions = allTransactions,
-                categoryMap = categoryMap,
-                criteria = effectiveCriteria
-            )
 
             if (filteredTransactions.isEmpty()) {
-                TransactionsUiState.NoSearchResults(
-                    query = query,
-                    hasActiveFilters = effectiveCriteria.hasActiveFilters()
-                )
+                if (effectiveCriteria.hasActiveFilters()) {
+                    TransactionsUiState.NoSearchResults(
+                        query = effectiveCriteria.query,
+                        hasActiveFilters = true
+                    )
+                } else {
+                    TransactionsUiState.Empty
+                }
             } else {
                 val income = filteredTransactions
                     .filter { it.type == TransactionType.INCOME }

@@ -5,20 +5,56 @@ import com.example.urwallet.features.transactions.domain.model.Category
 import com.example.urwallet.features.transactions.domain.model.FilterPeriod
 import com.example.urwallet.features.transactions.domain.model.Transaction
 import com.example.urwallet.features.transactions.domain.model.TransactionFilterCriteria
+import com.example.urwallet.features.transactions.domain.repository.TransactionRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
-// TODO(performance): For large datasets (>10,000 items), migrate filtering to Room queries
-//   with Paging 3 (PagingSource). In-memory filtering is optimal and instantaneous for MVP scale.
-class GetFilteredTransactionsUseCase @Inject constructor() {
+class GetFilteredTransactionsUseCase @Inject constructor(
+    private val transactionRepository: TransactionRepository
+) {
+    // Secondary constructor for in-memory testing without repository mock
+    constructor() : this(object : TransactionRepository {
+        override fun getAllTransactions(): Flow<List<Transaction>> = flowOf(emptyList())
+        override fun getTransactionById(id: Long): Flow<Transaction?> = flowOf(null)
+        override fun getRecentTransactions(limit: Int): Flow<List<Transaction>> = flowOf(emptyList())
+        override fun getTransactionsBetween(startDate: Long, endDate: Long): Flow<List<Transaction>> = flowOf(emptyList())
+        override fun getTransactionsByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): Flow<List<Transaction>> = flowOf(emptyList())
+        override fun getSumByTypeAndPeriod(type: com.example.urwallet.core.common.TransactionType, startDate: Long, endDate: Long): Flow<Double> = flowOf(0.0)
+        override fun getTotalSumByType(type: com.example.urwallet.core.common.TransactionType): Flow<Double> = flowOf(0.0)
+        override fun getSumByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): Flow<Double> = flowOf(0.0)
+        override fun getTodayTransactionCount(startOfDay: Long, endOfDay: Long): Flow<Int> = flowOf(0)
+        override suspend fun insertTransaction(transaction: Transaction): Long = 0L
+        override suspend fun updateTransaction(transaction: Transaction) {}
+        override suspend fun deleteTransaction(transaction: Transaction) {}
+        override suspend fun deleteTransactionById(id: Long) {}
+        override fun getAllCategories(): Flow<List<Category>> = flowOf(emptyList())
+        override fun getCategoriesByType(type: com.example.urwallet.core.common.CategoryType): Flow<List<Category>> = flowOf(emptyList())
+        override suspend fun getCategoryById(id: Long): Category? = null
+        override suspend fun insertCategory(category: Category): Long = 0L
+        override suspend fun updateCategory(category: Category) {}
+        override suspend fun deleteCategory(id: Long) {}
+    })
 
-    operator fun invoke(
-        transactions: List<Transaction>,
-        categoryMap: Map<Long, Category>,
-        criteria: TransactionFilterCriteria
-    ): List<Transaction> {
-        val query = criteria.query.trim().lowercase()
+    operator fun invoke(criteria: TransactionFilterCriteria): Flow<List<Transaction>> {
+        val (periodStart, periodEnd) = resolvePeriod(criteria.period, criteria.customStartDate, criteria.customEndDate)
+        return transactionRepository.getFilteredTransactions(
+            type = criteria.type,
+            startDate = periodStart,
+            endDate = periodEnd,
+            minAmount = criteria.minAmount,
+            maxAmount = criteria.maxAmount,
+            categoryIds = criteria.categoryIds.toList(),
+            query = criteria.query
+        )
+    }
 
-        val (periodStart, periodEnd) = when (criteria.period) {
+    private fun resolvePeriod(
+        period: FilterPeriod,
+        customStartDate: Long?,
+        customEndDate: Long?
+    ): Pair<Long?, Long?> {
+        return when (period) {
             FilterPeriod.ALL -> null to null
             FilterPeriod.TODAY -> DateUtils.getStartOfDay() to DateUtils.getEndOfDay()
             FilterPeriod.THIS_WEEK -> DateUtils.getStartOfWeek() to DateUtils.getEndOfWeek()
@@ -28,11 +64,20 @@ class GetFilteredTransactionsUseCase @Inject constructor() {
                 DateUtils.getStartOfMonth(m, y) to DateUtils.getEndOfMonth(m, y)
             }
             FilterPeriod.CUSTOM -> {
-                val start = criteria.customStartDate ?: 0L
-                val end = criteria.customEndDate ?: Long.MAX_VALUE
+                val start = customStartDate ?: 0L
+                val end = customEndDate ?: Long.MAX_VALUE
                 start to end
             }
         }
+    }
+
+    operator fun invoke(
+        transactions: List<Transaction>,
+        categoryMap: Map<Long, Category>,
+        criteria: TransactionFilterCriteria
+    ): List<Transaction> {
+        val query = criteria.query.trim().lowercase()
+        val (periodStart, periodEnd) = resolvePeriod(criteria.period, criteria.customStartDate, criteria.customEndDate)
 
         return transactions.filter { tx ->
             // 1. Type filter

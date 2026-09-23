@@ -40,6 +40,37 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE date >= :startDate AND date <= :endDate ORDER BY date DESC")
     fun getTransactionsBetween(startDate: Long, endDate: Long): Flow<List<TransactionEntity>>
 
+    @Query("SELECT * FROM transactions WHERE personId IS NOT NULL ORDER BY date DESC")
+    fun getTransactionsWithPeople(): Flow<List<TransactionEntity>>
+
+    @Query("""
+        SELECT transactions.* FROM transactions
+        LEFT JOIN categories ON transactions.categoryId = categories.id
+        WHERE (:type IS NULL OR transactions.type = :type)
+          AND (:startDate IS NULL OR transactions.date >= :startDate)
+          AND (:endDate IS NULL OR transactions.date <= :endDate)
+          AND (:minAmount IS NULL OR transactions.amount >= :minAmount)
+          AND (:maxAmount IS NULL OR transactions.amount <= :maxAmount)
+          AND (:hasCategories = 0 OR transactions.categoryId IN (:categoryIds))
+          AND (
+              :query IS NULL OR :query = '' OR
+              transactions.title LIKE '%' || :query || '%' OR
+              transactions.note LIKE '%' || :query || '%' OR
+              categories.name LIKE '%' || :query || '%'
+          )
+        ORDER BY transactions.date DESC
+    """)
+    fun getFilteredTransactions(
+        type: TransactionType? = null,
+        startDate: Long? = null,
+        endDate: Long? = null,
+        minAmount: Double? = null,
+        maxAmount: Double? = null,
+        hasCategories: Int = 0,
+        categoryIds: List<Long> = emptyList(),
+        query: String? = null
+    ): Flow<List<TransactionEntity>>
+
     @Query("SELECT * FROM transactions WHERE categoryId = :categoryId AND date >= :startDate AND date <= :endDate ORDER BY date DESC")
     fun getTransactionsByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): Flow<List<TransactionEntity>>
 

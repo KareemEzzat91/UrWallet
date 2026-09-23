@@ -23,6 +23,16 @@ class ConfirmFinancialEventUseCase @Inject constructor(
         val event = financialEventRepository.getEventById(eventId)
             ?: return Result.failure(IllegalArgumentException("لم يتم العثور على المعاملة في الوارد المالي"))
 
+        // Idempotency: If already confirmed, safely return existing transactionId
+        if (event.status == com.example.urwallet.features.events.domain.model.InboxStatus.CONFIRMED && event.matchedTransactionId != null) {
+            return Result.success(event.matchedTransactionId)
+        }
+
+        // Do not process events that are dismissed or non-pending
+        if (event.status != com.example.urwallet.features.events.domain.model.InboxStatus.PENDING) {
+            return Result.failure(IllegalStateException("لا يمكن تأكيد معاملة بحالة ${event.status}"))
+        }
+
         if (categoryId <= 0L) {
             return Result.failure(IllegalArgumentException("يرجى اختيار تصنيف للمعاملة"))
         }

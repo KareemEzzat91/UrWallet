@@ -69,8 +69,22 @@ class GetDashboardSummaryUseCaseTest {
         val summary = useCase().first()
 
         assertEquals(16500.0, summary.netBalance, 0.001) // 25000 - 8500
+        assertEquals(16500.0, summary.availableCash, 0.001) // no goal savings
         assertEquals(15000.0, summary.monthlyIncome, 0.001)
         assertEquals(4500.0, summary.monthlyExpense, 0.001)
+    }
+
+    @Test
+    fun `when goal savings exist, calculates available cash as net balance minus goal savings`() = runTest {
+        fakeTransactionRepository.totalIncome = 20000.0
+        fakeTransactionRepository.totalExpense = 5000.0
+        fakeGoalRepository.totalGoalSavings = 4000.0
+
+        val summary = useCase().first()
+
+        assertEquals(15000.0, summary.netBalance, 0.001) // 20000 - 5000
+        assertEquals(4000.0, summary.totalGoalSavings, 0.001)
+        assertEquals(11000.0, summary.availableCash, 0.001) // 15000 - 4000 (available cash correctly excludes goal savings)
     }
 
     @Test
@@ -136,6 +150,17 @@ class DashboardFakeTransactionRepository : TransactionRepository {
     val categories = mutableListOf<Category>()
 
     override fun getAllTransactions(): Flow<List<Transaction>> = flowOf(recentTransactions)
+    override fun getFilteredTransactions(
+        type: TransactionType?,
+        startDate: Long?,
+        endDate: Long?,
+        minAmount: Double?,
+        maxAmount: Double?,
+        categoryIds: List<Long>,
+        query: String?
+    ): Flow<List<Transaction>> = flowOf(recentTransactions)
+
+    override fun getTransactionsWithPeople(): Flow<List<Transaction>> = flowOf(recentTransactions.filter { it.personId != null })
     override fun getTransactionById(id: Long): Flow<Transaction?> = flowOf(recentTransactions.find { it.id == id })
     override fun getRecentTransactions(limit: Int): Flow<List<Transaction>> = flowOf(recentTransactions.take(limit))
     override fun getTransactionsBetween(startDate: Long, endDate: Long): Flow<List<Transaction>> = flowOf(emptyList())
@@ -166,6 +191,7 @@ class DashboardFakeTransactionRepository : TransactionRepository {
 
 class DashboardFakeGoalRepository : GoalRepository {
     var nearestGoal: Goal? = null
+    var totalGoalSavings: Double = 0.0
     val goals = mutableListOf<Goal>()
 
     override fun getAllGoals(): Flow<List<Goal>> = flowOf(goals)
@@ -174,6 +200,7 @@ class DashboardFakeGoalRepository : GoalRepository {
     override fun getGoalById(id: Long): Flow<Goal?> = flowOf(goals.find { it.id == id })
     override fun getContributionsForGoal(goalId: Long): Flow<List<GoalContribution>> = flowOf(emptyList())
     override fun getMonthlyContributionsSum(startDate: Long, endDate: Long): Flow<Double> = flowOf(0.0)
+    override fun getTotalGoalSavings(): Flow<Double> = flowOf(totalGoalSavings)
     override suspend fun insertGoal(goal: Goal): Long = 1L
     override suspend fun updateGoal(goal: Goal) {}
     override suspend fun addContribution(goalId: Long, amount: Double, note: String?): Long = 1L

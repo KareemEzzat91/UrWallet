@@ -141,6 +141,10 @@ class ProcessIncomingSmsUseCase @Inject constructor(
         )
 
         val id = financialEventRepository.insertEvent(event)
+        if (id <= 0L) {
+            // Already processed SMS or duplicate source identifier - do not treat as new event
+            return null
+        }
         return event.copy(id = id)
     }
 }

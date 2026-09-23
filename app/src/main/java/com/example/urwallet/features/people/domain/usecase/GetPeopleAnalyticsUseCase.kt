@@ -19,7 +19,7 @@ class GetPeopleAnalyticsUseCase @Inject constructor(
     operator fun invoke(): Flow<PeopleAnalyticsSummary> {
         return combine(
             peopleRepository.getAllPeople(),
-            transactionRepository.getAllTransactions(),
+            transactionRepository.getTransactionsWithPeople(),
             peopleRepository.getAllObligations()
         ) { people, transactions, obligations ->
             if (people.isEmpty()) {

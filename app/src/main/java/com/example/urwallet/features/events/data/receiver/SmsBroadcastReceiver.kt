@@ -57,8 +57,8 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
                             timestamp = timestamp
                         )
 
-                        // If high-confidence financial event detected, dispatch local notification
-                        if (event != null && event.confidence == EventConfidence.HIGH) {
+                        // If high-confidence financial event detected and successfully inserted, dispatch local notification
+                        if (event != null && event.id > 0L && event.confidence == EventConfidence.HIGH) {
                             val actionTypeStr = if (event.type == TransactionType.INCOME) "إيداع" else "خصم"
                             val amountStr = Formatters.formatCurrency(event.amount)
                             val title = context.getString(R.string.notification_financial_event_title)

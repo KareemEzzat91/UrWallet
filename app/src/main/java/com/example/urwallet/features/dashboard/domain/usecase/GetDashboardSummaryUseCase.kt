@@ -31,6 +31,7 @@ class GetDashboardSummaryUseCase @Inject constructor(
         val monthlyExpenseFlow = transactionRepository.getSumByTypeAndPeriod(
             TransactionType.EXPENSE, startOfMonth, endOfMonth
         )
+        val totalGoalSavingsFlow = goalRepository.getTotalGoalSavings()
         val recentTransactionsFlow = transactionRepository.getRecentTransactions(4)
         val categoriesFlow = transactionRepository.getAllCategories()
         val nearestGoalFlow = goalRepository.getNearestActiveGoal()
@@ -40,10 +41,14 @@ class GetDashboardSummaryUseCase @Inject constructor(
             totalIncomeFlow,
             totalExpenseFlow,
             monthlyIncomeFlow,
-            monthlyExpenseFlow
-        ) { totalIncome, totalExpense, monthlyIncome, monthlyExpense ->
+            monthlyExpenseFlow,
+            totalGoalSavingsFlow
+        ) { totalIncome, totalExpense, monthlyIncome, monthlyExpense, goalSavings ->
+            val net = totalIncome - totalExpense
             FinancialTotals(
-                netBalance = totalIncome - totalExpense,
+                netBalance = net,
+                totalGoalSavings = goalSavings,
+                availableCash = net - goalSavings,
                 monthlyIncome = monthlyIncome,
                 monthlyExpense = monthlyExpense
             )
@@ -70,6 +75,8 @@ class GetDashboardSummaryUseCase @Inject constructor(
         ) { totals, recentItems, nearestGoal, challengesResult ->
             DashboardSummary(
                 netBalance = totals.netBalance,
+                totalGoalSavings = totals.totalGoalSavings,
+                availableCash = totals.availableCash,
                 monthlyIncome = totals.monthlyIncome,
                 monthlyExpense = totals.monthlyExpense,
                 recentTransactions = recentItems,
@@ -81,6 +88,8 @@ class GetDashboardSummaryUseCase @Inject constructor(
 
     private data class FinancialTotals(
         val netBalance: Double,
+        val totalGoalSavings: Double,
+        val availableCash: Double,
         val monthlyIncome: Double,
         val monthlyExpense: Double
     )

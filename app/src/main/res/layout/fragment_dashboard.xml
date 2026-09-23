@@ -245,11 +245,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="14dp"
+                            android:layout_marginBottom="6dp"
                             android:textColor="@color/white"
                             android:textSize="34sp"
                             android:textStyle="bold"
                             tools:text="-200 ج.م" />
+
+                        <!-- Available Cash Subtitle (When Goal Savings Exist) -->
+                        <TextView
+                            android:id="@+id/tvAvailableCash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:textColor="#E0FFFFFF"
+                            android:textSize="13sp"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            tools:text="السيولة المتاحة: 5,000 ج.م (مدخر بالأهداف: 1,000 ج.م)" />
 
                         <!-- Monthly Stats (Income & Expense Translucent Sub-Cards) -->
                         <LinearLayout

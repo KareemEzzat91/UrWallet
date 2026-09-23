@@ -22,6 +22,32 @@ class TransactionRepositoryImpl @Inject constructor(
         return transactionDao.getAllTransactions().map { list -> list.map { it.toDomain() } }
     }
 
+    override fun getFilteredTransactions(
+        type: TransactionType?,
+        startDate: Long?,
+        endDate: Long?,
+        minAmount: Double?,
+        maxAmount: Double?,
+        categoryIds: List<Long>,
+        query: String?
+    ): Flow<List<Transaction>> {
+        val hasCategories = if (categoryIds.isNotEmpty()) 1 else 0
+        return transactionDao.getFilteredTransactions(
+            type = type,
+            startDate = startDate,
+            endDate = endDate,
+            minAmount = minAmount,
+            maxAmount = maxAmount,
+            hasCategories = hasCategories,
+            categoryIds = categoryIds,
+            query = query?.trim()?.ifBlank { null }
+        ).map { list -> list.map { it.toDomain() } }
+    }
+
+    override fun getTransactionsWithPeople(): Flow<List<Transaction>> {
+        return transactionDao.getTransactionsWithPeople().map { list -> list.map { it.toDomain() } }
+    }
+
     override fun getTransactionById(id: Long): Flow<Transaction?> {
         return transactionDao.getTransactionById(id).map { it?.toDomain() }
     }

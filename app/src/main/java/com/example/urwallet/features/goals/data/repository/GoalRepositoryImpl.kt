@@ -85,6 +85,10 @@ class GoalRepositoryImpl @Inject constructor(
         return goalContributionDao.getMonthlyContributionsSum(startDate, endDate)
     }
 
+    override fun getTotalGoalSavings(): Flow<Double> {
+        return goalContributionDao.getTotalGoalSavings()
+    }
+
     override suspend fun insertGoal(goal: Goal): Long {
         return goalDao.insertGoal(goal.toEntity())
     }

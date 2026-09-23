@@ -14,7 +14,7 @@ import com.example.urwallet.features.events.domain.repository.FinancialEventRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakeFinancialEventRepository : FinancialEventRepository {
+open class FakeFinancialEventRepository : FinancialEventRepository {
 
     val events = mutableListOf<FinancialEvent>()
     val mappings = mutableListOf<CounterpartyMapping>()

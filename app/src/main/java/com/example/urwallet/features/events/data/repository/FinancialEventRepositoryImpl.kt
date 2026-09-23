@@ -155,6 +155,18 @@ class FinancialEventRepositoryImpl @Inject constructor(
     ): Result<Long> = withContext(ioDispatcher) {
         runCatching {
             urWalletDatabase.withTransaction {
+                // 0. Verify current inbox event status under transaction lock
+                val currentInbox = financialInboxDao.getEventById(eventId)
+                    ?: throw IllegalArgumentException("المعاملة غير موجودة في الوارد المالي")
+
+                if (currentInbox.status == "CONFIRMED" && currentInbox.matchedTransactionId != null) {
+                    return@withTransaction currentInbox.matchedTransactionId
+                }
+
+                if (currentInbox.status != "PENDING") {
+                    throw IllegalStateException("لا يمكن تأكيد معاملة بحالة ${currentInbox.status}")
+                }
+
                 // 1. Insert Transaction into financial ledger
                 val txEntity = TransactionEntity(
                     id = 0L,

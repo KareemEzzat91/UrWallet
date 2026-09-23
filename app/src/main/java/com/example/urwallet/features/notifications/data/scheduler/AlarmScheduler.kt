@@ -62,40 +62,20 @@ class AlarmScheduler @Inject constructor(
     }
 
     /**
-     * Schedules the next daily reminder using exact alarm when permitted,
-     * falling back smoothly to inexact idle alarm. Never crashes on missing exact alarm permissions.
+     * Schedules the next daily reminder using inexact idle alarm.
+     * Reliable for reminders without demanding restricted exact-alarm privileges.
      */
     fun scheduleDailyReminder(hour: Int, minute: Int) {
         val triggerTime = calculateNextTriggerTime(hour, minute, System.currentTimeMillis())
         val pendingIntent = getPendingIntent()
 
-        val canScheduleExact = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            alarmManager.canScheduleExactAlarms()
-        } else {
-            true
-        }
-
         try {
-            if (canScheduleExact) {
-                alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    triggerTime,
-                    pendingIntent
-                )
-            } else {
-                alarmManager.setAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    triggerTime,
-                    pendingIntent
-                )
-            }
-        } catch (e: SecurityException) {
-            // Graceful fallback in case exact alarm permission was revoked concurrently
             alarmManager.setAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 triggerTime,
                 pendingIntent
             )
+        } catch (_: Exception) {
         }
     }
 

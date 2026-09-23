@@ -114,6 +114,59 @@ class ConfirmFinancialEventUseCaseTest {
         assertEquals("أحمد مصطفى", savedMapping!!.name)
     }
 
+    @Test
+    fun `confirming already confirmed event is idempotent and returns existing transaction id`() = runTest {
+        val confirmedEvent = FinancialEvent(
+            id = 30L,
+            amount = 300.0,
+            type = TransactionType.EXPENSE,
+            date = 1727000000000L,
+            sourceType = FinancialEventSource.SMS,
+            sourceIdentifier = "sms_hash_30",
+            sender = "VodafoneCash",
+            confidence = EventConfidence.HIGH,
+            status = InboxStatus.CONFIRMED,
+            matchedTransactionId = 555L,
+            matchStatus = DuplicateMatchStatus.EXACT_MATCH
+        )
+        fakeEventRepo.insertEvent(confirmedEvent)
+
+        val result = confirmUseCase(
+            eventId = 30L,
+            categoryId = 1L,
+            title = "Already confirmed"
+        )
+
+        assertTrue(result.isSuccess)
+        assertEquals(555L, result.getOrNull())
+    }
+
+    @Test
+    fun `confirming dismissed event returns failure`() = runTest {
+        val dismissedEvent = FinancialEvent(
+            id = 40L,
+            amount = 100.0,
+            type = TransactionType.EXPENSE,
+            date = 1727000000000L,
+            sourceType = FinancialEventSource.SMS,
+            sourceIdentifier = "sms_hash_40",
+            sender = "Promo",
+            confidence = EventConfidence.LOW,
+            status = InboxStatus.DISMISSED,
+            matchStatus = DuplicateMatchStatus.NEW_EVENT
+        )
+        fakeEventRepo.insertEvent(dismissedEvent)
+
+        val result = confirmUseCase(
+            eventId = 40L,
+            categoryId = 1L,
+            title = "Dismissed event"
+        )
+
+        assertTrue(result.isFailure)
+        assertTrue(result.exceptionOrNull() is IllegalStateException)
+    }
+
     private class TestTxRepo : TransactionRepository {
         val inserted = mutableListOf<Transaction>()
 

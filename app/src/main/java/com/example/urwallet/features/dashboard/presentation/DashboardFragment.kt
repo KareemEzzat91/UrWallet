@@ -46,6 +46,8 @@ class DashboardFragment : Fragment() {
 
     private var isBalanceHidden = false
     private var currentNetBalance: Double = 0.0
+    private var currentAvailableCash: Double = 0.0
+    private var currentGoalSavings: Double = 0.0
     private var nearestGoal: Goal? = null
 
     override fun onCreateView(
@@ -170,6 +172,8 @@ class DashboardFragment : Fragment() {
     private fun renderBalance() {
         if (isBalanceHidden) {
             binding.tvNetBalance.text = getString(R.string.dashboard_balance_hidden_mask)
+            binding.tvAvailableCash.text = getString(R.string.dashboard_balance_hidden_mask)
+            binding.tvAvailableCash.isVisible = currentGoalSavings > 0.001
             binding.btnToggleBalancePrivacy.setImageResource(R.drawable.ic_eye_closed)
         } else {
             val formatted = if (currentNetBalance < 0) {
@@ -178,6 +182,14 @@ class DashboardFragment : Fragment() {
                 Formatters.formatCurrency(currentNetBalance)
             }
             binding.tvNetBalance.text = formatted
+            if (currentGoalSavings > 0.001) {
+                val availableFormatted = Formatters.formatCurrency(currentAvailableCash)
+                val savingsFormatted = Formatters.formatCurrency(currentGoalSavings)
+                binding.tvAvailableCash.text = "السيولة المتاحة: $availableFormatted (مدخر بالأهداف: $savingsFormatted)"
+                binding.tvAvailableCash.isVisible = true
+            } else {
+                binding.tvAvailableCash.isVisible = false
+            }
             binding.btnToggleBalancePrivacy.setImageResource(R.drawable.ic_eye_open)
         }
     }
@@ -229,6 +241,8 @@ class DashboardFragment : Fragment() {
     private fun bindSummaryData(summary: DashboardSummary) {
         // 1. Hero Balance & Month
         currentNetBalance = summary.netBalance
+        currentAvailableCash = summary.availableCash
+        currentGoalSavings = summary.totalGoalSavings
         renderBalance()
 
         binding.tvCurrentMonth.text = getString(R.string.dashboard_this_month)

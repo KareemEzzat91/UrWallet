@@ -12,6 +12,8 @@ data class DashboardTransactionItem(
 
 data class DashboardSummary(
     val netBalance: Double,
+    val totalGoalSavings: Double = 0.0,
+    val availableCash: Double = netBalance - totalGoalSavings,
     val monthlyIncome: Double,
     val monthlyExpense: Double,
     val recentTransactions: List<DashboardTransactionItem>,

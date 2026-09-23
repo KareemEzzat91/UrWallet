@@ -171,4 +171,65 @@ class GetFilteredTransactionsUseCaseTest {
 
         assertTrue(results.isEmpty())
     }
+
+    @Test
+    fun `flow overload delegates to transactionRepository with mapped criteria`() = kotlinx.coroutines.test.runTest {
+        var capturedType: TransactionType? = null
+        var capturedQuery: String? = null
+        var capturedCategoryIds: List<Long>? = null
+
+        val fakeRepo = object : FakeTransactionRepositoryForTest() {
+            override fun getFilteredTransactions(
+                type: TransactionType?,
+                startDate: Long?,
+                endDate: Long?,
+                minAmount: Double?,
+                maxAmount: Double?,
+                categoryIds: List<Long>,
+                query: String?
+            ): kotlinx.coroutines.flow.Flow<List<Transaction>> {
+                capturedType = type
+                capturedQuery = query
+                capturedCategoryIds = categoryIds
+                return kotlinx.coroutines.flow.flowOf(sampleTransactions)
+            }
+        }
+
+        val repoUseCase = GetFilteredTransactionsUseCase(fakeRepo)
+        val criteria = TransactionFilterCriteria(
+            query = "قهوة",
+            type = TransactionType.EXPENSE,
+            categoryIds = setOf(1L, 2L)
+        )
+
+        repoUseCase(criteria).collect { list ->
+            assertEquals(3, list.size)
+        }
+
+        assertEquals(TransactionType.EXPENSE, capturedType)
+        assertEquals("قهوة", capturedQuery)
+        assertEquals(listOf(1L, 2L), capturedCategoryIds)
+    }
+
+    private open class FakeTransactionRepositoryForTest : com.example.urwallet.features.transactions.domain.repository.TransactionRepository {
+        override fun getAllTransactions(): kotlinx.coroutines.flow.Flow<List<Transaction>> = kotlinx.coroutines.flow.flowOf(emptyList())
+        override fun getTransactionById(id: Long): kotlinx.coroutines.flow.Flow<Transaction?> = kotlinx.coroutines.flow.flowOf(null)
+        override fun getRecentTransactions(limit: Int): kotlinx.coroutines.flow.Flow<List<Transaction>> = kotlinx.coroutines.flow.flowOf(emptyList())
+        override fun getTransactionsBetween(startDate: Long, endDate: Long): kotlinx.coroutines.flow.Flow<List<Transaction>> = kotlinx.coroutines.flow.flowOf(emptyList())
+        override fun getTransactionsByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): kotlinx.coroutines.flow.Flow<List<Transaction>> = kotlinx.coroutines.flow.flowOf(emptyList())
+        override fun getSumByTypeAndPeriod(type: TransactionType, startDate: Long, endDate: Long): kotlinx.coroutines.flow.Flow<Double> = kotlinx.coroutines.flow.flowOf(0.0)
+        override fun getTotalSumByType(type: TransactionType): kotlinx.coroutines.flow.Flow<Double> = kotlinx.coroutines.flow.flowOf(0.0)
+        override fun getSumByCategoryAndPeriod(categoryId: Long, startDate: Long, endDate: Long): kotlinx.coroutines.flow.Flow<Double> = kotlinx.coroutines.flow.flowOf(0.0)
+        override fun getTodayTransactionCount(startOfDay: Long, endOfDay: Long): kotlinx.coroutines.flow.Flow<Int> = kotlinx.coroutines.flow.flowOf(0)
+        override suspend fun insertTransaction(transaction: Transaction): Long = 1L
+        override suspend fun updateTransaction(transaction: Transaction) {}
+        override suspend fun deleteTransaction(transaction: Transaction) {}
+        override suspend fun deleteTransactionById(id: Long) {}
+        override fun getAllCategories(): kotlinx.coroutines.flow.Flow<List<Category>> = kotlinx.coroutines.flow.flowOf(emptyList())
+        override fun getCategoriesByType(type: CategoryType): kotlinx.coroutines.flow.Flow<List<Category>> = kotlinx.coroutines.flow.flowOf(emptyList())
+        override suspend fun getCategoryById(id: Long): Category? = null
+        override suspend fun insertCategory(category: Category): Long = 1L
+        override suspend fun updateCategory(category: Category) {}
+        override suspend fun deleteCategory(id: Long) {}
+    }
 }

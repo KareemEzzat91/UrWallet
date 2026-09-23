@@ -8,6 +8,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
     fun getAllTransactions(): Flow<List<Transaction>>
+    fun getFilteredTransactions(
+        type: TransactionType? = null,
+        startDate: Long? = null,
+        endDate: Long? = null,
+        minAmount: Double? = null,
+        maxAmount: Double? = null,
+        categoryIds: List<Long> = emptyList(),
+        query: String? = null
+    ): Flow<List<Transaction>> = kotlinx.coroutines.flow.flowOf(emptyList())
+    fun getTransactionsWithPeople(): Flow<List<Transaction>> = kotlinx.coroutines.flow.flowOf(emptyList())
     fun getTransactionById(id: Long): Flow<Transaction?>
     fun getRecentTransactions(limit: Int): Flow<List<Transaction>>
     fun getTransactionsByPerson(personId: Long): Flow<List<Transaction>> = kotlinx.coroutines.flow.flowOf(emptyList())

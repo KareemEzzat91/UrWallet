@@ -12,11 +12,14 @@ import com.example.urwallet.features.people.domain.repository.PeopleRepository
 import com.example.urwallet.features.transactions.data.dao.TransactionDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import androidx.room.withTransaction
+import com.example.urwallet.core.database.UrWalletDatabase
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PeopleRepositoryImpl @Inject constructor(
+    private val urWalletDatabase: UrWalletDatabase,
     private val personDao: PersonDao,
     private val obligationDao: FinancialObligationDao,
     private val transactionDao: TransactionDao
@@ -57,9 +60,11 @@ class PeopleRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deletePerson(id: Long) {
-        // Clear transactions reference first to preserve financial ledger
-        transactionDao.clearPersonFromTransactions(id)
-        personDao.deletePersonById(id)
+        urWalletDatabase.withTransaction {
+            // Clear transactions reference first to preserve financial ledger
+            transactionDao.clearPersonFromTransactions(id)
+            personDao.deletePersonById(id)
+        }
     }
 
     // --- Financial Obligations ---
