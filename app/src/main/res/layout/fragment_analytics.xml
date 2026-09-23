@@ -71,11 +71,64 @@
                 app:cornerRadius="@dimen/chip_corner_radius" />
         </LinearLayout>
 
-        <!-- Month Navigation Bar -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Period Selector Chips -->
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipThisMonth"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="هذا الشهر" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipLastMonth"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="الشهر الماضي" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipLast3Months"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="آخر 3 أشهر" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipLast6Months"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="آخر 6 أشهر" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipThisYear"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="هذا العام" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <!-- Month Navigation Bar -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMonthNavigator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             app:cardBackgroundColor="@color/urwallet_surface"
             app:cardCornerRadius="16dp"
             app:cardElevation="1dp"
@@ -141,14 +194,370 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <!-- 1. Financial Health Score Hero Card -->
+            <!-- 1. Cash Flow Overview Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/urwallet_surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/urwallet_card_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cash_flow_title"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <!-- Income and Expense row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <!-- Income Box -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_pill_income"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_income"
+                                android:textColor="@color/urwallet_income"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvTotalIncome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/urwallet_income"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                tools:text="+ 15,000 ج.م" />
+                        </LinearLayout>
+
+                        <!-- Expenses Box -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_pill_expense"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_expense"
+                                android:textColor="@color/urwallet_expense"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvTotalExpenses"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/urwallet_expense"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                tools:text="- 8,500 ج.م" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Net Savings Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_squircle_primary_light"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/label_net_savings"
+                            android:textColor="@color/urwallet_text_primary"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvNetSavings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/urwallet_income"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="+ 6,500 ج.م" />
+                    </LinearLayout>
+
+                    <!-- Goal Savings Row (demarcated as earmarked) -->
+                    <LinearLayout
+                        android:id="@+id/layoutGoalSavings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_pill_glass"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="المدخر للأهداف المالية"
+                            android:textColor="@color/urwallet_text_secondary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvGoalSavings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/urwallet_primary"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            tools:text="1,500 ج.م" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 2. Income vs Expense Comparison Bar Chart Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardIncomeExpenseChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/urwallet_surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/urwallet_card_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="مقارنة الدخل والمصروفات"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="مقارنة التدفق المالي الشهري للفترة المحددة"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barChartIncomeExpense"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="12dp" />
+
+                    <TextView
+                        android:id="@+id/tvIncomeExpenseChartEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="لا توجد بيانات دخل أو مصروفات للفترة المحددة"
+                        android:textColor="@color/urwallet_text_tertiary"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 3. Spending Trend Line Chart Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSpendingTrendChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/urwallet_surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/urwallet_card_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="مسار المصروفات اليومية"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="توزيع الإنفاق اليومي لمعرفة فترات الذروة"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lineChartSpendingTrend"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="12dp" />
+
+                    <TextView
+                        android:id="@+id/tvChartEmptyNotice"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="@string/chart_no_expenses_in_month"
+                        android:textColor="@color/urwallet_text_tertiary"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 4. Category Breakdown Donut / Pie Chart Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardCategoryPieChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/urwallet_surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/urwallet_card_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="توزيع المصروفات حسب الفئات"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="نسبة مساهمة كل فئة في إجمالي نفقاتك"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChartCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:layout_marginTop="12dp" />
+
+                    <TextView
+                        android:id="@+id/tvPieChartEmptyNotice"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="لا توجد فئات مصروفات للفترة المحددة"
+                        android:textColor="@color/urwallet_text_tertiary"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 5. Category Spending Breakdown Section (Ranked List) -->
+            <LinearLayout
+                android:id="@+id/layoutCategoryBreakdownSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_breakdown_title"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCategoryBreakdownCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_pill_primary"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="2dp"
+                        android:textColor="@color/urwallet_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        tools:text="4" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCategorySpending"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_category_analytics_bar" />
+            </LinearLayout>
+
+            <!-- 6. Financial Health Score Hero Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardHealthScore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
+                app:cardElevation="2dp"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -158,7 +567,7 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <!-- Score Header -->
+                    <!-- Header: Label + Rating Badge -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -170,8 +579,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/financial_health_title"
-                            android:textColor="#CCFFFFFF"
-                            android:textSize="13sp"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -182,12 +591,12 @@
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:textColor="@color/white"
-                            android:textSize="11sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             tools:text="جيد جداً" />
                     </LinearLayout>
 
-                    <!-- Big Radial Score Presentation -->
+                    <!-- Score Value & Coaching Message -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -331,228 +740,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 2. Cash Flow Overview Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/urwallet_surface"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="1dp"
-                app:strokeColor="@color/urwallet_card_border"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cash_flow_title"
-                        android:textColor="@color/urwallet_text_primary"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <!-- Income and Expense row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal">
-
-                        <!-- Income Box -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_pill_income"
-                            android:orientation="vertical"
-                            android:padding="12dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/label_income"
-                                android:textColor="@color/urwallet_income"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvTotalIncome"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textColor="@color/urwallet_income"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                tools:text="+ 15,000 ج.م" />
-                        </LinearLayout>
-
-                        <!-- Expenses Box -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_pill_expense"
-                            android:orientation="vertical"
-                            android:padding="12dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/label_expense"
-                                android:textColor="@color/urwallet_expense"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvTotalExpenses"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textColor="@color/urwallet_expense"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                tools:text="- 8,500 ج.م" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Net Savings Row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_squircle_primary_light"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="12dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/label_net_savings"
-                            android:textColor="@color/urwallet_text_primary"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvNetSavings"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/urwallet_income"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            tools:text="+ 6,500 ج.م" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 3. Spending Trend Bar Chart Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/urwallet_surface"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="1dp"
-                app:strokeColor="@color/urwallet_card_border"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/spending_trend_chart_title"
-                        android:textColor="@color/urwallet_text_primary"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="@string/spending_trend_chart_subtitle"
-                        android:textColor="@color/urwallet_text_secondary"
-                        android:textSize="12sp" />
-
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/barChartSpending"
-                        android:layout_width="match_parent"
-                        android:layout_height="190dp"
-                        android:layout_marginTop="12dp" />
-
-                    <TextView
-                        android:id="@+id/tvChartEmptyNotice"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center"
-                        android:text="@string/chart_no_expenses_in_month"
-                        android:textColor="@color/urwallet_text_tertiary"
-                        android:textSize="13sp"
-                        android:visibility="gone" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 4. Category Spending Breakdown Section -->
-            <LinearLayout
-                android:id="@+id/layoutCategoryBreakdownSection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/category_breakdown_title"
-                        android:textColor="@color/urwallet_text_primary"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCategoryBreakdownCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_pill_primary"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="2dp"
-                        android:textColor="@color/urwallet_primary"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        tools:text="4" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCategorySpending"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_category_analytics_bar" />
-            </LinearLayout>
-
-            <!-- 5. Habits & Personality Shortcut Banner Card -->
+            <!-- 7. Habits & Personality Shortcut Banner Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardHabitsBanner"
                 android:layout_width="match_parent"

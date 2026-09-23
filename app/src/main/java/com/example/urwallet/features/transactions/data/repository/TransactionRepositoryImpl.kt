@@ -5,6 +5,8 @@ import com.example.urwallet.core.common.TransactionType
 import com.example.urwallet.features.transactions.data.dao.CategoryDao
 import com.example.urwallet.features.transactions.data.dao.TransactionDao
 import com.example.urwallet.features.transactions.data.entity.CategoryEntity
+import com.example.urwallet.features.transactions.data.entity.DailySpendingEntity
+import com.example.urwallet.features.transactions.data.entity.MonthlyCashFlowEntity
 import com.example.urwallet.features.transactions.data.entity.TransactionEntity
 import com.example.urwallet.features.transactions.domain.model.Category
 import com.example.urwallet.features.transactions.domain.model.Transaction
@@ -127,6 +129,14 @@ class TransactionRepositoryImpl @Inject constructor(
         return transactionDao.getCategorySpendingBetween(startDate, endDate).map { list ->
             list.associate { it.categoryId to it.totalSpent }
         }
+    }
+
+    override fun getMonthlyCashFlowsBetween(startDate: Long, endDate: Long): Flow<List<MonthlyCashFlowEntity>> {
+        return transactionDao.getMonthlyCashFlowsBetween(startDate, endDate)
+    }
+
+    override fun getDailyExpensesBetween(startDate: Long, endDate: Long): Flow<List<DailySpendingEntity>> {
+        return transactionDao.getDailyExpensesBetween(startDate, endDate)
     }
 
     override suspend fun countTransactionsByNoteTag(tagPattern: String): Int {

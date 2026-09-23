@@ -173,4 +173,45 @@ object DateUtils {
     fun getCurrentDayOfMonth(): Int {
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
     }
+
+    fun getPeriodDateRange(
+        period: com.example.urwallet.features.analytics.domain.model.AnalyticsTimePeriod,
+        referenceMonth: Int = getCurrentMonth(),
+        referenceYear: Int = getCurrentYear()
+    ): Pair<Long, Long> {
+        return when (period) {
+            com.example.urwallet.features.analytics.domain.model.AnalyticsTimePeriod.THIS_MONTH -> {
+                Pair(getStartOfMonth(referenceMonth, referenceYear), getEndOfMonth(referenceMonth, referenceYear))
+            }
+            com.example.urwallet.features.analytics.domain.model.AnalyticsTimePeriod.LAST_MONTH -> {
+                val (prevM, prevY) = getPreviousMonth(referenceMonth, referenceYear)
+                Pair(getStartOfMonth(prevM, prevY), getEndOfMonth(prevM, prevY))
+            }
+            com.example.urwallet.features.analytics.domain.model.AnalyticsTimePeriod.LAST_3_MONTHS -> {
+                val cal = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, referenceYear)
+                    set(Calendar.MONTH, referenceMonth - 1)
+                    set(Calendar.DAY_OF_MONTH, 1)
+                    add(Calendar.MONTH, -2)
+                }
+                val startM = cal.get(Calendar.MONTH) + 1
+                val startY = cal.get(Calendar.YEAR)
+                Pair(getStartOfMonth(startM, startY), getEndOfMonth(referenceMonth, referenceYear))
+            }
+            com.example.urwallet.features.analytics.domain.model.AnalyticsTimePeriod.LAST_6_MONTHS -> {
+                val cal = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, referenceYear)
+                    set(Calendar.MONTH, referenceMonth - 1)
+                    set(Calendar.DAY_OF_MONTH, 1)
+                    add(Calendar.MONTH, -5)
+                }
+                val startM = cal.get(Calendar.MONTH) + 1
+                val startY = cal.get(Calendar.YEAR)
+                Pair(getStartOfMonth(startM, startY), getEndOfMonth(referenceMonth, referenceYear))
+            }
+            com.example.urwallet.features.analytics.domain.model.AnalyticsTimePeriod.THIS_YEAR -> {
+                Pair(getStartOfMonth(1, referenceYear), getEndOfMonth(12, referenceYear))
+            }
+        }
+    }
 }

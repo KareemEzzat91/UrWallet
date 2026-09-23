@@ -8,6 +8,8 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.urwallet.core.common.TransactionType
 import com.example.urwallet.features.transactions.data.entity.CategorySpendingEntity
+import com.example.urwallet.features.transactions.data.entity.DailySpendingEntity
+import com.example.urwallet.features.transactions.data.entity.MonthlyCashFlowEntity
 import com.example.urwallet.features.transactions.data.entity.TransactionEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -118,4 +120,30 @@ interface TransactionDao {
 
     @Query("UPDATE transactions SET categoryId = :categoryId, updatedAt = :updatedAt WHERE id IN (:ids)")
     suspend fun updateCategoryByIds(ids: List<Long>, categoryId: Long, updatedAt: Long = System.currentTimeMillis()): Int
+
+    @Query("""
+        SELECT 
+            CAST(strftime('%Y', date / 1000, 'unixepoch', 'localtime') AS INTEGER) AS year,
+            CAST(strftime('%m', date / 1000, 'unixepoch', 'localtime') AS INTEGER) AS month,
+            type,
+            COALESCE(SUM(amount), 0.0) AS totalAmount
+        FROM transactions
+        WHERE date >= :startDate AND date <= :endDate
+        GROUP BY year, month, type
+        ORDER BY year ASC, month ASC
+    """)
+    fun getMonthlyCashFlowsBetween(startDate: Long, endDate: Long): Flow<List<MonthlyCashFlowEntity>>
+
+    @Query("""
+        SELECT 
+            CAST(strftime('%Y', date / 1000, 'unixepoch', 'localtime') AS INTEGER) AS year,
+            CAST(strftime('%m', date / 1000, 'unixepoch', 'localtime') AS INTEGER) AS month,
+            CAST(strftime('%d', date / 1000, 'unixepoch', 'localtime') AS INTEGER) AS day,
+            COALESCE(SUM(amount), 0.0) AS totalAmount
+        FROM transactions
+        WHERE type = 'EXPENSE' AND date >= :startDate AND date <= :endDate
+        GROUP BY year, month, day
+        ORDER BY year ASC, month ASC, day ASC
+    """)
+    fun getDailyExpensesBetween(startDate: Long, endDate: Long): Flow<List<DailySpendingEntity>>
 }
