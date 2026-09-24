@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/urwallet_background"
-    android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <!-- Top App Bar -->
@@ -104,6 +103,7 @@
         tools:visibility="visible">
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -113,13 +113,15 @@
 
             <ImageView
                 android:id="@+id/btnCloseBulk"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:contentDescription="@string/bulk_clear_selection"
                 android:focusable="true"
-                android:padding="4dp"
+                android:padding="12dp"
                 android:src="@drawable/ic_close"
                 app:tint="@color/white" />
 
@@ -139,24 +141,26 @@
                 android:id="@+id/btnBulkSelectAll"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
                 android:fontFamily="@font/cairo"
                 android:paddingHorizontal="8dp"
                 android:text="@string/bulk_select_all"
                 android:textColor="@color/white"
-                android:textSize="11sp" />
+                android:textSize="12sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBulkMarkReview"
                 style="@style/Widget.Material3.Button"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/cairo"
                 android:paddingHorizontal="10dp"
                 android:text="@string/bulk_mark_review"
                 android:textColor="@color/urwallet_primary"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:backgroundTint="@color/white"
                 app:cornerRadius="8dp" />
@@ -165,13 +169,14 @@
                 android:id="@+id/btnBulkDismiss"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
                 android:layout_marginStart="6dp"
                 android:fontFamily="@font/cairo"
                 android:paddingHorizontal="10dp"
                 android:text="@string/bulk_dismiss"
                 android:textColor="@color/white"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 app:cornerRadius="8dp"
                 app:strokeColor="@color/white" />
         </LinearLayout>
@@ -207,6 +212,7 @@
                     android:padding="16dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -249,7 +255,7 @@
                                 android:fontFamily="@font/cairo"
                                 android:text="@string/pref_sms_detection_desc"
                                 android:textColor="@color/urwallet_text_secondary"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <com.google.android.material.switchmaterial.SwitchMaterial
@@ -261,6 +267,7 @@
 
                     <!-- Permission Banner (If needed) -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:id="@+id/layoutPermissionBanner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -279,17 +286,18 @@
                             android:fontFamily="@font/cairo"
                             android:text="@string/permission_sms_rationale"
                             android:textColor="@color/urwallet_text_secondary"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnGrantPermission"
                             style="@style/Widget.Material3.Button"
                             android:layout_width="wrap_content"
-                            android:layout_height="38dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="48dp"
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/cairo"
                             android:text="@string/permission_grant_button"
-                            android:textSize="11sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             app:backgroundTint="@color/urwallet_primary"
                             app:cornerRadius="10dp" />
@@ -299,6 +307,7 @@
 
             <!-- Search Field & Sort Row -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -322,6 +331,7 @@
                     app:startIconTint="@color/urwallet_text_secondary">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:importantForAutofill="no"
                         android:id="@+id/etSearchInbox"
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
@@ -380,7 +390,7 @@
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:fontFamily="@font/cairo"
-                        android:text="معلقة (0)"
+                        android:text="@string/inbox_tab_pending" tools:text="معلقة (0)"
                         android:textSize="12sp" />
 
                     <com.google.android.material.chip.Chip

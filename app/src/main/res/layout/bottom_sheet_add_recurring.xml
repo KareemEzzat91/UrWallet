@@ -38,6 +38,7 @@
 
         <!-- Type Selector (Income vs Expense) -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
@@ -82,6 +83,7 @@
             app:boxCornerRadiusTopStart="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:importantForAutofill="no"
                 android:id="@+id/etTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,6 +108,7 @@
             app:suffixText="@string/currency_symbol">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:importantForAutofill="no"
                 android:id="@+id/etAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,6 +201,7 @@
             app:endIconMode="custom">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:importantForAutofill="no"
                 android:id="@+id/etStartDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -210,6 +214,7 @@
 
         <!-- End Date Toggle & Field -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
@@ -246,6 +251,7 @@
             app:endIconMode="custom">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:importantForAutofill="no"
                 android:id="@+id/etEndDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

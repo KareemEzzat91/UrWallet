@@ -25,6 +25,7 @@
 
         <!-- Top Row: Icon squircle with checkmark, Goal info, 100% Badge & Chevron -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -97,6 +98,7 @@
 
             <!-- 100% Completed Badge & Chevron -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -110,7 +112,7 @@
                     android:paddingVertical="4dp"
                     android:text="@string/goals_completed_badge"
                     android:textColor="@color/urwallet_income"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -136,6 +138,7 @@
 
         <!-- Celebratory Trophy Note -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -154,7 +157,7 @@
                 android:layout_marginStart="6dp"
                 android:text="@string/goal_completed_badge_banner"
                 android:textColor="@color/urwallet_text_tertiary"
-                android:textSize="11sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>

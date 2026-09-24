@@ -208,6 +208,7 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -226,6 +227,7 @@
                     app:boxCornerRadiusTopStart="12dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:importantForAutofill="no"
                         android:id="@+id/etMinAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -251,6 +253,7 @@
                     app:boxCornerRadiusTopStart="12dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:importantForAutofill="no"
                         android:id="@+id/etMaxAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -275,6 +278,7 @@
 
     <!-- Action Buttons -->
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

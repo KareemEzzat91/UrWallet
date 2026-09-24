@@ -6,7 +6,6 @@
     android:id="@+id/scrollDashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
     android:background="@color/urwallet_background"
     android:fillViewport="true">
 
@@ -81,7 +80,7 @@
                     android:layout_marginTop="2dp"
                     android:text="@string/dashboard_daily_quote"
                     android:textColor="#00897B"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <!-- Notification Button with Unread Badge -->
@@ -114,7 +113,7 @@
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:visibility="visible" />
             </FrameLayout>
@@ -176,7 +175,7 @@
 
                     <LinearLayout
                         android:id="@+id/layoutHeroCardContent"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="20dp"
@@ -191,6 +190,7 @@
                             android:layout_height="wrap_content">
 
                             <LinearLayout
+                                android:baselineAligned="false"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -272,6 +272,7 @@
 
                             <!-- Monthly Expense Sub-Card (Right in RTL) -->
                             <LinearLayout
+                                android:baselineAligned="false"
                                 android:id="@+id/layoutExpensePill"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -294,7 +295,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/dashboard_monthly_expense"
                                         android:textColor="#B3FFFFFF"
-                                        android:textSize="11sp" />
+                                        android:textSize="12sp" />
 
                                     <TextView
                                         android:id="@+id/tvMonthlyExpense"
@@ -325,6 +326,7 @@
 
                             <!-- Monthly Income Sub-Card (Left in RTL) -->
                             <LinearLayout
+                                android:baselineAligned="false"
                                 android:id="@+id/layoutIncomePill"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -347,7 +349,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/dashboard_monthly_income"
                                         android:textColor="#B3FFFFFF"
-                                        android:textSize="11sp" />
+                                        android:textSize="12sp" />
 
                                     <TextView
                                         android:id="@+id/tvMonthlyIncome"
@@ -573,6 +575,7 @@
 
                     <!-- Goal Header: Icon + Titles + Percentage + Chevron -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -638,11 +641,12 @@
                                 android:layout_marginTop="1dp"
                                 android:text="@string/dashboard_goal_security_subtitle"
                                 android:textColor="@color/urwallet_text_tertiary"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <!-- Percentage Badge & Chevron -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -739,6 +743,7 @@
                     android:padding="18dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -762,6 +767,7 @@
                             android:textStyle="bold" />
 
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_pill_streak"
@@ -868,7 +874,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
-                    android:text="عرض الكل &lt;"
+                    android:text="@string/action_view_all"
                     android:textColor="@color/urwallet_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"

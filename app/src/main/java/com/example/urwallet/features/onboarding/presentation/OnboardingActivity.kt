@@ -40,14 +40,25 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun setupInsets() {
+        androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             val navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val topInset = if (statusBars.top > 0) statusBars.top else resources.getDimensionPixelSize(R.dimen.spacing_lg)
+            val btnTopMargin = topInset + resources.getDimensionPixelSize(R.dimen.spacing_sm)
+
             binding.btnSkip.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = statusBars.top + resources.getDimensionPixelSize(R.dimen.spacing_md)
+                topMargin = btnTopMargin
+            }
+            binding.btnExit.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = btnTopMargin
+            }
+            binding.viewPager.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = btnTopMargin + resources.getDimensionPixelSize(R.dimen.spacing_xl)
             }
             binding.bottomBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = navBars.bottom + resources.getDimensionPixelSize(R.dimen.spacing_md)
+                val bottomInset = if (navBars.bottom > 0) navBars.bottom else 0
+                bottomMargin = bottomInset + resources.getDimensionPixelSize(R.dimen.spacing_md)
             }
             insets
         }
@@ -143,6 +154,10 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
+        binding.btnExit.setOnClickListener {
+            finish()
+        }
+
         binding.btnSkip.setOnClickListener {
             navigateToWizard()
         }

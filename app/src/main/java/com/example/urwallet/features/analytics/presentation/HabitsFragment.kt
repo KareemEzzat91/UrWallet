@@ -17,6 +17,7 @@ import com.example.urwallet.core.common.DateUtils
 import com.example.urwallet.core.common.Formatters
 import com.example.urwallet.databinding.FragmentHabitsBinding
 import com.example.urwallet.features.analytics.domain.model.FinancialHabitsResult
+import com.example.urwallet.features.analytics.domain.model.PersonalityType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -93,18 +94,53 @@ class HabitsFragment : Fragment() {
 
         // 1. Personality
         val p = result.personality
+        val (titleRes, descRes, coachRes) = when (p.type) {
+            PersonalityType.CAUTIOUS_SAVER -> Triple(
+                R.string.personality_cautious_saver_title,
+                R.string.personality_cautious_saver_desc,
+                R.string.personality_cautious_saver_coach
+            )
+            PersonalityType.SMART_PLANNER -> Triple(
+                R.string.personality_smart_planner_title,
+                R.string.personality_smart_planner_desc,
+                R.string.personality_smart_planner_coach
+            )
+            PersonalityType.SPONTANEOUS_SPENDER -> Triple(
+                R.string.personality_spontaneous_spender_title,
+                R.string.personality_spontaneous_spender_desc,
+                R.string.personality_spontaneous_spender_coach
+            )
+            PersonalityType.BALANCED -> Triple(
+                R.string.personality_balanced_title,
+                R.string.personality_balanced_desc,
+                R.string.personality_balanced_coach
+            )
+        }
         binding.tvPersonalityEmoji.text = p.emoji
-        binding.tvPersonalityTitle.text = p.title
-        binding.tvPersonalityDescription.text = p.description
-        binding.tvCoachRecommendation.text = p.coachRecommendation
+        binding.tvPersonalityTitle.text = getString(titleRes)
+        binding.tvPersonalityDescription.text = getString(descRes)
+        binding.tvCoachRecommendation.text = getString(coachRes)
 
         // 2. Peak Day
         if (result.peakSpendingDay != null && result.peakSpendingAmount > 0.0) {
-            binding.tvPeakDayName.text = result.peakSpendingDay
-            binding.tvPeakDayAmount.text = "إجمالي ${Formatters.formatCurrency(result.peakSpendingAmount)}"
+            val localizedDay = when (result.peakSpendingDay) {
+                "السبت" -> if (Locale.getDefault().language == "en") "Saturday" else "السبت"
+                "الأحد" -> if (Locale.getDefault().language == "en") "Sunday" else "الأحد"
+                "الاثنين" -> if (Locale.getDefault().language == "en") "Monday" else "الاثنين"
+                "الثلاثاء" -> if (Locale.getDefault().language == "en") "Tuesday" else "الثلاثاء"
+                "الأربعاء" -> if (Locale.getDefault().language == "en") "Wednesday" else "الأربعاء"
+                "الخميس" -> if (Locale.getDefault().language == "en") "Thursday" else "الخميس"
+                "الجمعة" -> if (Locale.getDefault().language == "en") "Friday" else "الجمعة"
+                else -> result.peakSpendingDay
+            }
+            binding.tvPeakDayName.text = localizedDay
+            binding.tvPeakDayAmount.text = getString(
+                R.string.habits_peak_total_format,
+                Formatters.formatCurrency(result.peakSpendingAmount)
+            )
         } else {
-            binding.tvPeakDayName.text = "لا توجد مصروفات"
-            binding.tvPeakDayAmount.text = "0 ج.م"
+            binding.tvPeakDayName.text = getString(R.string.habits_no_expenses)
+            binding.tvPeakDayAmount.text = Formatters.formatCurrency(0.0)
         }
 
         // 3. Daily Average

@@ -63,6 +63,7 @@
         app:suffixText="@string/currency_symbol">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:importantForAutofill="no"
             android:id="@+id/etContributeAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,6 +76,7 @@
 
     <!-- Quick Presets -->
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -164,10 +166,11 @@
         app:boxStrokeColor="@color/urwallet_primary">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:importantForAutofill="no"
             android:id="@+id/etContributeNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="مثال: من مكافأة العمل..."
+            android:hint="@string/hint_goal_contribution_note"
             android:inputType="textCapSentences"
             android:textColor="@color/urwallet_text_primary" />
     </com.google.android.material.textfield.TextInputLayout>

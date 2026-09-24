@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
     android:background="@color/urwallet_background"
     android:fillViewport="true">
 
@@ -18,6 +17,7 @@
 
         <!-- Top Header Row -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -74,6 +74,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -127,7 +128,7 @@
                     android:paddingVertical="5dp"
                     android:text="@string/more_badge_secure"
                     android:textColor="#00732C"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -136,6 +137,7 @@
         <!-- SECTION 1: الإدارة والتحليلات المالية                       -->
         <!-- ========================================================= -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
@@ -173,6 +175,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -228,7 +231,7 @@
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="3dp"
                     android:textColor="@color/white"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:visibility="gone"
                     tools:text="3"
@@ -258,6 +261,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -328,6 +332,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -398,6 +403,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -468,6 +474,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -538,6 +545,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -597,6 +605,7 @@
         <!-- SECTION 2: النمو والتحفيز المالي                           -->
         <!-- ========================================================= -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -634,6 +643,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -703,6 +713,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -762,6 +773,7 @@
         <!-- SECTION 3: التفضيلات والأمان                               -->
         <!-- ========================================================= -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -799,6 +811,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -872,6 +885,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -943,6 +957,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -1013,6 +1028,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -1083,6 +1099,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -1150,7 +1167,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="UrWallet v1.0.0"
+                android:text="@string/more_app_version_label"
                 android:textColor="@color/urwallet_text_tertiary"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -1161,7 +1178,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/more_footer_privacy"
                 android:textColor="@color/urwallet_text_tertiary"
-                android:textSize="11sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>

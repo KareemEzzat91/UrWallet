@@ -12,7 +12,7 @@
     <!-- App / Security Header -->
     <LinearLayout
         android:id="@+id/headerContainer"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
@@ -57,6 +57,7 @@
 
         <!-- 4 PIN Dots Indicator -->
         <LinearLayout
+            android:baselineAligned="false"
             android:id="@+id/pinDotsContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -123,6 +124,7 @@
 
         <!-- Row 1: 1, 2, 3 -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -145,6 +147,7 @@
 
         <!-- Row 2: 4, 5, 6 -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -167,6 +170,7 @@
 
         <!-- Row 3: 7, 8, 9 -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -189,6 +193,7 @@
 
         <!-- Row 4: Biometric, 0, Delete -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

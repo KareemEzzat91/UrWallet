@@ -31,6 +31,7 @@
 
         <!-- Pace selector: 3 cards in a row -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -71,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/wizard_pace_relaxed_desc"
                     android:textColor="@color/urwallet_text_secondary"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:gravity="center" />
             </LinearLayout>
 
@@ -110,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/wizard_pace_balanced_desc"
                     android:textColor="#CCE8EAF6"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:gravity="center" />
             </LinearLayout>
 
@@ -149,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/wizard_pace_aggressive_desc"
                     android:textColor="@color/urwallet_text_secondary"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:gravity="center" />
             </LinearLayout>
         </LinearLayout>

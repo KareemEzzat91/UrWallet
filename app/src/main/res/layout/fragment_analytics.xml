@@ -18,6 +18,7 @@
 
         <!-- Top Header Row -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -136,6 +137,7 @@
             app:strokeWidth="1dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
@@ -288,6 +290,7 @@
 
                     <!-- Net Savings Row -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -317,6 +320,7 @@
 
                     <!-- Goal Savings Row (demarcated as earmarked) -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:id="@+id/layoutGoalSavings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -481,7 +485,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="نسبة مساهمة كل فئة في إجمالي نفقاتك"
+                        android:text="@string/analytics_category_share_subtitle"
                         android:textColor="@color/urwallet_text_secondary"
                         android:textSize="12sp" />
 
@@ -512,6 +516,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -535,7 +540,7 @@
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="2dp"
                         android:textColor="@color/urwallet_primary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         tools:text="4" />
                 </LinearLayout>
@@ -569,6 +574,7 @@
 
                     <!-- Header: Label + Rating Badge -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -598,6 +604,7 @@
 
                     <!-- Score Value & Coaching Message -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
@@ -605,6 +612,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
@@ -624,7 +632,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:layout_marginBottom="6dp"
-                                android:text="/ 100"
+                                android:text="@string/health_score_max"
                                 android:textColor="#B3FFFFFF"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -665,7 +673,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/pillar_planning"
                                 android:textColor="#B3FFFFFF"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tvPlanningScore"
@@ -694,7 +702,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/pillar_saving"
                                 android:textColor="#B3FFFFFF"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tvSavingScore"
@@ -723,7 +731,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/pillar_control"
                                 android:textColor="#B3FFFFFF"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tvControlScore"
@@ -755,6 +763,7 @@
                 app:strokeWidth="1dp">
 
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:baselineAligned="false" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -23,6 +24,7 @@
 
     <!-- Today / Yesterday Pill Badge (End in RTL) -->
     <LinearLayout
+        android:baselineAligned="false"
         android:id="@+id/layoutTodayBadge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="@string/date_today"
             android:textColor="@color/urwallet_primary"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             tools:text="Today" />
 

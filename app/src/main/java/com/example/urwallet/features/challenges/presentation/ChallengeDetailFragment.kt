@@ -57,6 +57,7 @@ class ChallengeDetailFragment : Fragment() {
 
     private fun setupTimelineList() {
         timelineAdapter = ChallengeDaysAdapter()
+        binding.rvDailyTimeline.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
         binding.rvDailyTimeline.adapter = timelineAdapter
     }
 

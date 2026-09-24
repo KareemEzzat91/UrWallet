@@ -6,7 +6,6 @@
     android:id="@+id/mainCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
     android:background="@color/urwallet_background"
     tools:context=".MainActivity">
 

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
     android:background="@color/urwallet_background">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -26,6 +25,7 @@
             app:contentInsetStart="0dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -109,6 +109,7 @@
                     android:padding="16dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -150,7 +151,7 @@
                                 android:layout_marginTop="2dp"
                                 android:text="@string/data_management_privacy_card_desc"
                                 android:textColor="@color/urwallet_text_secondary"
-                                android:textSize="11.5sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <TextView
@@ -161,7 +162,7 @@
                             android:paddingVertical="4dp"
                             android:text="@string/more_badge_secure"
                             android:textColor="#00732C"
-                            android:textSize="11sp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -195,6 +196,7 @@
                     android:padding="18dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -301,6 +303,7 @@
                     android:padding="18dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -385,6 +388,7 @@
                     android:padding="18dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"

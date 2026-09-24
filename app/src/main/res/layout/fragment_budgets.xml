@@ -18,6 +18,7 @@
 
         <!-- Top Header Row -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -113,6 +114,7 @@
 
                     <!-- Top Row: Icon + Title + Status Pill -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -143,7 +145,7 @@
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:textColor="@color/white"
-                            android:textSize="11sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             tools:text="إنفاق آمن" />
                     </LinearLayout>
@@ -183,6 +185,7 @@
 
                     <!-- Bottom Details Row: Remaining and Percentage -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -220,6 +223,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -243,7 +247,7 @@
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="2dp"
                         android:textColor="@color/urwallet_primary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         tools:text="3" />
                 </LinearLayout>

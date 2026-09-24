@@ -11,6 +11,7 @@
 
     <!-- Top Header: Title & Subtitle (Start) + Filter Squircle Button (End) -->
     <LinearLayout
+        android:baselineAligned="false"
         android:id="@+id/layoutNormalHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,16 +46,18 @@
         <!-- Top Right Filter Button (Squircle) -->
         <FrameLayout
             android:id="@+id/btnHeaderFilter"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             android:background="@drawable/bg_btn_filter_header"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/action_filter"
                 android:src="@drawable/ic_filter"
@@ -64,6 +67,7 @@
 
     <!-- Selection Action Bar (Visible in Multi-Selection Mode) -->
     <LinearLayout
+        android:baselineAligned="false"
         android:id="@+id/layoutSelectionHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,11 +79,13 @@
 
         <ImageView
             android:id="@+id/btnCloseSelection"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_cancel"
-            android:padding="8dp"
+            android:padding="12dp"
             android:src="@drawable/ic_close"
             app:tint="@color/urwallet_text_primary" />
 
@@ -99,7 +105,8 @@
             android:id="@+id/btnBulkChangeCategory"
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:layout_marginEnd="8dp"
             android:paddingHorizontal="12dp"
             android:text="@string/btn_bulk_change_category"
@@ -119,7 +126,8 @@
             android:id="@+id/btnBulkDelete"
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:paddingHorizontal="12dp"
             android:text="@string/action_delete"
             android:textColor="@color/urwallet_expense"
@@ -136,6 +144,7 @@
 
     <!-- Modern Rounded Search Bar -->
     <LinearLayout
+        android:baselineAligned="false"
         android:id="@+id/layoutSearchBar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -146,6 +155,7 @@
         android:paddingHorizontal="14dp">
 
         <EditText
+            android:importantForAutofill="no"
             android:id="@+id/etSearch"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -161,12 +171,12 @@
 
         <ImageView
             android:id="@+id/ivClearSearch"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="6dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="4dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/cd_clear_search"
-            android:padding="4dp"
+            android:padding="8dp"
             android:src="@drawable/ic_close"
             android:visibility="gone"
             app:tint="@color/urwallet_text_secondary"
@@ -175,7 +185,8 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:contentDescription="@string/cd_search_icon"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_search"
             app:tint="@color/urwallet_text_tertiary" />
     </LinearLayout>
@@ -189,6 +200,7 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -204,7 +216,8 @@
                     android:id="@+id/btnAdvancedFilter"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
                     android:backgroundTint="#EEF2FF"
                     android:paddingHorizontal="14dp"
                     android:text="@string/action_filter"
@@ -245,7 +258,8 @@
                     android:id="@+id/chipAll"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
                     android:checked="true"
                     android:text="@string/filter_all"
                     android:textSize="13sp"
@@ -258,7 +272,8 @@
                     android:id="@+id/chipExpenses"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
                     android:text="@string/filter_expenses"
                     android:textSize="13sp"
                     app:checkedIconVisible="false"
@@ -272,7 +287,8 @@
                     android:id="@+id/chipIncome"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
                     android:text="@string/filter_income"
                     android:textSize="13sp"
                     app:checkedIconVisible="false"
@@ -287,8 +303,10 @@
             <!-- Quick Calendar Button -->
             <FrameLayout
                 android:id="@+id/btnDateFilter"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/bg_btn_filter_header"
                 android:clickable="true"
@@ -296,10 +314,10 @@
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:contentDescription="@null"
+                    android:contentDescription="@string/action_set_date"
                     android:src="@drawable/ic_calendar"
                     app:tint="@color/urwallet_primary" />
             </FrameLayout>
@@ -324,97 +342,91 @@
             android:layout_height="wrap_content"
             android:minHeight="120dp">
 
-            <!-- Background WebP Illustration (0dp MATCH_CONSTRAINT) -->
+            <!-- Background WebP Illustration (Auto-mirrored in RTL) -->
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:contentDescription="@null"
-                android:scaleType="centerCrop"
-                android:src="@drawable/trasnarctions_hero_bg"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_transactions_hero"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Close/Dismiss Button (Top-Left in RTL = End + Top) -->
+            <!-- Close/Dismiss Button (Top-End) -->
             <ImageView
                 android:id="@+id/btnCloseReportsBanner"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="12dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/cd_close"
-                android:padding="6dp"
+                android:padding="14dp"
                 android:src="@drawable/ic_close"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="#64748B" />
+                app:tint="@color/urwallet_text_secondary" />
 
-            <!-- Title (Top-Right in RTL = Start + Top) -->
-            <TextView
-                android:id="@+id/tvReportsBannerTitle"
+            <!-- Content Container (Start Side: Title + Subtitle + Action Button) -->
+            <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="12dp"
-                android:gravity="start"
-                android:text="@string/reports_banner_title"
-                android:textColor="#0A1172"
-                android:textSize="15.5sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/btnCloseReportsBanner"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Subtitle (Right in RTL, below Title) -->
-            <TextView
-                android:id="@+id/tvReportsBannerDesc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="16dp"
-                android:gravity="start"
-                android:lineSpacingExtra="2dp"
-                android:text="@string/reports_banner_desc"
-                android:textColor="#475569"
-                android:textSize="11.5sp"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btnViewReports"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvReportsBannerTitle"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.68">
 
-            <!-- Action Button: Bottom-Left in RTL = End + Bottom -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnViewReports"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="14dp"
-                android:backgroundTint="#000666"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="0dp"
-                android:text="@string/action_view_reports"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:cornerRadius="19dp"
-                app:elevation="0dp"
-                app:icon="@drawable/ic_chart_bars"
-                app:iconGravity="textStart"
-                app:iconPadding="4dp"
-                app:iconSize="14dp"
-                app:iconTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnCloseReportsBanner"
-                app:layout_constraintVertical_bias="1.0" />
+                <TextView
+                    android:id="@+id/tvReportsBannerTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/reports_banner_title"
+                    android:textColor="@color/urwallet_text_primary"
+                    android:textSize="15.5sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvReportsBannerDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="start"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/reports_banner_desc"
+                    android:textColor="@color/urwallet_text_secondary"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewReports"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/urwallet_primary"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="0dp"
+                    android:text="@string/action_view_reports"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="19dp"
+                    app:elevation="0dp"
+                    app:icon="@drawable/ic_chart_bars"
+                    app:iconGravity="textStart"
+                    app:iconPadding="4dp"
+                    app:iconSize="14dp"
+                    app:iconTint="@color/white" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

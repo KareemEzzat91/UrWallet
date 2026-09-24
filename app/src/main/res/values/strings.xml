@@ -271,7 +271,7 @@ Date: %4$s</string>
     <string name="goals_all_completed_format">All goals successfully completed 🎉</string>
     <string name="goals_saved_prefix">Saved</string>
     <string name="goals_target_prefix">of</string>
-    <string name="goals_completed_badge">100% Completed</string>
+    <string name="goals_completed_badge" formatted="false">100% Completed</string>
     <string name="goals_completed_sub_format">Fully saved %1$s 🎉</string>
     <string name="label_contributions_count">Contributions History (%1$d)</string>
     <string name="goal_pace_relaxed_label">Relaxed Pace</string>
@@ -355,9 +355,9 @@ for a better future 🌱</string>
     <string name="daily_average_subtitle">Average spending per day</string>
     <string name="rule_50_30_20_title">The 50/30/20 Financial Rule</string>
     <string name="rule_50_30_20_desc">Split your monthly spending into essentials, wants, and savings</string>
-    <string name="rule_needs_label">Essential Needs (50%)</string>
-    <string name="rule_wants_label">Wants &amp; Leisure (30%)</string>
-    <string name="rule_savings_label">Savings &amp; Goals (20%)</string>
+    <string name="rule_needs_label" formatted="false">Essential Needs (50%)</string>
+    <string name="rule_wants_label" formatted="false">Wants &amp; Leisure (30%)</string>
+    <string name="rule_savings_label" formatted="false">Savings &amp; Goals (20%)</string>
     <string name="more_analytics_title">Analytics &amp; Financial Reports</string>
     <string name="more_analytics_desc">Financial health score, spending trends, and category distribution</string>
     <string name="more_habits_title">Financial Habits &amp; Persona</string>
@@ -456,9 +456,9 @@ for a better future 🌱</string>
     <string name="settings_daily_reminder_desc">Daily notification to help you log your expenses regularly</string>
     <string name="settings_reminder_time_label">Reminder Time</string>
     <string name="settings_budget_alerts_title">Budget Alerts</string>
-    <string name="settings_budget_alerts_desc">Instant alert when reaching 80% or exceeding budget</string>
+    <string name="settings_budget_alerts_desc" formatted="false">Instant alert when reaching 80% or exceeding budget</string>
     <string name="settings_goal_alerts_title">Savings Goal Milestones</string>
-    <string name="settings_goal_alerts_desc">Encouraging notifications upon reaching 50% and completing goals</string>
+    <string name="settings_goal_alerts_desc" formatted="false">Encouraging notifications upon reaching 50% and completing goals</string>
     <string name="settings_test_notification_btn">Send Test Notification 🔔</string>
     <string name="settings_test_notification_hint">Tap to test notification delivery and ensure channels are configured</string>
     <string name="settings_permission_banner_title">Notification Permission Disabled</string>
@@ -725,17 +725,17 @@ for a better future 🌱</string>
     <string name="event_type_deposit">Deposit</string>
     <string name="event_type_deduction">Debit</string>
     <string name="more_badge_secure">Local &amp; Secure</string>
-    <string name="more_footer_privacy">Crafted for a better financial future 🌱 • 100% offline privacy</string>
+    <string name="more_footer_privacy" formatted="false">Crafted for a better financial future 🌱 • 100% offline privacy</string>
     <string name="more_app_title">UrWallet • Smart Wallet</string>
-    <string name="more_app_desc">100% Local Storage • Private &amp; Secure 🔒</string>
-    <string name="security_privacy_guarantee">100% Local Privacy</string>
+    <string name="more_app_desc" formatted="false">100% Local Storage • Private &amp; Secure 🔒</string>
+    <string name="security_privacy_guarantee" formatted="false">100% Local Privacy</string>
     <string name="security_privacy_guarantee_desc">Your financial data and PIN never leave your phone. The PIN is hashed using PBKDF2 for total security.</string>
     <string name="person_debts_status">Debts &amp; Obligations:</string>
     <string name="person_actual_cashflow">Actual Cash Flow (Transactions):</string>
     <string name="person_paid_to_him">Paid to them (Expense)</string>
     <string name="person_received_from_him">Received from them (Income)</string>
     <string name="person_net_flow">Net Flow</string>
-    <string name="data_management_privacy_card_title">100% Privacy &amp; Security</string>
+    <string name="data_management_privacy_card_title" formatted="false">100% Privacy &amp; Security</string>
     <string name="data_management_privacy_card_desc">Your data is encrypted and saved only on your device without cloud storage.</string>
     <string name="data_management_processing">Processing data...</string>
     <string name="bottom_sheet_pin_enable_bio">Enable Biometrics Now</string>
@@ -760,4 +760,62 @@ for a better future 🌱</string>
     <string name="inbox_sender_prefix">From: %1$s</string>
     <string name="inbox_raw_message_prefix">Message text: %1$s</string>
     <string name="duplicate_matched_desc">Transaction recorded with approximately same amount and date (ID: #%1$s)</string>
+    <string name="goals_of_total_format">of %1$s</string>
+    <string name="budgets_of_total_limit_format">of total budget %1$s</string>
+    <string name="hint_goal_contribution_note">e.g. from work bonus...</string>
+    <string name="search_people_hint">Search by name or phone...</string>
+    <string name="personality_cautious_saver_title">The Cautious Saver 🛡️</string>
+    <string name="personality_cautious_saver_desc">You strongly prioritize financial security and savings, avoiding unnecessary consumer spending.</string>
+    <string name="personality_cautious_saver_coach">Your financial safety is excellent! It\'s okay to treat yourself occasionally without worry.</string>
+    <string name="personality_smart_planner_title">The Smart Planner 🧠</string>
+    <string name="personality_smart_planner_desc">You set clear budgets, stick to them with discipline, and regularly direct surpluses toward your goals.</string>
+    <string name="personality_smart_planner_coach">Keep up this exceptional balance and consider starting new savings challenges to accelerate growth.</string>
+    <string name="personality_spontaneous_spender_title">The Spontaneous Explorer ⚡</string>
+    <string name="personality_spontaneous_spender_desc">You enjoy life and in-the-moment spending, but impulses can sometimes strain your budget and savings.</string>
+    <string name="personality_spontaneous_spender_coach">Try the 24-hour rule before non-essential purchases, and set a weekly cap for entertainment.</string>
+    <string name="personality_balanced_title">The Balanced Spender ⚖️</string>
+    <string name="personality_balanced_desc">You maintain a steady spending pattern that meets your daily needs without excess or deprivation.</string>
+    <string name="personality_balanced_coach">You are in a stable position! The next step is setting a specific monthly savings target.</string>
+    <string name="habits_peak_total_format">Total %1$s</string>
+    <string name="habits_no_expenses">No expenses recorded</string>
+    <string name="preset_no_cafe_title">No Cafes &amp; Restaurants Week ☕</string>
+    <string name="preset_no_cafe_desc">Skip dining out and cafe expenses for 7 consecutive days and make your own food &amp; coffee.</string>
+    <string name="preset_zero_spend_title">Zero Spend Day 🚫</string>
+    <string name="preset_zero_spend_desc">Challenge yourself to go 24 hours without any non-essential spending.</string>
+    <string name="preset_save_1000_title">Save 1,000 in 30 Days 💰</string>
+    <string name="preset_save_1000_desc">Set aside regular savings towards your goals to reach 1,000 before the end of the month.</string>
+    <string name="preset_smart_shopping_title">Smart &amp; Frugal Shopping 🛒</string>
+    <string name="preset_smart_shopping_desc">Cap all shopping and luxury expenses to 500 over two weeks.</string>
+    <string name="preset_calm_weekend_title">Quiet Weekend Challenge 🌴</string>
+    <string name="preset_calm_weekend_desc">Enjoy a relaxing weekend at home and parks without spending any money.</string>
+    <string name="preset_difficulty_easy">Easy</string>
+    <string name="preset_difficulty_medium">Medium</string>
+    <string name="preset_difficulty_hard">Advanced</string>
+    <string name="preset_duration_1d">1 Day</string>
+    <string name="preset_duration_2d">2 Days</string>
+    <string name="preset_duration_7d">7 Days</string>
+    <string name="preset_duration_14d">14 Days</string>
+    <string name="preset_duration_30d">30 Days</string>
+    <string name="challenge_joined_success">Challenge joined successfully! 🔥</string>
+    <string name="splash_tagline">Your Smart Financial Wallet</string>
+    <string name="add_goal_select_target_date">Select Target Achievement Date</string>
+    <string name="add_goal_pace_relaxed">Relaxed (24 months)</string>
+    <string name="add_goal_pace_balanced">Balanced (12 months)</string>
+    <string name="add_goal_pace_aggressive">Fast (6 months)</string>
+    <string name="analytics_category_share_subtitle">Each category\'s share of your total spending</string>
+    <string name="challenge_detail_toolbar_title">Challenge Details</string>
+    <string name="challenge_detail_toolbar_subtitle">Daily streak tracking and progress log</string>
+    <string name="challenge_stat_successful_days">Successful Days</string>
+    <string name="challenge_stat_remaining_days">Remaining Days</string>
+    <string name="challenge_stat_longest_streak">Longest Streak 🔥</string>
+    <string name="challenge_empty_badges_hint">Complete your first challenges to showcase badges here! 🏆</string>
+    <string name="goals_quote_line1">A step today...</string>
+    <string name="goals_quote_line2">For a better future 🌱</string>
+    <string name="inbox_possible_match_badge">Potential Match</string>
+    <string name="quick_add_500">+500</string>
+    <string name="quick_add_1000">+1,000</string>
+    <string name="quick_add_2000">+2,000</string>
+    <string name="quick_add_5000">+5,000</string>
+    <string name="more_app_version_label">UrWallet v1.0.0</string>
+    <string name="health_score_max">/ 100</string>
 </resources>

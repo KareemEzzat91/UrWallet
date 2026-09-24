@@ -113,6 +113,7 @@
 
                             <!-- Trend Badge -->
                             <LinearLayout
+                                android:baselineAligned="false"
                                 android:id="@+id/layoutTrendBadge"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -163,6 +164,7 @@
 
                         <!-- Two Stats: Average & Count -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">

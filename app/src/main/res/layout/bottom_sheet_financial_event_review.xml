@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_surface_rounded"
-    android:layoutDirection="rtl">
+    android:background="@drawable/bg_surface_rounded">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,6 +98,7 @@
             app:boxStrokeColor="@color/urwallet_primary">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:importantForAutofill="no"
                 android:id="@+id/etTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,6 +110,7 @@
 
         <!-- Category Selection -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -136,7 +137,7 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
                 android:textColor="#16A34A"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:visibility="gone"
                 tools:text="✨ فئة مقترحة تلقائياً"
@@ -170,6 +171,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -188,6 +190,7 @@
                 app:boxStrokeColor="@color/urwallet_primary">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:importantForAutofill="no"
                     android:id="@+id/etCounterpartyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -206,7 +209,7 @@
                 android:fontFamily="@font/cairo"
                 android:text="@string/label_choose_from_contacts"
                 android:textColor="@color/urwallet_primary"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 app:cornerRadius="12dp"
                 app:icon="@drawable/ic_avatar_placeholder"
                 app:iconSize="16dp"
@@ -305,6 +308,7 @@
             app:boxStrokeColor="@color/urwallet_primary">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:importantForAutofill="no"
                 android:id="@+id/etNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

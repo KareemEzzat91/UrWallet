@@ -25,6 +25,7 @@
 
         <!-- Header Row: Category Squircle, Name & Days Remaining, and Pace Pill -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -68,6 +69,7 @@
                     tools:text="صندوق الطوارئ" />
 
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -101,13 +103,14 @@
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="5dp"
                 android:textColor="#00732C"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 tools:text="● وتيرة متوازنة" />
         </LinearLayout>
 
         <!-- Middle Section: Financial Numbers (Start) & 64dp Circular Progress Ring (End) -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -125,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/goals_current_amount_label"
                     android:textColor="#64748B"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvSavedAndTarget"
@@ -191,6 +194,7 @@
 
         <!-- Bottom Action Row: Remaining Box (Start) & Deposit Button (End) -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -199,6 +203,7 @@
 
             <!-- Rounded Remaining Stat Box (Start in RTL) -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:id="@+id/layoutRemainingBox"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
@@ -220,7 +225,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/goals_remaining_label"
                         android:textColor="#64748B"
-                        android:textSize="10.5sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tvRemainingAmount"
@@ -236,7 +241,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#64748B"
-                        android:textSize="9.5sp"
+                        android:textSize="12sp"
                         android:visibility="gone"
                         tools:text="مطلوب 417 ج.م شهرياً" />
                 </LinearLayout>

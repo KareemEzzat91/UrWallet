@@ -58,16 +58,19 @@ class ChallengesFragment : Fragment() {
     }
 
     private fun setupAdapters() {
+        binding.rvActiveChallenges.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
         activeAdapter = ActiveChallengesAdapter { challengeId ->
             navigateToDetail(challengeId)
         }
         binding.rvActiveChallenges.adapter = activeAdapter
 
+        binding.rvChallengePresets.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
         presetsAdapter = ChallengePresetsAdapter { preset ->
             viewModel.joinPreset(preset)
         }
         binding.rvChallengePresets.adapter = presetsAdapter
 
+        binding.rvCompletedChallenges.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
         completedAdapter = CompletedChallengesAdapter { challengeId ->
             navigateToDetail(challengeId)
         }
@@ -95,7 +98,7 @@ class ChallengesFragment : Fragment() {
                 viewModel.uiEvents.collect { event ->
                     when (event) {
                         is ChallengesUiEvent.ChallengeJoined -> {
-                            Snackbar.make(binding.root, "تم الانضمام للتحدي بنجاح! 🔥", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(binding.root, getString(R.string.challenge_joined_success), Snackbar.LENGTH_SHORT).show()
                             navigateToDetail(event.challengeId)
                         }
                         is ChallengesUiEvent.ShowMessage -> {

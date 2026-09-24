@@ -13,6 +13,7 @@
     app:strokeWidth="1dp">
 
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -62,11 +63,12 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
                 android:textColor="@color/urwallet_primary"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 tools:text="افتراضي" />
         </LinearLayout>
 
         <LinearLayout
+            android:baselineAligned="false"
             android:id="@+id/layoutActions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,20 +77,26 @@
 
             <ImageButton
                 android:id="@+id/btnEditCategory"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/action_edit"
+                android:padding="12dp"
                 android:src="@drawable/ic_edit"
                 app:tint="@color/urwallet_text_secondary" />
 
             <ImageButton
                 android:id="@+id/btnDeleteCategory"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
                 android:layout_marginStart="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/action_delete"
+                android:padding="12dp"
                 android:src="@drawable/ic_delete"
                 app:tint="@color/urwallet_expense" />
         </LinearLayout>

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_surface_rounded"
-    android:layoutDirection="rtl"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingTop="12dp"
@@ -79,6 +78,7 @@
         android:hint="@string/obligation_title_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:importantForAutofill="no"
             android:id="@+id/etObligationTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,6 +99,7 @@
         app:suffixText="@string/currency_symbol">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:importantForAutofill="no"
             android:id="@+id/etObligationAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,6 +111,7 @@
 
     <!-- Due Date Selection -->
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -151,6 +153,7 @@
         android:hint="@string/person_notes_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:importantForAutofill="no"
             android:id="@+id/etObligationNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

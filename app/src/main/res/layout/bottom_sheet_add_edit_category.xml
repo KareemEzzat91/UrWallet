@@ -43,6 +43,7 @@
         app:boxCornerRadiusTopStart="14dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:importantForAutofill="no"
             android:id="@+id/etCategoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

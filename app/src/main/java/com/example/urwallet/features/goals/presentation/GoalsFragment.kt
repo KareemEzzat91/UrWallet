@@ -227,7 +227,10 @@ class GoalsFragment : Fragment() {
 
                 binding.tvTotalGoalsSavings.text = Formatters.formatCurrency(totalSaved, includeDecimals = false)
                 binding.overviewProgressBar.progress = totalPercentage
-                binding.tvOverviewProgressDesc.text = "من ${Formatters.formatCurrency(totalTarget, includeDecimals = false)}"
+                binding.tvOverviewProgressDesc.text = getString(
+                    R.string.goals_of_total_format,
+                    Formatters.formatCurrency(totalTarget, includeDecimals = false)
+                )
                 binding.tvOverviewProgressPercentage.text = "$totalPercentage%"
 
                 // Pills Count
@@ -243,7 +246,7 @@ class GoalsFragment : Fragment() {
                 val activeWithMonthly = state.activeGoals.firstOrNull { it.monthlyTarget > 0 }
                 if (activeWithMonthly != null) {
                     val monthlyClean = Formatters.formatCurrency(activeWithMonthly.monthlyTarget, includeDecimals = false)
-                    binding.tvInsightMessage.text = "خصص $monthlyClean شهرياً للوصول لهدفك في الموعد المحدد."
+                    binding.tvInsightMessage.text = getString(R.string.goal_insight_example, monthlyClean)
                     binding.cardSavingsInsight.isVisible = true
                     binding.cardSavingsInsight.setOnClickListener {
                         it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)

@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/urwallet_background"
-    android:layoutDirection="rtl">
+    android:background="@color/urwallet_background">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -200,13 +199,14 @@
                                     android:paddingVertical="3dp"
                                     android:text="@string/status_active"
                                     android:textColor="@color/urwallet_primary"
-                                    android:textSize="11sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </FrameLayout>
 
                         <!-- 3-Box Financial Matrix -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="24dp"
@@ -230,7 +230,7 @@
                                     android:fontFamily="@font/cairo"
                                     android:text="@string/goals_saved_prefix"
                                     android:textColor="@color/urwallet_income"
-                                    android:textSize="11sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/tvDetailSavedAmount"
@@ -264,7 +264,7 @@
                                     android:fontFamily="@font/cairo"
                                     android:text="@string/goals_remaining_label"
                                     android:textColor="@color/urwallet_text_secondary"
-                                    android:textSize="11sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/tvDetailRemainingAmount"
@@ -298,7 +298,7 @@
                                     android:fontFamily="@font/cairo"
                                     android:text="@string/goals_target_label"
                                     android:textColor="@color/urwallet_primary"
-                                    android:textSize="11sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/tvDetailTargetAmount"
@@ -339,6 +339,7 @@
 
                 <!-- Plan & Timeline Metrics Grid -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -363,6 +364,7 @@
                             android:padding="16dp">
 
                             <LinearLayout
+                                android:baselineAligned="false"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -424,6 +426,7 @@
                             android:padding="16dp">
 
                             <LinearLayout
+                                android:baselineAligned="false"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -469,6 +472,7 @@
 
                 <!-- Contribution History Section Header -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"

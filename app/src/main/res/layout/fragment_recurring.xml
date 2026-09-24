@@ -13,6 +13,7 @@
 
         <!-- Top App Bar -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -23,11 +24,13 @@
 
             <ImageButton
                 android:id="@+id/btnBack"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@null"
-                android:padding="8dp"
+                android:contentDescription="@string/cd_back"
+                android:padding="12dp"
                 android:src="@drawable/ic_arrow_back"
                 app:tint="@color/urwallet_text_primary" />
 
@@ -119,7 +122,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/recurring_monthly_income"
                                     android:textColor="#B0BEC5"
-                                    android:textSize="11sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/tvMonthlyIncome"
@@ -143,7 +146,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/recurring_active_count"
                                     android:textColor="#B0BEC5"
-                                    android:textSize="11sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/tvActiveCount"

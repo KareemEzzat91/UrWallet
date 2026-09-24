@@ -51,6 +51,7 @@
 
         <!-- 4 PIN Dots -->
         <LinearLayout
+            android:baselineAligned="false"
             android:id="@+id/wizardDotsContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,6 +112,7 @@
 
             <!-- Row 1 -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -145,6 +147,7 @@
 
             <!-- Row 2 -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -179,6 +182,7 @@
 
             <!-- Row 3 -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -213,6 +217,7 @@
 
             <!-- Row 4 -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

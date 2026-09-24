@@ -39,7 +39,8 @@ data class SupportedCurrency(
     val code: String,
     val symbol: String,
     val displayNameAr: String,
-    val displayNameEn: String = ""
+    val displayNameEn: String = "",
+    val symbolEn: String = if (symbol in listOf("$", "€", "£")) symbol else code
 ) {
     fun getDisplayName(locale: java.util.Locale = java.util.Locale.getDefault()): String {
         return if (locale.language.startsWith("ar")) displayNameAr else displayNameEn.ifEmpty { displayNameAr }
@@ -47,5 +48,9 @@ data class SupportedCurrency(
 
     fun getDisplayName(languageCode: String): String {
         return getDisplayName(java.util.Locale(languageCode))
+    }
+
+    fun getSymbol(locale: java.util.Locale = java.util.Locale.getDefault()): String {
+        return if (locale.language.startsWith("ar")) symbol else symbolEn
     }
 }

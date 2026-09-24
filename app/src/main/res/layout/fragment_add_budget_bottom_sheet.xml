@@ -120,6 +120,7 @@
             app:suffixText="@string/currency_symbol">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:importantForAutofill="no"
                 android:id="@+id/etBudgetAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,6 +133,7 @@
 
         <!-- Quick Presets -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -146,7 +148,7 @@
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:padding="0dp"
-                android:text="+500"
+                android:text="@string/quick_add_500"
                 android:textColor="@color/urwallet_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -161,7 +163,7 @@
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:padding="0dp"
-                android:text="+1,000"
+                android:text="@string/quick_add_1000"
                 android:textColor="@color/urwallet_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -176,7 +178,7 @@
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:padding="0dp"
-                android:text="+2,000"
+                android:text="@string/quick_add_2000"
                 android:textColor="@color/urwallet_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -191,7 +193,7 @@
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:padding="0dp"
-                android:text="+5,000"
+                android:text="@string/quick_add_5000"
                 android:textColor="@color/urwallet_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"

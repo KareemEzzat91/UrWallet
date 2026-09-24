@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/urwallet_background"
-    android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <!-- Top App Bar / Header -->
@@ -203,6 +202,7 @@
 
                         <!-- Category Row -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -252,6 +252,7 @@
 
                         <!-- Date & Time Row -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -301,6 +302,7 @@
 
                         <!-- Note Row -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -346,6 +348,7 @@
 
                 <!-- Action Buttons: Share & Delete -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"

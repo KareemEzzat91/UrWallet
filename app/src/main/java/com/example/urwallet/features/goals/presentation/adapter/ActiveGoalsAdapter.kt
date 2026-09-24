@@ -78,7 +78,10 @@ class ActiveGoalsAdapter(
 
             // Financials (Hero Saved Amount + Target Subtitle)
             binding.tvSavedAndTarget.text = Formatters.formatCurrency(goal.savedAmount, includeDecimals = false)
-            binding.tvTargetSub.text = "من ${Formatters.formatCurrency(goal.targetAmount, includeDecimals = false)}"
+            binding.tvTargetSub.text = context.getString(
+                R.string.goals_of_total_format,
+                Formatters.formatCurrency(goal.targetAmount, includeDecimals = false)
+            )
             binding.tvRemainingAmount.text = Formatters.formatCurrency(goal.remainingAmount, includeDecimals = false)
 
             // Monthly Needed Target (Clean rounded number)

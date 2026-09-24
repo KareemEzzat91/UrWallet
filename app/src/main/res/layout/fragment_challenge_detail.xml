@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
     android:background="@color/urwallet_background">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -26,6 +25,7 @@
             app:contentInsetStart="0dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -60,7 +60,7 @@
                         android:id="@+id/tvToolbarTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="تفاصيل التحدي"
+                        android:text="@string/challenge_detail_toolbar_title"
                         android:textColor="@color/urwallet_text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="متابعة الالتزام اليومي وسجل التقدم"
+                        android:text="@string/challenge_detail_toolbar_subtitle"
                         android:textColor="@color/urwallet_text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -120,6 +120,7 @@
 
                     <!-- Top Row: Type Chip + Streak Badge -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -143,6 +144,7 @@
                             android:layout_weight="1" />
 
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:id="@+id/streakBadge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -193,6 +195,7 @@
                         tools:progress="57" />
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -250,9 +253,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="أيام ناجحة"
+                                android:text="@string/challenge_stat_successful_days"
                                 android:textColor="@color/urwallet_text_secondary"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <View
@@ -282,9 +285,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="أيام متبقية"
+                                android:text="@string/challenge_stat_remaining_days"
                                 android:textColor="@color/urwallet_text_secondary"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <View
@@ -314,9 +317,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="أطول تتابع 🔥"
+                                android:text="@string/challenge_stat_longest_streak"
                                 android:textColor="#E65100"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -341,6 +344,7 @@
                     android:padding="16dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -376,6 +380,7 @@
 
             <!-- Daily Timeline Section -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -404,6 +409,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
                 tools:listitem="@layout/item_challenge_day" />
 

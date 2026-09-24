@@ -124,7 +124,10 @@ class BudgetsFragment : Fragment() {
         if (gb != null) {
             binding.cardGlobalBudget.isVisible = true
             binding.tvGlobalSpent.text = Formatters.formatCurrency(gb.spentAmount)
-            binding.tvGlobalLimitDesc.text = "من إجمالي ميزانية ${Formatters.formatCurrency(gb.limitAmount)}"
+            binding.tvGlobalLimitDesc.text = getString(
+                R.string.budgets_of_total_limit_format,
+                Formatters.formatCurrency(gb.limitAmount)
+            )
             binding.progressGlobalBudget.progress = gb.visualProgress
             binding.tvGlobalPercentage.text = String.format(Locale.getDefault(), "%.0f%%", gb.progressPercentage)
 

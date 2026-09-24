@@ -22,6 +22,7 @@
 
         <!-- Top Header Row -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -80,19 +81,21 @@
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="4dp"
                 android:textColor="@color/urwallet_income"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 tools:text="إنفاق آمن" />
 
             <!-- Delete Action Button -->
             <ImageView
                 android:id="@+id/btnDeleteBudget"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
                 android:layout_marginStart="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/action_delete"
-                android:padding="6dp"
+                android:padding="12dp"
                 android:src="@drawable/ic_close"
                 app:tint="@color/urwallet_text_tertiary" />
         </LinearLayout>
@@ -111,6 +114,7 @@
 
         <!-- Bottom Row: Remaining and Percentage -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

@@ -17,6 +17,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Exit button (top start, styled as a premium glassmorphic button) -->
+    <FrameLayout
+        android:id="@+id/btn_exit"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_skip_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="16dp"
+        android:translationZ="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/cd_close"
+            android:src="@drawable/ic_close"
+            app:tint="#FFFFFF" />
+    </FrameLayout>
+
     <!-- Skip button (top end, styled as a premium glassmorphic pill button) -->
     <TextView
         android:id="@+id/btn_skip"
@@ -43,6 +67,7 @@
 
     <!-- Bottom bar: dots + next/start action button -->
     <LinearLayout
+        android:baselineAligned="false"
         android:id="@+id/bottom_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -59,6 +84,7 @@
 
         <!-- Dots indicator -->
         <LinearLayout
+            android:baselineAligned="false"
             android:id="@+id/dots_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

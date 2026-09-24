@@ -187,10 +187,10 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
         val start = customStartDate
         val end = customEndDate
         if (start != null && end != null) {
-            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale("ar"))
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val startStr = formatter.format(Date(start))
             val endStr = formatter.format(Date(end))
-            binding.tvCustomDateRange.text = "من $startStr إلى $endStr"
+            binding.tvCustomDateRange.text = getString(R.string.date_custom_range_format, startStr, endStr)
             binding.tvCustomDateRange.isVisible = true
         } else {
             binding.tvCustomDateRange.isVisible = false

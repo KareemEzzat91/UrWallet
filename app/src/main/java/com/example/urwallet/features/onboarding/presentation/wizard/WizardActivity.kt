@@ -12,6 +12,11 @@ import com.example.urwallet.R
 import com.example.urwallet.databinding.ActivityWizardBinding
 import com.example.urwallet.features.onboarding.presentation.OnboardingViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -28,9 +33,28 @@ class WizardActivity : AppCompatActivity() {
         binding = ActivityWizardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupInsets()
         goToStep(1)
         setupClickListeners()
         observeNavigation()
+    }
+
+    private fun setupInsets() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            val navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val topInset = if (statusBars.top > 0) statusBars.top else resources.getDimensionPixelSize(R.dimen.spacing_lg)
+
+            binding.wizardTopBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = topInset
+            }
+            binding.btnWizardNext.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                val bottomInset = if (navBars.bottom > 0) navBars.bottom else 0
+                bottomMargin = bottomInset + resources.getDimensionPixelSize(R.dimen.spacing_xl)
+            }
+            insets
+        }
     }
 
     private fun setupClickListeners() {

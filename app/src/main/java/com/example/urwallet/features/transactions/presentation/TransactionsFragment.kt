@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TransactionsFragment : Fragment() {
+class  TransactionsFragment : Fragment() {
 
     private var _binding: FragmentTransactionsBinding? = null
     private val binding get() = _binding!!

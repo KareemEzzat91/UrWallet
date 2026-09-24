@@ -19,6 +19,7 @@
         android:padding="16dp">
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -83,12 +84,14 @@
             <!-- Delete Button -->
             <ImageButton
                 android:id="@+id/btnDelete"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
                 android:layout_marginStart="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/action_delete"
-                android:padding="8dp"
+                android:padding="12dp"
                 android:src="@drawable/ic_delete"
                 app:tint="@color/urwallet_text_tertiary" />
         </LinearLayout>
@@ -103,6 +106,7 @@
 
         <!-- Bottom info bar: Next occurrence date and Active toggle -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"

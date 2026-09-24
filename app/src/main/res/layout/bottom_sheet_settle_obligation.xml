@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_surface_rounded"
-    android:layoutDirection="rtl"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingTop="12dp"
@@ -57,6 +56,7 @@
                 tools:text="سلفة سريعة" />
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -96,6 +96,7 @@
         app:suffixText="@string/currency_symbol">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:importantForAutofill="no"
             android:id="@+id/etSettlementAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,6 +108,7 @@
 
     <!-- Auto-create Transaction Switch -->
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
@@ -140,6 +142,7 @@
         android:hint="@string/settlement_note_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:importantForAutofill="no"
             android:id="@+id/etSettlementNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -16,36 +16,67 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:paddingEnd="16dp">
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingHorizontal="@dimen/screen_padding_horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp">
 
-            <FrameLayout
-                android:id="@+id/btnBack"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="start|center_vertical"
-                android:background="@drawable/bg_chip_preset"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/action_back"
-                    android:src="@drawable/ic_arrow_back"
-                    app:tint="@color/urwallet_text_primary" />
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:baselineAligned="false"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:text="@string/security_settings_title"
-                android:textColor="@color/urwallet_text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/btnBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:background="@drawable/bg_squircle_pastel_blue"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/action_back"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="@color/urwallet_primary" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/security_settings_title"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/security_settings_subtitle"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -60,55 +91,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/screen_padding_horizontal"
-            android:paddingTop="16dp"
+            android:paddingTop="12dp"
             android:paddingBottom="100dp">
-
-            <!-- Subtitle Header Card -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="16dp">
-
-                <FrameLayout
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/bg_squircle_primary_light">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_lock"
-                        app:tint="@color/urwallet_primary" />
-                </FrameLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/security_settings_title"
-                        android:textColor="@color/urwallet_text_primary"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="@string/security_settings_subtitle"
-                        android:textColor="@color/urwallet_text_secondary"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </LinearLayout>
 
             <!-- Card 1: App Lock Switch -->
             <com.google.android.material.card.MaterialCardView
@@ -123,6 +107,7 @@
                 app:strokeWidth="1dp">
 
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -174,6 +159,7 @@
                 app:strokeWidth="1dp">
 
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -207,8 +193,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:contentDescription="@null"
-                        android:rotation="180"
-                        android:src="@drawable/ic_arrow_back"
+                        android:src="@drawable/ic_chevron_left"
                         app:tint="@color/urwallet_text_tertiary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -232,6 +217,7 @@
                     android:padding="16dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -273,7 +259,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/security_biometric_not_supported"
                         android:textColor="@color/urwallet_expense"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:visibility="gone"
                         tools:visibility="visible" />
                 </LinearLayout>
@@ -291,6 +277,7 @@
                 app:strokeWidth="1dp">
 
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -333,7 +320,7 @@
                             android:lineSpacingExtra="2dp"
                             android:text="@string/security_privacy_guarantee_desc"
                             android:textColor="@color/urwallet_text_secondary"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

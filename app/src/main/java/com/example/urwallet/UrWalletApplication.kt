@@ -14,6 +14,8 @@ import com.example.urwallet.features.notifications.data.helper.NotificationHelpe
 import com.example.urwallet.features.notifications.data.scheduler.AlarmScheduler
 import com.example.urwallet.features.security.domain.session.AppLockManager
 import com.example.urwallet.core.common.Formatters
+import com.example.urwallet.core.common.Constants
+import com.example.urwallet.core.common.SupportedCurrency
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,8 +78,18 @@ class UrWalletApplication : Application() {
     private fun initializeCurrency() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                appPreferences.currencySymbol.collect { symbol ->
-                    Formatters.activeCurrencySymbol = symbol
+                kotlinx.coroutines.flow.combine(
+                    appPreferences.currencySymbol,
+                    appPreferences.appLanguage
+                ) { symbol, lang ->
+                    val matched = Constants.SUPPORTED_CURRENCIES.find { it.symbol == symbol || it.code == symbol }
+                    if (matched != null) {
+                        matched.getSymbol(java.util.Locale(lang))
+                    } else {
+                        symbol
+                    }
+                }.collect { resolvedSymbol ->
+                    Formatters.activeCurrencySymbol = resolvedSymbol
                 }
             } catch (_: Exception) {
             }

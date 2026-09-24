@@ -60,6 +60,29 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    lint {
+        checkAllWarnings = true
+        warningsAsErrors = false
+        abortOnError = false
+        enable += setOf(
+            "ContentDescription",
+            "TouchTargetSizeLin",
+            "KeyboardInaccessibleWidget",
+            "ClickableViewAccessibility",
+            "RtlCompat",
+            "RtlEnabled",
+            "RtlHardcoded",
+            "RtlSymmetry",
+            "Autofill",
+            "HardcodedText",
+            "TypographyEllipsis",
+            "DisableBaselineAlignment",
+            "StringFormatInvalid",
+            "StringFormatCount",
+            "Overdraw"
+        )
+    }
 }
 
 ksp {

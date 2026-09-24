@@ -18,6 +18,7 @@
 
         <!-- Top Header Row -->
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -119,6 +120,7 @@
 
                     <!-- Top Section: Left = Mountain Illustration + Motto; Right = Title + Bars Icon + Big Amount -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
@@ -134,6 +136,7 @@
 
                             <!-- Header Row: Title + Bars Icon -->
                             <LinearLayout
+                                android:baselineAligned="false"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -169,6 +172,7 @@
 
                         <!-- Left Column (End in RTL): Mountain Summit Illustration + Motivational Motto -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layoutDirection="ltr"
@@ -194,7 +198,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="خطوة اليوم .."
+                                    android:text="@string/goals_quote_line1"
                                     android:textColor="#E6FFFFFF"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
@@ -203,9 +207,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="2dp"
-                                    android:text="لمستقبل أفضل 🌱"
+                                    android:text="@string/goals_quote_line2"
                                     android:textColor="#B3FFFFFF"
-                                    android:textSize="11sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -224,6 +228,7 @@
 
                     <!-- Progress Info Row -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -251,6 +256,7 @@
 
                     <!-- Dual Status Glass Pills at Bottom -->
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -258,6 +264,7 @@
 
                         <!-- Active Goals Pill (Child 1 = Right in RTL) -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_marginEnd="6dp"
@@ -284,7 +291,7 @@
                                 android:gravity="center"
                                 android:text="@string/goals_tab_active"
                                 android:textColor="#E6FFFFFF"
-                                android:textSize="11sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -296,6 +303,7 @@
 
                         <!-- Completed Goals Pill (Child 2 = Left in RTL) -->
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="6dp"
@@ -322,7 +330,7 @@
                                 android:gravity="center"
                                 android:text="@string/goals_tab_completed"
                                 android:textColor="#E6FFFFFF"
-                                android:textSize="11sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -338,6 +346,7 @@
 
             <!-- Filter Tabs Bar (Active / Completed / All) -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:id="@+id/layoutGoalsTabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -347,6 +356,7 @@
 
                 <!-- Tab 1: Active Goals -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:id="@+id/tabActiveGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -374,13 +384,14 @@
                         android:background="@drawable/bg_squircle_pastel_blue"
                         android:gravity="center"
                         android:textColor="@color/urwallet_accent"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         tools:text="1" />
                 </LinearLayout>
 
                 <!-- Tab 2: Completed Goals -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:id="@+id/tabCompletedGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -407,13 +418,14 @@
                         android:background="#F1F5F9"
                         android:gravity="center"
                         android:textColor="@color/urwallet_text_secondary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         tools:text="0" />
                 </LinearLayout>
 
                 <!-- Tab 3: All Goals -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:id="@+id/tabAllGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -440,7 +452,7 @@
                         android:background="#F1F5F9"
                         android:gravity="center"
                         android:textColor="@color/urwallet_text_secondary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         tools:text="1" />
                 </LinearLayout>
@@ -522,6 +534,7 @@
                 app:strokeWidth="0dp">
 
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_card_insight"
@@ -588,6 +601,7 @@
 
                 <!-- Header Row -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -614,6 +628,7 @@
 
                 <!-- 3 Preset Goal Cards in a Responsive Row -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -676,7 +691,7 @@
                                 android:maxLines="1"
                                 android:text="@string/goals_suggested_car_desc"
                                 android:textColor="@color/urwallet_text_tertiary"
-                                android:textSize="9.5sp" />
+                                android:textSize="12sp" />
 
                             <FrameLayout
                                 android:layout_width="28dp"
@@ -752,7 +767,7 @@
                                 android:maxLines="1"
                                 android:text="@string/goals_suggested_home_desc"
                                 android:textColor="@color/urwallet_text_tertiary"
-                                android:textSize="9.5sp" />
+                                android:textSize="12sp" />
 
                             <FrameLayout
                                 android:layout_width="28dp"
@@ -828,7 +843,7 @@
                                 android:maxLines="1"
                                 android:text="@string/goals_suggested_travel_desc"
                                 android:textColor="@color/urwallet_text_tertiary"
-                                android:textSize="9.5sp" />
+                                android:textSize="12sp" />
 
                             <FrameLayout
                                 android:layout_width="28dp"

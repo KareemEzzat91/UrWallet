@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
     android:background="@color/urwallet_background">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -26,6 +25,7 @@
             app:contentInsetStart="0dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -150,6 +150,7 @@
                     android:padding="16dp">
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -180,7 +181,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="حوّل توفيرك إلى إنجازات! 🏆"
+                                android:text="@string/challenge_turn_savings_into_achievements"
                                 android:textColor="@color/urwallet_text_primary"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
@@ -189,12 +190,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="التزم بأيام محددة واكسب الأوسمة"
+                                android:text="@string/challenge_badge_hint"
                                 android:textColor="@color/urwallet_text_secondary"
-                                android:textSize="11.5sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_pill_streak"
@@ -213,9 +215,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="تحفيز مالي"
+                                android:text="@string/challenge_tag_financial_motivation"
                                 android:textColor="#E65100"
-                                android:textSize="11sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
@@ -226,6 +228,7 @@
             <!-- SECTION 1: Active Challenges                              -->
             <!-- ========================================================= -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -309,6 +312,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="1"
                 tools:listitem="@layout/item_active_challenge" />
 
@@ -316,6 +320,7 @@
             <!-- SECTION 2: Presets                                        -->
             <!-- ========================================================= -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -345,6 +350,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_challenge_preset" />
 
@@ -352,6 +358,7 @@
             <!-- SECTION 3: Completed Challenges                           -->
             <!-- ========================================================= -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -380,6 +387,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="1"
                 tools:listitem="@layout/item_completed_challenge" />
 
@@ -390,7 +398,7 @@
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:padding="20dp"
-                android:text="أنجز تحدياتك الأولى لتظهر أوسمتك هنا! 🏆"
+                android:text="@string/challenge_empty_badges_hint"
                 android:textColor="@color/urwallet_text_tertiary"
                 android:textSize="13sp"
                 android:visibility="gone" />

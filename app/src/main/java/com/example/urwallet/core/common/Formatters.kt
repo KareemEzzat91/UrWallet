@@ -7,7 +7,7 @@ import java.util.Locale
 object Formatters {
 
     @Volatile
-    var activeCurrencySymbol: String = Constants.DEFAULT_CURRENCY_SYMBOL
+    var activeCurrencySymbol: String = if (Locale.getDefault().language == "en") "EGP" else Constants.DEFAULT_CURRENCY_SYMBOL
 
     private val ARABIC_LOCALE = Locale("ar")
 

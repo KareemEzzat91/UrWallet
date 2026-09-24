@@ -18,6 +18,7 @@
     app:strokeWidth="1dp">
 
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -74,6 +75,7 @@
                 tools:text="eat" />
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -123,6 +125,7 @@
 
             <!-- Category Pastel Pill Badge -->
             <LinearLayout
+                android:baselineAligned="false"
                 android:id="@+id/flCategoryBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -147,17 +150,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/urwallet_expense"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     tools:text="أكل ومشروبات" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- 4. Delete Action Box: Soft Reddish Squircle (36dp x 36dp) -->
+        <!-- 4. Delete Action Box: Soft Reddish Squircle (48dp x 48dp) -->
         <FrameLayout
             android:id="@+id/btnDelete"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             android:layout_marginStart="10dp"
             android:background="@drawable/bg_badge_delete"
             android:clickable="true"
@@ -165,8 +170,8 @@
             android:foreground="?attr/selectableItemBackground">
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/action_delete"
                 android:src="@drawable/ic_delete"

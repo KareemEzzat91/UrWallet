@@ -169,6 +169,11 @@ class MoreFragment : Fragment() {
                     if (chosen != currentLang) {
                         viewLifecycleOwner.lifecycleScope.launch {
                             appPreferences.setAppLanguage(chosen)
+                            val currentSym = appPreferences.currencySymbol.first()
+                            val matched = Constants.SUPPORTED_CURRENCIES.find { it.symbol == currentSym || it.code == currentSym }
+                            if (matched != null) {
+                                Formatters.activeCurrencySymbol = matched.getSymbol(java.util.Locale(chosen))
+                            }
                             androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(
                                 androidx.core.os.LocaleListCompat.forLanguageTags(chosen)
                             )
@@ -205,7 +210,8 @@ class MoreFragment : Fragment() {
                     viewLifecycleOwner.lifecycleScope.launch {
                         appPreferences.setCurrencySymbol(selectedCurrency.symbol)
                         appPreferences.setCurrencyCode(selectedCurrency.code)
-                        Formatters.activeCurrencySymbol = selectedCurrency.symbol
+                        val lang = appPreferences.appLanguage.first()
+                        Formatters.activeCurrencySymbol = selectedCurrency.getSymbol(java.util.Locale(lang))
                         Snackbar.make(
                             binding.root,
                             R.string.currency_updated_success,
