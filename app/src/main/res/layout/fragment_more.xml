@@ -105,7 +105,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="UrWallet • المحفظة الذكية"
+                        android:text="@string/more_app_title"
                         android:textColor="@color/urwallet_text_primary"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -114,7 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="تخزين محلي 100% • خصوصية آمنة 🔒"
+                        android:text="@string/more_app_desc"
                         android:textColor="@color/urwallet_text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -125,7 +125,7 @@
                     android:background="@drawable/bg_pill_pace_green"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="5dp"
-                    android:text="محلي وآمن"
+                    android:text="@string/more_badge_secure"
                     android:textColor="#00732C"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -857,6 +857,77 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- 7b. Language Option -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardLanguageNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/urwallet_background"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/urwallet_card_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <FrameLayout
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_squircle_pastel_amber">
+
+                    <TextView
+                        android:id="@+id/tvLanguageIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="🌐"
+                        android:textSize="20sp" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/language_settings_title"
+                        android:textColor="@color/urwallet_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCurrentLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/language_settings_desc"
+                        android:textColor="@color/urwallet_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_chevron_left"
+                    app:tint="@color/urwallet_text_tertiary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- 8. Security Option -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardSecurityNav"
@@ -1088,7 +1159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="صُنع بحب لمستقبل مالي أفضل 🌱 • خصوصية تامة بدون إنترنت"
+                android:text="@string/more_footer_privacy"
                 android:textColor="@color/urwallet_text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>

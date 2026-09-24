@@ -104,7 +104,9 @@ class FinancialEventReviewBottomSheetFragment : BottomSheetDialogFragment() {
         )
 
         val cardInfo = if (!item.accountOrCard.isNullOrBlank()) " • ${item.accountOrCard}" else ""
-        binding.tvReviewSenderAndDate.text = "من: ${item.sender}$cardInfo • ${DateUtils.formatDateArabic(item.date)}"
+        val senderText = getString(R.string.inbox_sender_prefix, item.sender)
+        val dateText = DateUtils.formatDateLocalized(item.date, requireContext())
+        binding.tvReviewSenderAndDate.text = "$senderText$cardInfo • $dateText"
 
         val initialTitle = item.counterparty?.name ?: item.sender
         binding.etTitle.setText(initialTitle)
@@ -118,7 +120,7 @@ class FinancialEventReviewBottomSheetFragment : BottomSheetDialogFragment() {
 
         if (!item.rawMessage.isNullOrBlank()) {
             binding.tvRawMessageQuote.isVisible = true
-            binding.tvRawMessageQuote.text = "نص الرسالة: ${item.rawMessage}"
+            binding.tvRawMessageQuote.text = getString(R.string.inbox_raw_message_prefix, item.rawMessage)
         } else {
             binding.tvRawMessageQuote.isVisible = false
         }

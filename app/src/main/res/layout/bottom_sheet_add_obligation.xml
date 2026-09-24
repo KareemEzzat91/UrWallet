@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/cairo"
-            android:text="تاريخ الاستحقاق: غير محدد"
+            android:text="@string/date_due_not_set"
             android:textColor="@color/urwallet_text_secondary"
             android:textSize="13sp" />
 
@@ -134,7 +134,7 @@
             android:fontFamily="@font/cairo"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="تحديد تاريخ"
+            android:text="@string/action_set_date"
             android:textSize="12sp"
             app:cornerRadius="10dp"
             app:icon="@drawable/ic_calendar"

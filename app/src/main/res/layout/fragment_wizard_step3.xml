@@ -171,7 +171,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="📊 خطتك المحسوبة"
+                    android:text="@string/wizard_step3_plan_title"
                     android:textColor="@color/urwallet_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -184,7 +184,7 @@
                     android:textColor="@color/urwallet_text_primary"
                     android:textSize="16sp"
                     android:lineSpacingMultiplier="1.5"
-                    android:text="جاري الحساب..." />
+                    android:text="@string/wizard_step3_calculating" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

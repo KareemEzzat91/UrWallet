@@ -303,7 +303,7 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginTop="28dp"
-            android:text="تفعيل البصمة الآن"
+            android:text="@string/bottom_sheet_pin_enable_bio"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -315,7 +315,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
-            android:text="تخطي والانتهاء"
+            android:text="@string/bottom_sheet_pin_skip"
             android:textColor="@color/urwallet_text_secondary"
             android:textSize="14sp" />
     </LinearLayout>

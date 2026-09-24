@@ -65,15 +65,16 @@ class GroupedTransactionAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(header: TransactionListItem.Header) {
             val label = header.dateLabel
-            if (label == "اليوم") {
+            val context = binding.root.context
+            if (label == DateUtils.LABEL_TODAY || label == "اليوم") {
                 binding.tvDateHeader.text = DateUtils.formatDisplayDate(DateUtils.getCurrentEpochMs())
                 binding.layoutTodayBadge.visibility = android.view.View.VISIBLE
-                binding.tvTodayBadgeText.text = "اليوم"
-            } else if (label == "أمس") {
+                binding.tvTodayBadgeText.text = context.getString(R.string.date_today)
+            } else if (label == DateUtils.LABEL_YESTERDAY || label == "أمس") {
                 val yesterday = DateUtils.getCurrentEpochMs() - (24 * 60 * 60 * 1000)
                 binding.tvDateHeader.text = DateUtils.formatDisplayDate(yesterday)
                 binding.layoutTodayBadge.visibility = android.view.View.VISIBLE
-                binding.tvTodayBadgeText.text = "أمس"
+                binding.tvTodayBadgeText.text = context.getString(R.string.date_yesterday)
             } else {
                 binding.tvDateHeader.text = label
                 binding.layoutTodayBadge.visibility = android.view.View.GONE
@@ -93,7 +94,7 @@ class GroupedTransactionAdapter(
             binding.tvTransactionTitle.text = transaction.title
 
             val categoryName = category?.name ?: context.getString(R.string.cat_other)
-            val timeFormatted = DateUtils.formatTimeArabic(transaction.date)
+            val timeFormatted = DateUtils.formatTime(transaction.date)
             binding.tvTransactionTime.text = timeFormatted
             binding.tvCategoryBadge.text = categoryName
 

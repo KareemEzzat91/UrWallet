@@ -89,14 +89,15 @@ class DashboardFragment : Fragment() {
         }
         binding.tvGreeting.text = getString(greetingRes)
 
-        val dayOfWeekFormat = java.text.SimpleDateFormat("EEEE", java.util.Locale("ar"))
+        val dayOfWeekFormat = java.text.SimpleDateFormat("EEEE", java.util.Locale.getDefault())
         val dayOfWeek = dayOfWeekFormat.format(calendar.time)
-        val monthName = DateUtils.formatMonthYearArabic(
+        val monthYear = DateUtils.formatMonthYearLocalized(
             DateUtils.getCurrentMonth(),
             DateUtils.getCurrentYear()
         )
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        binding.tvSubtitle.text = "$dayOfWeek، $day $monthName"
+        val separator = if (java.util.Locale.getDefault().language == "ar") "، " else ", "
+        binding.tvSubtitle.text = "$dayOfWeek$separator$day $monthYear"
     }
 
     private fun setupRecentTransactionsList() {

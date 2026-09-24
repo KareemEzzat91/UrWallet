@@ -161,8 +161,8 @@ class TransactionDetailFragment : Fragment() {
         binding.tvCategoryName.text = categoryName
 
         // 4. Date & Time
-        val dateFormatted = DateUtils.formatDateArabic(tx.date)
-        val timeFormatted = DateUtils.formatTimeArabic(tx.date)
+        val dateFormatted = DateUtils.formatDateLocalized(tx.date, requireContext())
+        val timeFormatted = DateUtils.formatTime(tx.date)
         binding.tvDateTime.text = "$dateFormatted • $timeFormatted"
 
         // 5. Note

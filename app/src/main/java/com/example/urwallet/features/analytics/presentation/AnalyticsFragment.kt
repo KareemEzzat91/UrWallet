@@ -238,7 +238,7 @@ class AnalyticsFragment : Fragment() {
     }
 
     private fun updateMonthTitle(month: Int, year: Int) {
-        binding.tvSelectedMonthYear.text = DateUtils.formatMonthYearArabic(month, year)
+        binding.tvSelectedMonthYear.text = DateUtils.formatMonthYearLocalized(month, year)
     }
 
     private fun renderState(state: AnalyticsUiState) {
@@ -338,11 +338,11 @@ class AnalyticsFragment : Fragment() {
                 expenseEntries.add(BarEntry(index.toFloat(), point.expense.toFloat()))
             }
 
-            val incomeSet = BarDataSet(incomeEntries, "الدخل").apply {
+            val incomeSet = BarDataSet(incomeEntries, context.getString(R.string.chart_income_label)).apply {
                 color = context.getColor(R.color.urwallet_income)
                 setDrawValues(false)
             }
-            val expenseSet = BarDataSet(expenseEntries, "المصروف").apply {
+            val expenseSet = BarDataSet(expenseEntries, context.getString(R.string.chart_expense_label)).apply {
                 color = context.getColor(R.color.urwallet_expense)
                 setDrawValues(false)
             }
@@ -365,7 +365,7 @@ class AnalyticsFragment : Fragment() {
                 override fun getFormattedValue(value: Float): String {
                     val idx = value.toInt()
                     return if (idx in cashFlows.indices) {
-                        cashFlows[idx].monthName.split(" ").firstOrNull() ?: cashFlows[idx].monthName
+                        DateUtils.formatMonthName(cashFlows[idx].month)
                     } else ""
                 }
             }
@@ -400,7 +400,7 @@ class AnalyticsFragment : Fragment() {
                 Entry(index.toFloat(), pt.amount.toFloat())
             }
 
-            val dataSet = LineDataSet(entries, "المصروفات").apply {
+            val dataSet = LineDataSet(entries, context.getString(R.string.chart_expenses_label)).apply {
                 color = context.getColor(R.color.urwallet_primary)
                 lineWidth = 2.5f
                 setCircleColor(context.getColor(R.color.urwallet_primary))

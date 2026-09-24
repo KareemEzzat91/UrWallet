@@ -153,7 +153,7 @@ class GetMonthlyAnalyticsUseCase @Inject constructor(
                     val inc = flows.firstOrNull { it.type == TransactionType.INCOME }?.totalAmount ?: 0.0
                     val exp = flows.firstOrNull { it.type == TransactionType.EXPENSE }?.totalAmount ?: 0.0
                     MonthlyCashFlow(
-                        monthName = DateUtils.formatMonthYearArabic(m, y),
+                        monthName = DateUtils.formatMonthYearLocalized(m, y),
                         month = m,
                         year = y,
                         income = inc,
@@ -164,7 +164,7 @@ class GetMonthlyAnalyticsUseCase @Inject constructor(
             } else {
                 listOf(
                     MonthlyCashFlow(
-                        monthName = DateUtils.formatMonthYearArabic(month, year),
+                        monthName = DateUtils.formatMonthYearLocalized(month, year),
                         month = month,
                         year = year,
                         income = totalIncome,

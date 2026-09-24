@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.urwallet.R
 import com.example.urwallet.core.common.DateUtils
 import com.example.urwallet.core.common.Formatters
 import com.example.urwallet.databinding.FragmentHabitsBinding
@@ -85,7 +86,10 @@ class HabitsFragment : Fragment() {
 
     private fun renderHabits(result: FinancialHabitsResult) {
         // Month badge
-        binding.tvHabitsMonthBadge.text = "تحليل شهر ${DateUtils.formatMonthYearArabic(result.month, result.year)}"
+        binding.tvHabitsMonthBadge.text = getString(
+            R.string.analytics_habit_badge_format,
+            DateUtils.formatMonthYearLocalized(result.month, result.year)
+        )
 
         // 1. Personality
         val p = result.personality

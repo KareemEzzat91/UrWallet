@@ -95,7 +95,12 @@ class MoreFragment : Fragment() {
             showCurrencySelectionDialog()
         }
 
+        binding.cardLanguageNav.setOnClickListener {
+            showLanguageSelectionDialog()
+        }
+
         observeCurrency()
+        observeLanguage()
         observeFinancialInboxBadge()
     }
 
@@ -120,16 +125,71 @@ class MoreFragment : Fragment() {
                 appPreferences.currencySymbol.collect { symbol ->
                     binding.tvCurrencySymbolIcon.text = symbol
                     val currency = Constants.SUPPORTED_CURRENCIES.find { it.symbol == symbol }
-                    binding.tvCurrentCurrency.text = currency?.displayNameAr ?: symbol
+                    binding.tvCurrentCurrency.text = currency?.getDisplayName() ?: symbol
                 }
             }
+        }
+    }
+
+    private fun observeLanguage() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                appPreferences.appLanguage.collect { langCode ->
+                    val isAr = langCode.startsWith("ar")
+                    binding.tvCurrentLanguage.text = if (isAr) {
+                        getString(R.string.language_arabic)
+                    } else {
+                        getString(R.string.language_english)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showLanguageSelectionDialog() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val currentLang = appPreferences.appLanguage.first()
+            val languages = listOf(
+                Pair(Constants.LANGUAGE_ARABIC, getString(R.string.language_arabic)),
+                Pair(Constants.LANGUAGE_ENGLISH, getString(R.string.language_english))
+            )
+            val items = languages.map { it.second }.toTypedArray()
+            val currentIndex = languages.indexOfFirst { it.first == currentLang }.let {
+                if (it >= 0) it else 1
+            }
+
+            var selectedIndex = currentIndex
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_select_language_title)
+                .setSingleChoiceItems(items, currentIndex) { _, which ->
+                    selectedIndex = which
+                }
+                .setPositiveButton(R.string.security_action_confirm) { dialog, _ ->
+                    val chosen = languages[selectedIndex].first
+                    if (chosen != currentLang) {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            appPreferences.setAppLanguage(chosen)
+                            androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(
+                                androidx.core.os.LocaleListCompat.forLanguageTags(chosen)
+                            )
+                            Snackbar.make(
+                                binding.root,
+                                R.string.language_updated_success,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.security_action_cancel, null)
+                .show()
         }
     }
 
     private fun showCurrencySelectionDialog() {
         viewLifecycleOwner.lifecycleScope.launch {
             val currentSymbol = appPreferences.currencySymbol.first()
-            val items = Constants.SUPPORTED_CURRENCIES.map { it.displayNameAr }.toTypedArray()
+            val items = Constants.SUPPORTED_CURRENCIES.map { it.getDisplayName() }.toTypedArray()
             val currentIndex = Constants.SUPPORTED_CURRENCIES.indexOfFirst { it.symbol == currentSymbol }.let {
                 if (it >= 0) it else 0
             }

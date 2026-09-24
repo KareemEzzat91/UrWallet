@@ -35,7 +35,11 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
  *    Preferences for daily reminders, reminder time, budget alerts, and goal milestones.
  *    Also tracks deterministic delivered alert keys to enforce strict threshold crossing idempotency.
  */
-class AppPreferences(private val context: Context) {
+class AppPreferences(
+    private val dataStore: DataStore<Preferences>
+) {
+
+    constructor(context: Context) : this(context.dataStore)
 
     companion object {
         private val KEY_ONBOARDING_COMPLETED = booleanPreferencesKey("is_onboarding_completed")
@@ -59,78 +63,91 @@ class AppPreferences(private val context: Context) {
         // Financial Event Detection Preferences
         private val KEY_SMS_DETECTION_ENABLED = booleanPreferencesKey("is_sms_detection_enabled")
         private val KEY_SMS_LAST_SCAN_TIMESTAMP = longPreferencesKey("sms_last_scan_timestamp")
+
+        // Language Preference
+        private val KEY_APP_LANGUAGE = stringPreferencesKey("app_language")
     }
 
-    val isSmsDetectionEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    val appLanguage: Flow<String> = dataStore.data.map { preferences ->
+        preferences[KEY_APP_LANGUAGE] ?: Constants.DEFAULT_LANGUAGE
+    }
+
+    suspend fun setAppLanguage(languageCode: String) {
+        dataStore.edit { preferences ->
+            preferences[KEY_APP_LANGUAGE] = languageCode
+        }
+    }
+
+    val isSmsDetectionEnabled: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[KEY_SMS_DETECTION_ENABLED] ?: false
     }
 
     suspend fun setSmsDetectionEnabled(enabled: Boolean) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_SMS_DETECTION_ENABLED] = enabled
         }
     }
 
-    val lastSmsScanTimestamp: Flow<Long> = context.dataStore.data.map { preferences ->
+    val lastSmsScanTimestamp: Flow<Long> = dataStore.data.map { preferences ->
         preferences[KEY_SMS_LAST_SCAN_TIMESTAMP] ?: 0L
     }
 
     suspend fun setLastSmsScanTimestamp(timestamp: Long) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_SMS_LAST_SCAN_TIMESTAMP] = timestamp
         }
     }
 
-    val isOnboardingCompleted: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    val isOnboardingCompleted: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[KEY_ONBOARDING_COMPLETED] ?: false
     }
 
     suspend fun setOnboardingCompleted(completed: Boolean) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_ONBOARDING_COMPLETED] = completed
         }
     }
 
-    val currencySymbol: Flow<String> = context.dataStore.data.map { preferences ->
+    val currencySymbol: Flow<String> = dataStore.data.map { preferences ->
         preferences[KEY_CURRENCY_SYMBOL] ?: Constants.DEFAULT_CURRENCY_SYMBOL
     }
 
     suspend fun setCurrencySymbol(symbol: String) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_CURRENCY_SYMBOL] = symbol
         }
     }
 
-    val currencyCode: Flow<String> = context.dataStore.data.map { preferences ->
+    val currencyCode: Flow<String> = dataStore.data.map { preferences ->
         preferences[KEY_CURRENCY_CODE] ?: Constants.DEFAULT_CURRENCY_CODE
     }
 
     suspend fun setCurrencyCode(code: String) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_CURRENCY_CODE] = code
         }
     }
 
-    val isAppLockEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    val isAppLockEnabled: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[KEY_APP_LOCK_ENABLED] ?: false
     }
 
     suspend fun setAppLockEnabled(enabled: Boolean) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_APP_LOCK_ENABLED] = enabled
         }
     }
 
-    val pinSalt: Flow<String?> = context.dataStore.data.map { preferences ->
+    val pinSalt: Flow<String?> = dataStore.data.map { preferences ->
         preferences[KEY_PIN_SALT]
     }
 
-    val pinHash: Flow<String?> = context.dataStore.data.map { preferences ->
+    val pinHash: Flow<String?> = dataStore.data.map { preferences ->
         preferences[KEY_PIN_HASH]
     }
 
     suspend fun savePin(salt: String, hash: String) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_PIN_SALT] = salt
             preferences[KEY_PIN_HASH] = hash
             preferences[KEY_APP_LOCK_ENABLED] = true
@@ -138,30 +155,30 @@ class AppPreferences(private val context: Context) {
     }
 
     suspend fun clearPin() {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences.remove(KEY_PIN_SALT)
             preferences.remove(KEY_PIN_HASH)
             preferences[KEY_APP_LOCK_ENABLED] = false
         }
     }
 
-    val isBiometricEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    val isBiometricEnabled: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[KEY_BIOMETRIC_ENABLED] ?: false
     }
 
     suspend fun setBiometricEnabled(enabled: Boolean) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_BIOMETRIC_ENABLED] = enabled
         }
     }
 
-    val failedPinAttempts: Flow<Int> = context.dataStore.data.map { preferences ->
+    val failedPinAttempts: Flow<Int> = dataStore.data.map { preferences ->
         preferences[KEY_FAILED_PIN_ATTEMPTS] ?: 0
     }
 
     suspend fun incrementFailedPinAttempts(): Int {
         var newCount = 1
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             val current = preferences[KEY_FAILED_PIN_ATTEMPTS] ?: 0
             newCount = current + 1
             preferences[KEY_FAILED_PIN_ATTEMPTS] = newCount
@@ -170,75 +187,75 @@ class AppPreferences(private val context: Context) {
     }
 
     suspend fun resetFailedPinAttempts() {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_FAILED_PIN_ATTEMPTS] = 0
             preferences[KEY_PIN_LOCKOUT_UNTIL_TIMESTAMP] = 0L
         }
     }
 
-    val pinLockoutUntil: Flow<Long> = context.dataStore.data.map { preferences ->
+    val pinLockoutUntil: Flow<Long> = dataStore.data.map { preferences ->
         preferences[KEY_PIN_LOCKOUT_UNTIL_TIMESTAMP] ?: 0L
     }
 
     suspend fun setPinLockoutUntil(timestamp: Long) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_PIN_LOCKOUT_UNTIL_TIMESTAMP] = timestamp
         }
     }
 
     // --- Phase 12 Notification Preferences ---
 
-    val isDailyReminderEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    val isDailyReminderEnabled: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[KEY_DAILY_REMINDER_ENABLED] ?: true
     }
 
     suspend fun setDailyReminderEnabled(enabled: Boolean) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_DAILY_REMINDER_ENABLED] = enabled
         }
     }
 
-    val reminderHour: Flow<Int> = context.dataStore.data.map { preferences ->
+    val reminderHour: Flow<Int> = dataStore.data.map { preferences ->
         preferences[KEY_REMINDER_HOUR] ?: 21
     }
 
-    val reminderMinute: Flow<Int> = context.dataStore.data.map { preferences ->
+    val reminderMinute: Flow<Int> = dataStore.data.map { preferences ->
         preferences[KEY_REMINDER_MINUTE] ?: 0
     }
 
     suspend fun setReminderTime(hour: Int, minute: Int) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_REMINDER_HOUR] = hour
             preferences[KEY_REMINDER_MINUTE] = minute
         }
     }
 
-    val isBudgetAlertsEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    val isBudgetAlertsEnabled: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[KEY_BUDGET_ALERTS_ENABLED] ?: true
     }
 
     suspend fun setBudgetAlertsEnabled(enabled: Boolean) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_BUDGET_ALERTS_ENABLED] = enabled
         }
     }
 
-    val isGoalAlertsEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    val isGoalAlertsEnabled: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[KEY_GOAL_ALERTS_ENABLED] ?: true
     }
 
     suspend fun setGoalAlertsEnabled(enabled: Boolean) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[KEY_GOAL_ALERTS_ENABLED] = enabled
         }
     }
 
-    val deliveredAlertKeys: Flow<Set<String>> = context.dataStore.data.map { preferences ->
+    val deliveredAlertKeys: Flow<Set<String>> = dataStore.data.map { preferences ->
         preferences[KEY_DELIVERED_ALERT_KEYS] ?: emptySet()
     }
 
     suspend fun markAlertDelivered(key: String) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             val current = preferences[KEY_DELIVERED_ALERT_KEYS] ?: emptySet()
             preferences[KEY_DELIVERED_ALERT_KEYS] = current + key
         }

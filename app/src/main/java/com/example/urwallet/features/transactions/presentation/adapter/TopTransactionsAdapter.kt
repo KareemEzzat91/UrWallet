@@ -39,8 +39,8 @@ class TopTransactionsAdapter(
         fun bind(transaction: Transaction) {
             binding.tvTitle.text = transaction.title
 
-            val timeFormatted = DateUtils.formatTimeArabic(transaction.date)
-            val dateFormatted = DateUtils.formatDateArabic(transaction.date)
+            val timeFormatted = DateUtils.formatTime(transaction.date)
+            val dateFormatted = DateUtils.formatDateLocalized(transaction.date, binding.root.context)
             binding.tvSubtitle.text = "$dateFormatted • $timeFormatted"
 
             binding.tvAmount.text = Formatters.formatSignedAmount(

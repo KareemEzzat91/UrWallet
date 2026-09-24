@@ -44,8 +44,8 @@ class RecentTransactionsAdapter(
             val categoryName = category?.name ?: context.getString(R.string.cat_other)
             binding.tvTitle.text = categoryName
 
-            val datePart = DateUtils.formatDateArabic(transaction.date)
-            val timePart = DateUtils.formatTimeArabic(transaction.date)
+            val datePart = DateUtils.formatDateLocalized(transaction.date, context)
+            val timePart = DateUtils.formatTime(transaction.date)
             binding.tvSubtitle.text = "$datePart • $timePart"
 
             val noteText = transaction.title.takeIf { it.isNotBlank() && it != categoryName } ?: transaction.note

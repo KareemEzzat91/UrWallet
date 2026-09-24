@@ -126,7 +126,7 @@ class TransactionsFragment : Fragment() {
             if (categories.isNotEmpty()) {
                 showBulkChangeCategoryDialog(categories)
             } else {
-                Toast.makeText(requireContext(), "لا توجد فئات متاحة", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.toast_no_categories_available, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -214,13 +214,13 @@ class TransactionsFragment : Fragment() {
 
     private fun showBulkDeleteConfirmationDialog(selectedCount: Int) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("حذف المعاملات المحددة")
-            .setMessage("هل أنت متأكد من حذف $selectedCount معاملات؟ لا يمكن التراجع عن هذا الإجراء.")
+            .setTitle(R.string.dialog_bulk_delete_title)
+            .setMessage(getString(R.string.dialog_bulk_delete_message, selectedCount))
             .setNegativeButton(R.string.action_cancel, null)
             .setPositiveButton(R.string.action_delete) { _, _ ->
                 viewModel.bulkDeleteSelected(
                     onSuccess = { count ->
-                        showSuccessSnackbar("تم حذف $count معاملات بنجاح")
+                        showSuccessSnackbar(getString(R.string.toast_bulk_delete_success, count))
                     },
                     onError = { error ->
                         Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
@@ -236,17 +236,19 @@ class TransactionsFragment : Fragment() {
         var selectedIndex = 0
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("اختر الفئة الجديدة")
+            .setTitle(R.string.dialog_bulk_category_title)
             .setSingleChoiceItems(categoryNames, selectedIndex) { _, which ->
                 selectedIndex = which
             }
             .setNegativeButton(R.string.action_cancel, null)
-            .setPositiveButton("تطبيق") { _, _ ->
+            .setPositiveButton(R.string.action_apply) { _, _ ->
                 val chosenCategory = categories.getOrNull(selectedIndex) ?: return@setPositiveButton
                 viewModel.bulkChangeCategorySelected(
                     newCategoryId = chosenCategory.id,
                     onSuccess = { count ->
-                        showSuccessSnackbar("تم تحديث فئة $count معاملات بنجاح إلى ${chosenCategory.name}")
+                        showSuccessSnackbar(
+                            getString(R.string.toast_bulk_category_success, count, chosenCategory.name)
+                        )
                     },
                     onError = { error ->
                         Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
@@ -327,7 +329,7 @@ class TransactionsFragment : Fragment() {
                 binding.layoutNormalHeader.isVisible = !state.isSelectionMode
                 binding.layoutSelectionHeader.isVisible = state.isSelectionMode
                 if (state.isSelectionMode) {
-                    binding.tvSelectionCount.text = "${state.selectedCount} محدد"
+                    binding.tvSelectionCount.text = getString(R.string.transactions_selected_count, state.selectedCount)
                     binding.btnBulkDelete.isEnabled = state.selectedCount > 0
                     binding.btnBulkChangeCategory.isEnabled = state.selectedCount > 0
                 }

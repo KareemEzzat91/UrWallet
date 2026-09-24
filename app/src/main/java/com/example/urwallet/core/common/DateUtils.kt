@@ -1,13 +1,12 @@
 package com.example.urwallet.core.common
 
+import com.example.urwallet.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 object DateUtils {
-
-    private val ARABIC_LOCALE = Locale("ar")
 
     fun getCurrentEpochMs(): Long = System.currentTimeMillis()
 
@@ -63,42 +62,66 @@ object DateUtils {
         return Calendar.getInstance().get(Calendar.MONTH) + 1
     }
 
+    const val LABEL_TODAY = "TODAY"
+    const val LABEL_YESTERDAY = "YESTERDAY"
+
     fun getCurrentYear(): Int {
         return Calendar.getInstance().get(Calendar.YEAR)
     }
 
-    fun formatDateArabic(epochMs: Long): String {
+    fun getDateGroupKey(epochMs: Long): String {
+        val todayStart = getStartOfDay()
+        val yesterdayStart = todayStart - (24 * 60 * 60 * 1000)
+        return when {
+            epochMs >= todayStart -> LABEL_TODAY
+            epochMs >= yesterdayStart -> LABEL_YESTERDAY
+            else -> formatDisplayDate(epochMs)
+        }
+    }
+
+    fun formatDateLocalized(
+        epochMs: Long,
+        context: android.content.Context,
+        locale: Locale = Locale.getDefault()
+    ): String {
         val todayStart = getStartOfDay()
         val yesterdayStart = todayStart - (24 * 60 * 60 * 1000)
 
         return when {
-            epochMs >= todayStart -> "اليوم"
-            epochMs >= yesterdayStart -> "أمس"
+            epochMs >= todayStart -> context.getString(R.string.date_today)
+            epochMs >= yesterdayStart -> context.getString(R.string.date_yesterday)
             else -> {
-                val formatter = SimpleDateFormat("dd MMMM yyyy", ARABIC_LOCALE)
+                val formatter = SimpleDateFormat("dd MMMM yyyy", locale)
                 formatter.format(Date(epochMs))
             }
         }
     }
 
-    fun formatDisplayDate(epochMs: Long): String {
-        val formatter = SimpleDateFormat("dd MMMM yyyy", ARABIC_LOCALE)
+    fun formatDisplayDate(epochMs: Long, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat("dd MMMM yyyy", locale)
         return formatter.format(Date(epochMs))
     }
 
-    fun formatTimeArabic(epochMs: Long): String {
-        val formatter = SimpleDateFormat("hh:mm a", ARABIC_LOCALE)
+    fun formatTime(epochMs: Long, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat("hh:mm a", locale)
         return formatter.format(Date(epochMs))
     }
 
-    fun formatTime(epochMs: Long): String = formatTimeArabic(epochMs)
-
-    fun formatMonthYearArabic(month: Int, year: Int): String {
+    fun formatMonthYearLocalized(month: Int, year: Int, locale: Locale = Locale.getDefault()): String {
         val calendar = Calendar.getInstance().apply {
             set(Calendar.MONTH, month - 1)
             set(Calendar.YEAR, year)
         }
-        val formatter = SimpleDateFormat("MMMM yyyy", ARABIC_LOCALE)
+        val formatter = SimpleDateFormat("MMMM yyyy", locale)
+        return formatter.format(calendar.time)
+    }
+
+    fun formatMonthName(month: Int, locale: Locale = Locale.getDefault()): String {
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.MONTH, month - 1)
+            set(Calendar.DAY_OF_MONTH, 1)
+        }
+        val formatter = SimpleDateFormat("MMMM", locale)
         return formatter.format(calendar.time)
     }
 

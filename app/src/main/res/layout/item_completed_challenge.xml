@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="تم إنجاز التحدي بنجاح 🏆"
+                android:text="@string/challenge_completed_badge_banner"
                 android:textColor="@color/urwallet_text_secondary"
                 android:textSize="12sp" />
         </LinearLayout>

@@ -37,7 +37,7 @@ class ChallengeDaysAdapter : ListAdapter<ChallengeDayStatus, ChallengeDaysAdapte
             val context = binding.root.context
 
             binding.tvDayNumber.text = context.getString(R.string.day_number_format, item.dayNumber)
-            binding.tvDayDate.text = DateUtils.formatDateArabic(item.dateMillis)
+            binding.tvDayDate.text = DateUtils.formatDateLocalized(item.dateMillis, context)
 
             if (item.spentAmount > 0.0) {
                 binding.tvDaySpent.text = Formatters.formatCurrency(item.spentAmount)

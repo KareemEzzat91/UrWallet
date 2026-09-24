@@ -91,35 +91,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="هذا الشهر" />
+                    android:text="@string/analytics_period_this_month" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipLastMonth"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الشهر الماضي" />
+                    android:text="@string/analytics_period_last_month" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipLast3Months"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="آخر 3 أشهر" />
+                    android:text="@string/analytics_period_last_3_months" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipLast6Months"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="آخر 6 أشهر" />
+                    android:text="@string/analytics_period_last_6_months" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipThisYear"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="هذا العام" />
+                    android:text="@string/analytics_period_this_year" />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
@@ -331,7 +331,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="المدخر للأهداف المالية"
+                            android:text="@string/analytics_saved_for_goals"
                             android:textColor="@color/urwallet_text_secondary"
                             android:textSize="12sp" />
 
@@ -368,7 +368,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="مقارنة الدخل والمصروفات"
+                        android:text="@string/chart_income_label"
                         android:textColor="@color/urwallet_text_primary"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -377,7 +377,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="مقارنة التدفق المالي الشهري للفترة المحددة"
+                        android:text="@string/analytics_chart_income_expense_title"
                         android:textColor="@color/urwallet_text_secondary"
                         android:textSize="12sp" />
 
@@ -392,7 +392,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center"
-                        android:text="لا توجد بيانات دخل أو مصروفات للفترة المحددة"
+                        android:text="@string/analytics_chart_income_expense_empty"
                         android:textColor="@color/urwallet_text_tertiary"
                         android:textSize="13sp"
                         android:visibility="gone" />
@@ -420,7 +420,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="مسار المصروفات اليومية"
+                        android:text="@string/analytics_chart_spending_trend_title"
                         android:textColor="@color/urwallet_text_primary"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -429,7 +429,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="توزيع الإنفاق اليومي لمعرفة فترات الذروة"
+                        android:text="@string/spending_trend_chart_subtitle"
                         android:textColor="@color/urwallet_text_secondary"
                         android:textSize="12sp" />
 
@@ -444,7 +444,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center"
-                        android:text="@string/chart_no_expenses_in_month"
+                        android:text="@string/analytics_chart_spending_trend_empty"
                         android:textColor="@color/urwallet_text_tertiary"
                         android:textSize="13sp"
                         android:visibility="gone" />
@@ -472,7 +472,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="توزيع المصروفات حسب الفئات"
+                        android:text="@string/category_breakdown_title"
                         android:textColor="@color/urwallet_text_primary"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -496,7 +496,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center"
-                        android:text="لا توجد فئات مصروفات للفترة المحددة"
+                        android:text="@string/analytics_chart_category_empty"
                         android:textColor="@color/urwallet_text_tertiary"
                         android:textSize="13sp"
                         android:visibility="gone" />

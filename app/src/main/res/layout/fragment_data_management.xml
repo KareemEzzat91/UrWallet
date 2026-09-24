@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="تحكم كامل في بياناتك وتصديرها بأمان"
+                        android:text="@string/data_management_subtitle"
                         android:textColor="@color/urwallet_text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -139,7 +139,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="أمان وخصوصية تامة 100%"
+                                android:text="@string/data_management_privacy_card_title"
                                 android:textColor="@color/urwallet_text_primary"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
@@ -148,7 +148,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="بياناتك مشفرة ومحفوظة على جهازك فقط بدون سحابة"
+                                android:text="@string/data_management_privacy_card_desc"
                                 android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="11.5sp" />
                         </LinearLayout>
@@ -159,7 +159,7 @@
                             android:background="@drawable/bg_pill_pace_green"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
-                            android:text="محلي وآمن"
+                            android:text="@string/more_badge_secure"
                             android:textColor="#00732C"
                             android:textSize="11sp"
                             android:textStyle="bold" />
@@ -491,7 +491,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:text="جاري معالجة البيانات..."
+                    android:text="@string/data_management_processing"
                     android:textColor="@color/urwallet_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />

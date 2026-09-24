@@ -215,7 +215,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cairo"
-                        android:text="موقف الديون والالتزامات:"
+                        android:text="@string/person_debts_status"
                         android:textColor="@color/urwallet_text_primary"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -309,7 +309,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
                         android:fontFamily="@font/cairo"
-                        android:text="التدفق المالي الفعلي (المعاملات):"
+                        android:text="@string/person_actual_cashflow"
                         android:textColor="@color/urwallet_text_primary"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -331,7 +331,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cairo"
-                                android:text="دفعت له (مصروف)"
+                                android:text="@string/person_paid_to_him"
                                 android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="11sp" />
 
@@ -356,7 +356,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cairo"
-                                android:text="استلمت منه (دخل)"
+                                android:text="@string/person_received_from_him"
                                 android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="11sp" />
 
@@ -381,7 +381,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cairo"
-                                android:text="صافي التدفق"
+                                android:text="@string/person_net_flow"
                                 android:textColor="@color/urwallet_text_secondary"
                                 android:textSize="11sp" />
 

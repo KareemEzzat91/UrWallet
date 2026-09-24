@@ -92,7 +92,7 @@
             android:textColor="@color/urwallet_text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="3 محدد" />
+            tools:text="3 selected" />
 
         <!-- Change Category Button -->
         <com.google.android.material.button.MaterialButton
@@ -102,7 +102,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"
             android:paddingHorizontal="12dp"
-            android:text="تغيير الفئة"
+            android:text="@string/btn_bulk_change_category"
             android:textColor="@color/urwallet_primary"
             android:textSize="12sp"
             android:textStyle="bold"

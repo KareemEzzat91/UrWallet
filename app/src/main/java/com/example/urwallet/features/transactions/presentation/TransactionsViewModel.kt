@@ -401,7 +401,7 @@ class TransactionsViewModel @Inject constructor(
         isSelectionMode: Boolean = false
     ): List<TransactionListItem> {
         val items = mutableListOf<TransactionListItem>()
-        val groupedByDate = transactions.groupBy { DateUtils.formatDateArabic(it.date) }
+        val groupedByDate = transactions.groupBy { DateUtils.getDateGroupKey(it.date) }
 
         for ((dateLabel, dayTransactions) in groupedByDate) {
             items.add(TransactionListItem.Header(dateLabel))

@@ -39,10 +39,11 @@
             android:id="@+id/tvTodayBadgeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="اليوم"
+            android:text="@string/date_today"
             android:textColor="@color/urwallet_primary"
             android:textSize="11sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Today" />
 
         <ImageView
             android:layout_width="12dp"

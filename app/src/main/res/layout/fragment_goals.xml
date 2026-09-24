@@ -48,7 +48,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الأهداف المالية"
+                    android:text="@string/goals_placeholder_card_title"
                     android:textColor="@color/urwallet_text_primary"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -606,7 +606,7 @@
                         android:id="@+id/btnSuggestedViewAll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="عرض الكل  ‹"
+                        android:text="@string/goals_view_all"
                         android:textColor="@color/urwallet_primary"
                         android:textSize="12sp"
                         android:textStyle="bold" />

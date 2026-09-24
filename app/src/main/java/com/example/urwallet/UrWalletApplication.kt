@@ -44,7 +44,7 @@ class UrWalletApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
+        initializeLocale()
         appLockManager.syncLockStateBlocking()
         ProcessLifecycleOwner.get().lifecycle.addObserver(appLockLifecycleObserver)
         notificationHelper.createNotificationChannels()
@@ -52,6 +52,25 @@ class UrWalletApplication : Application() {
         scheduleFinancialEventScanWorker()
         initializeDailyReminder()
         initializeCurrency()
+    }
+
+    private fun initializeLocale() {
+        val currentLocales = AppCompatDelegate.getApplicationLocales()
+        if (currentLocales.isEmpty) {
+            AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(com.example.urwallet.core.common.Constants.DEFAULT_LANGUAGE)
+            )
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val stored = appPreferences.appLanguage.first()
+                val activeTag = AppCompatDelegate.getApplicationLocales().toLanguageTags()
+                if (activeTag.isNotEmpty() && activeTag != stored) {
+                    appPreferences.setAppLanguage(activeTag)
+                }
+            } catch (_: Exception) {
+            }
+        }
     }
 
     private fun initializeCurrency() {

@@ -60,11 +60,10 @@ class FinancialEventScanWorker(
 
             // 4. Trigger safe, idempotent notification if high-confidence events detected
             if (newEventsCount > 0) {
-                val message = if (newEventsCount == 1) {
-                    "تم اكتشاف معاملة مالية جديدة في الوارد المالي"
-                } else {
-                    "تم اكتشاف $newEventsCount معاملات مالية جديدة في الوارد المالي"
-                }
+                val message = applicationContext.getString(
+                    R.string.notification_financial_events_summary,
+                    newEventsCount
+                )
                 notificationHelper.sendFinancialEventsSummaryNotification(newEventsCount, message)
             }
 

@@ -105,7 +105,7 @@ class FinancialInboxAdapter(
             }
 
             // 3. Date
-            binding.tvDate.text = "${DateUtils.formatDateArabic(item.date)} • ${DateUtils.formatTimeArabic(item.date)}"
+            binding.tvDate.text = "${DateUtils.formatDateLocalized(item.date, context)} • ${DateUtils.formatTime(item.date)}"
 
             // 4. Counterparty
             val hasCounterparty = item.counterparty != null && item.counterparty.name.isNotBlank()
@@ -129,10 +129,10 @@ class FinancialInboxAdapter(
 
             binding.layoutDuplicateResolution.isVisible = isDuplicate
             if (isDuplicate) {
-                val detectedText = "${context.getString(R.string.duplicate_detected_label)} ${item.sender} • ${Formatters.formatCurrency(item.amount)} • ${DateUtils.formatTimeArabic(item.date)}"
+                val detectedText = "${context.getString(R.string.duplicate_detected_label)} ${item.sender} • ${Formatters.formatCurrency(item.amount)} • ${DateUtils.formatTime(item.date)}"
                 binding.tvDuplicateDetectedInfo.text = detectedText
 
-                val existingText = "${context.getString(R.string.duplicate_existing_label)} معاملة مسجلة بنفس القيمة والتاريخ تقريباً (معرف: #${item.matchedTransactionId ?: ""})"
+                val existingText = "${context.getString(R.string.duplicate_existing_label)} ${context.getString(R.string.duplicate_matched_desc, item.matchedTransactionId ?: "")}"
                 binding.tvDuplicateExistingInfo.text = existingText
 
                 binding.btnSameTransaction.setOnClickListener { onSameTransactionClick(item) }

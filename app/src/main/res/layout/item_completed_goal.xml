@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:text="تم إنجاز هذا الهدف بنجاح 🏆"
+                android:text="@string/goal_completed_badge_banner"
                 android:textColor="@color/urwallet_text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>

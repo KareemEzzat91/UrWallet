@@ -321,7 +321,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="خصوصية محلية 100%"
+                            android:text="@string/security_privacy_guarantee"
                             android:textColor="@color/urwallet_text_primary"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -331,7 +331,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:lineSpacingExtra="2dp"
-                            android:text="بياناتك المالية ورمز PIN لا يغادران هاتفك أبداً، ويتم تشفير الرمز باستخدام PBKDF2 لضمان الأمان التام."
+                            android:text="@string/security_privacy_guarantee_desc"
                             android:textColor="@color/urwallet_text_secondary"
                             android:textSize="11sp" />
                     </LinearLayout>
